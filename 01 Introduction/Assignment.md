@@ -105,8 +105,8 @@ Do this for your Entities library project.
 You are used to model relationships with associations, e.g. a Post has many Comments. Then the Post would have a List of Comments.
 We don’t initially do this. It comes later in the course.
 
-[!IMPORTANT]
-DON’T DO ASSOCIATIONS NOW
+> [!IMPORTANT]
+> DON’T DO ASSOCIATIONS NOW
 
 We use the approach of a relational database, and model our entity-relationships using foreign keys.
 This means a Comment will have a property called PostId, which references the post, that the comment belongs to.
@@ -211,8 +211,8 @@ This makes filtering the Users by some criteria easier (using predicates, later)
 Maybe we want to fetch all Users with a specific sub-string in the username. Or some other property on the User.
 The method is not async, the reason of which we will get back to, when we add a database.
 
-[!CAUTION]
-You will define such an I*Repository interface per entity!
+> [!IMPORTANT]
+> You will define such an I*Repository interface per entity!
 
 ### What is Task and Async?
 We will come back to this in session 2. It is asynchronous programming. It’s an optimization approach, so that different tasks/jobs/pieces of code can automatically be executed in parallel. Sort of like automatic multithreading. It is just managed for us, instead of us having to explicitly create threads.
