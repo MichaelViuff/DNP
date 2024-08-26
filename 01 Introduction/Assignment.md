@@ -32,7 +32,7 @@ Further feature suggestions, if you are brave:
 First, you need a new, fresh solution. You may work in groups, so only one group member does the initial setup.
 Create a new Solution in Rider:
  
-![alt text](image.png)
+![alt text](Images/image.png)
 
 And then:
 1)	Select Empty Solution
@@ -41,7 +41,7 @@ And then:
 4)	Create a new directory, this is probably checked already
 5)	Check this to create a git repository. You must have your assignment on GitHub, and hand in a link to your repository. It’s easier if this is checked initially, then you get some extra setup prepared for you, like a git ignore file.
  
-![alt text](image-1.png)
+![alt text](Images/image-1.png)
 
 Now you should have a new, fresh, empty solution.
 ## 3. GitHub
@@ -57,15 +57,15 @@ Based on the above requirements, you must create a domain model diagram, where w
 It’s time to implement the domain model, i.e. the entities as classes. These will just be data container classes, using properties. 
 First, create a new Solution Folder, call it Server. This folder will contain all server related code:
  
-![alt text](image-2.png)
+![alt text](Images/image-2.png)
 
 Now, your solution looks like this:
  
- ![alt text](image-3.png)
+ ![alt text](Images/image-3.png)
 
 Then, create a new class library to contain your domain entities, inside the Server folder:
  
-![alt text](image-4.png)
+![alt text](Images/image-4.png)
 
 Then, setup the project as follows:
 1)	Select Class Library
@@ -74,30 +74,30 @@ Then, setup the project as follows:
 4)	Select SDK and Framework, if available. If you only have one version installed, these are probably greyed out, or not there at all.
 5)	Select Create
  
-![alt text](image-5.png)
+![alt text](Images/image-5.png)
 
 Now your solution looks like this:
  
-![alt text](image-6.png)
+![alt text](Images/image-6.png)
 
 You can safely delete the Class1.cs file inside Entities. 
 Now, you can create your entities, e.g. Post, User, etc, in this project:
  
- ![alt text](image-7.png)
+ ![alt text](Images/image-7.png)
 
 Remember, all your classes should be under git version control. But you must also tell git about your projects.
 This is done by adding and committing the *.csproj file for each project.
 Initially, a new project will have its name in red font, meaning git does not know about it. E.g.:
  
-![alt text](image-8.png)
+![alt text](Images/image-8.png)
 
 You must then find the *.csproj file and add it. First, change the view from ”Solution” to ”File system”:
  
-![alt text](image-9.png)
+![alt text](Images/image-9.png)
 
 Then add the .csproj file in the project to git:
  
- ![alt text](image-10.png)
+ ![alt text](Images/image-10.png)
 
 Do this for your Entities library project.
 
@@ -142,7 +142,7 @@ The Repositories live on the server side, and is only used on the server side.
 We need a project to house the Repository interfaces, aka ”contracts”. The actual implementations will go elsewhere, later.
 Create a new Class Library Project, first:
  
-![alt text](image-12.png)
+![alt text](Images/image-12.png)
 
 And then setup the project:
 1)	Select type
@@ -151,11 +151,11 @@ And then setup the project:
 4)	Select versions
 5)	Select to create
 
-![alt text](image-13.png)
+![alt text](Images/image-13.png)
  
 And finally the new solution structure:
  
-![alt text](image-14.png)
+![alt text](Images/image-14.png)
 
 You can, again, delete Class1.cs. And put the RepositoryContracts.csproj file under version control, like before with the Entities project.
 
@@ -163,11 +163,11 @@ You can, again, delete Class1.cs. And put the RepositoryContracts.csproj file un
 The new RepositoryContracts project need to work with your entities. These are located in a separate project, and so we need to add a reference from RepositoryContracts to Entities.
 Right click on the ”Dependencies” inside RepositoryContracts.
  
-![alt text](image-15.png)
+![alt text](Images/image-15.png)
 
 And then select the project, you want to referece, in our case the Entities:
  
-![alt text](image-16.png)
+![alt text](Images/image-16.png)
 
 Finally, select [Add].
 Note: In the image above, it says <Shared>. In yours it says <Server>.
@@ -228,7 +228,7 @@ Again, we need a new project. We are going to use his approach a lot, creating n
 The project goes into the Server package, it is a class library, and is named InMemoryRepositories.
 Create a new class library like this, by right-clicking on the Server folder:
  
-![alt text](image-17.png)
+![alt text](Images/image-17.png)
 
 And then:
 1)	Select Class Library
@@ -237,7 +237,7 @@ And then:
 4)	Pick versions, if possible.
 5)	Select Create.
 
-![alt text](image-18.png)
+![alt text](Images/image-18.png)
  
 Delete Class1.cs.
 Put the project under version control, as previously.
@@ -247,11 +247,11 @@ You need to add a dependency from InMemoryRepositories project to the Entities p
 This is so your repository implementations can know about the entities they manage.
 You will also need a dependency from InMemoryRepositories project to the RepositoryContracts project, because this is where the interfaces are located:
  
-![alt text](image-19.png)
+![alt text](Images/image-19.png)
 
 Now your solution structure looks like this:
 
-![alt text](image-20.png)
+![alt text](Images/image-20.png)
  
 
 ### Implementations
@@ -262,7 +262,7 @@ Below is a description of the PostInMemoryRepository, step by step. You will the
 #### Post Repository class
 First, you need a class, which implements the IPostRepository:
 
-![alt text](image-21.png)
+![alt text](Images/image-21.png)
  
 Notice the location of the class, and the class definition in the file.
 
