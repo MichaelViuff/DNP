@@ -31,7 +31,7 @@ Create a "ConsoleApplication" Project in your newly created Solution.
 
 You should end up with something similar to this
 
-![My first Solution](Images\myfirstsolution.png)
+![My first Solution](Images/myfirstsolution.png)
 
 ## 1.4 Your first C# class
 
