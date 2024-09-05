@@ -29,6 +29,8 @@ Open your IDE and create a Solution. You might have to define an initial Project
 
 Create a "ConsoleApplication" Project in your newly created Solution.
 
+If you want to have your entry point (main-method) feel similiar to Java, check the box "Do not use top-level statements".
+
 You should end up with something similar to this
 
 ![My first Solution](Images/myfirstsolution.png)
