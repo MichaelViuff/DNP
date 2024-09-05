@@ -297,7 +297,7 @@ public Task UpdateAsync(Post post)
     if (existingPost is null)
     {
         throw new InvalidOperationException(
-				$"Post with ID '{post.Id}' not found");
+                $"Post with ID '{post.Id}' not found");
     }
 
     posts.Remove(existingPost);
