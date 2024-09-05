@@ -15,7 +15,7 @@ Your teacher will be using [JetBrains Rider](https://www.jetbrains.com/rider/do
 
 Rider does not have a free version, so you will need a [student account](https://www.jetbrains.com/community/education/) at JetBrains (you may already have one from a previous semester).
 
-In one of the steps of the installation wizard for Rider, make sure that you check “Add launchers dir to PATH”
+In one of the steps of the installation wizard for Rider, make sure that you check “Add bin folder to the PATH”
 
 Popular alternatives to Rider are [Visual Studio or Visual Studio Code](https://visualstudio.microsoft.com/downloads/).
 
