@@ -368,7 +368,7 @@ MakeWord("[[]]", "word") → "[[word]]"
 ```csharp
 public string MakeWord(string outer, string word)
 {
-    return outer.Substring(0, 2) + word + outer.Substring(2);
+    return $"{outer.Substring(0, 2)}{word}{outer.Substring(2)}";
 }
 ```
 
