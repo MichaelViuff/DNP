@@ -64,6 +64,11 @@ namespace ConsoleApplication
         {
             Name = name;
         }
+
+        public void Introduce()
+        {
+            Console.WriteLine($"Hi, I am {person1.Name}");
+        }
     }
 }
 ```
@@ -79,11 +84,11 @@ namespace ConsoleApplication
         {
             //Using constructor
             Person person1 = new Person("Alice");
-            Console.WriteLine($"Hi, I am {person1.Name}");
+            person1.Introduce();
 
             //Using object initializer
             Person person2 = new Person{Name = "Bob"};
-            Console.WriteLine($"Hi, I am {person2.Name}");
+            person2.Introduce();
         }
     }
 }
