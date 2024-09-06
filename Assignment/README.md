@@ -212,11 +212,10 @@ Our repository interfaces will define 5 standard methods:
 4)	GetSingle – Get a single post.
 5)	GetMany – Get multiple posts.
 
-Here is an example for the IUserRepository interface. The others look almost identical:
-public interface IPostRepository
-
+Here is an example for the IPostRepository interface. The others look almost identical:
 
 ```csharp
+public interface IPostRepository
 {
     Task<Post> AddAsync(Post post);
     Task UpdateAsync(Post post);
@@ -229,17 +228,17 @@ public interface IPostRepository
 For now, ignore the Task return types, and the ”Async” method name suffixes. This will be explained later.
 Method descriptions:
 
-**Add** takes a user, and returns the created user. This is because the server sets some data on the User, e.g. the ID, and this should be returned to the client. The client might need this ID for something. This is common.
+**Add** takes a Post, and returns the created Post. This is because the server sets some data on the Post, e.g. the ID, and this should be returned to the client. The client might need this ID for something. This is common.
 
-**Update** takes a user (with ID), and just replaces the existing User. If no existing User is found, an exception is thrown to indicate the error.
+**Update** takes a Post (with ID), and just replaces the existing Post. If no existing Post is found, an exception is thrown to indicate the error.
 
-**Delete** will remove the User with a given ID. If no matching User is found, an exception is thrown.
+**Delete** will remove the Post with a given ID. If no matching Post is found, an exception is thrown.
 
-**GetSingle** will return the User matching the given ID. If no User is found, an exception is thrown.
+**GetSingle** will return the Post matching the given ID. If no Post is found, an exception is thrown.
 
 **GetMany** will return an IQueryable. This is an interface which can looped over in a for-each loop to extract the relevant entities. Or we can use LINQ, which we will see later in the course. 
-This makes filtering the Users by some criteria easier (using predicates, later). 
-Maybe we want to fetch all Users with a specific sub-string in the username. Or some other property on the User.
+This makes filtering the Posts by some criteria easier (using predicates, later). 
+Maybe we want to fetch all Posts with a specific sub-string in the postname. Or some other property on the Post.
 The method is not async, the reason of which we will get back to, when we add a database.
 
 > [!IMPORTANT]
