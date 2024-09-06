@@ -1,14 +1,45 @@
-# Assignment 1 - Entities & Repositories
+# Table of Contents:
 
-In this assignment series you will build out a small forum app. For each assignment you will add something new to the project, and at the end of the semester you will have a fully working forum app. Hopefully. It is very much inspired by Reddit.
-In the end it will consist of a simple CRUD focused Web API, with Entity Framework Core and a SQLite database to store data. For the front-end you will have a Blazor web app.
+ - [Part 1 - Entities & Repositories](#part-1---entities--repositories)
+ - [Part 2 - Some more stuff](#part-2---some-other-stuff)
+ - [Part 3 - Some more stuff](#part-3---some-other-stuff)
+ - [Part 4 - Some more stuff](#part-4---some-other-stuff)
+ - [Part 5 - Some more stuff](#part-5---some-other-stuff)
+ - [Part 6 - Some more stuff](#part-6---some-other-stuff)
+ - [Part 7 - Some more stuff](#part-7---some-other-stuff)
+
+
+
+
+
+
+# Part 1 - Entities & Repositories
+
+In this assignment series you will build out a small forum app. 
+
+For each assignment you will add something new to the project, and at the end of the semester you will have a fully working forum app (hopefully...). 
+
+It will consist of a simple CRUD focused Web API, with Entity Framework Core and a SQLite database to store data. 
+
+For the front-end you will have a Blazor web app.
+
 In this first assignment you will create the entities for your domain model, and you will define repository interfaces (repository is explained later).
-Because your app will evolve over time - different parts will be added and swapped out - we need to design the system with modularity in mind. We do this by creating multiple projects, each responsible for something specific. It will be a simplified layered application.
-The Web API (i.e. server) will contain two layers: a network and a persistence. Often you will have a business logic layer in between, but we are skipping that, and simplifying the server to focus on the .NET tools rather than good SOLID architecture design. You should probably have this extra layer in your semester project.
-There is some initial setup, which is best done on one computer, then shared to others through GitHub. I recommend reading through the entire document before actually starting on anything.
-Let’s begin.
 
-## 1. Features
+Because your app will evolve over time (different parts will be added and swapped out) we need to design the system with modularity in mind. 
+
+We do this by creating multiple *projects*, each responsible for something specific. It will be a simplified layered application.
+
+**The Web API** (i.e. server) will contain two layers; a network layer and a persistence layer. 
+
+Often you will have a business logic layer in between, but we are skipping that, and simplifying the server to focus on the .NET tools rather than good SOLID architecture design. 
+
+You should probably have this extra layer in your semester project.
+
+There is some initial setup, which is best done on one computer, then shared to others through GitHub. 
+
+I recommend reading through the entire document before actually starting on anything.
+
+## Step 1 - Features
 This assignment is open-ended, meaning we provide you with a few minimum requirements, which must be completed. We also have suggestions on how to expand upon the system, should you wish to. Or you can come up with your own ideas.
 
 ### Feature description
@@ -28,7 +59,7 @@ Further feature suggestions, if you are brave:
 •	A user becomes moderator of a sub forum, they created, meaning they can delete comments and posts.
 •	Feel free to add further ideas yourself.
 
-## 2. Create Solution
+## Step 2 - Create Solution
 First, you need a new, fresh solution. You may work in groups, so only one group member does the initial setup.
 Create a new Solution in Rider:
  
@@ -44,16 +75,16 @@ And then:
 ![alt text](Images/image-1.png)
 
 Now you should have a new, fresh, empty solution.
-## 3. GitHub
+## Step 3 - GitHub
 You must use Git and GitHub for your assignments. You may use whatever branching strategy, you like. Each hand-in on itslearning is typically a link to your main branch. 
 A good start is to now commit your *.sln file. E.g.: DnpAssignmentXYZ.sln. This file ”binds” your entire application together.
-## 4. Domain Model
+## Step 4 - Domain Model
 Based on the above requirements, you must create a domain model diagram, where we can see:
 •	The entities of the system
 •	The properties (attributes) on the entities
 •	The relationships between entities, e.g. Post is written by a User. Remember multiplicities at both ends. Like you were taught for the Entity Relationship Diagram in DBS, or the Domain Model in SWE. 
 
-## 5. Entities
+## Step 5 - Entities
 It’s time to implement the domain model, i.e. the entities as classes. These will just be data container classes, using properties. 
 First, create a new Solution Folder, call it Server. This folder will contain all server related code:
  
@@ -126,18 +157,18 @@ public class Post
 
 You may add constructor(s) if you find this needed. It will be later, and it will then be explained how to do it. Or you can just use the object initializer approach.
 
-## 6. Implement your Entities
+## Step 6 - Implement your Entities
 Implement all your entities now.
 
 
-## 7. Repositories
+## Step 7 - Repositories
 Repository pattern is similar to Data Access Pattern, if you are familiar with that. 
 A Repository is an abstraction of data-access for a single entity. This means a Repository is an interface, and the implementation manages how to persist a specific entity-type, somehow. We will initially use a List (i.e. no actual persistence), then a file, and then a database, as we progress through the course.
 The Repository interface comes in different shapes, but it will generally provide some standard methods, usually like Create, Read, Update, Delete (i.e. CRUD for short), though maybe renamed.
 The Command Line Interface (assignment 2) and Web API (assignment 4) will use a Repository to save incoming data, or extract requested data, etc.
 Both the ”presentation/network” layer, and the persistence layer will change over time, but the Repository-interfaces remain the same. This means they must live in their own respective project. It becomes similar to the layered architecture you have seen on second semester, and each project becomes a layer. Sort of.
 
-## 8. Repository Contracts Project
+## Step 8 - Repository Contracts Project
 The Repositories live on the server side, and is only used on the server side.
 We need a project to house the Repository interfaces, aka ”contracts”. The actual implementations will go elsewhere, later.
 Create a new Class Library Project, first:
@@ -220,7 +251,7 @@ It requires us to return a Task, sometimes wrapping the actual value, e.g. Task<
 By convention asynchronous methods have their method names suffixed with ”Async”, to indicate they are used differently from normal methods.
 Again, we will come back to this later.	
 
-## 9. In-memory Repository Implementations
+## Step 9 - In-memory Repository Implementations
 We will create initial implementations for the repository interfaces. We start by just keeping the data in a list, i.e. nothing is actually saved to disk or database, this comes later. But it let’s us create a ”complete” system by assignment 2, which we can actually play around with.
 
 ### New project
@@ -370,8 +401,62 @@ You might even consider some optimization, so you don’t have so much duplicate
 Each of your repositories could create some initial dummy data, just so you have a few posts, users, comments, etc, when the application starts. Next time it will be easier to test things, when you have this initial data.
 You can e.g. create this data in each of the constructors. You may benefit from having a specific method for this, which the constructor could call.
 
-## 10. Formalities
+## Step 10 - Formalities
 You may work on this assignment in groups.
 You must have your assignment on github.
 You will hand in a link to your GitHub repository on itslearning.
 Deadline can be found on itslearning.
+
+# Part 2 - Some other stuff
+Introductionary text...
+## Step 1
+
+## Step 2
+
+## Step 3
+
+# Part 3 - Some other stuff
+Introductionary text...
+
+## Step 1
+
+## Step 2
+
+## Step 3
+
+# Part 4 - Some other stuff
+Introductionary text...
+
+## Step 1
+
+## Step 2
+
+## Step 3
+
+# Part 5 - Some other stuff
+Introductionary text...
+
+## Step 1
+
+## Step 2
+
+## Step 3
+
+# Part 6 - Some other stuff
+Introductionary text...
+
+## Step 1
+
+## Step 2
+
+## Step 3
+
+# Part 7 - Some other stuff
+Introductionary text...
+
+## Step 1
+
+## Step 2
+
+## Step 3
+
