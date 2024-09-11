@@ -1,7 +1,26 @@
 # Table of Contents:
 
  - [Part 1 - Entities & Repositories](#part-1---entities--repositories)
- - [Part 2 - Some more stuff](#part-2---some-other-stuff)
+    - [Step 1.1 - Requirements](#step-11---requirements)
+    - [Step 1.2 - Create Solution](#step-12---create-solution)
+    - [Step 1.3 - GitHub](#step-13---github)
+    - [Step 1.4 - Domain Model](#step-14---domain-model)
+    - [Step 1.5 - Entities](#step-15---entities)
+    - [Step 1.6 - Implement your entities](#step-16---implement-your-entities)
+    - [Step 1.7 - Repositories](#step-17---repositories)
+    - [Step 1.8 - Repository Contracts Project](#step-18---repository-contracts-project)
+    - [Step 1.9 - In-memory Repository Implementations](#step-19---in-memory-repository-implementations)
+    - [Step 1.10 - Formalities](#step-110---formalities)
+ - [Part 2 - Some more stuff](#part-2---command-line-interface)
+    - [Step 2.1 - Requirements](#step-21---requirements)
+    - [Step 2.2 - Status](#step-22---status)
+    - [Step 2.3 - Setup](#step-23---setup)
+    - [Step 2.4 - Dependencies](#step-24---dependencies)
+    - [Step 2.5 - UI Class](#step-25---ui-class)
+    - [Step 2.6 - Implement CLI Application](#step-26---implement-cli-application)
+    - [Step 2.7 - Business Logic](#step-27---business-logic)
+    - [Step 2.8 - Asynchronous Programming](#step-28---asynchronous-programming)
+    - [Step 2.9 - Formalities](#step-29---formalities)
  - [Part 3 - Some more stuff](#part-3---some-other-stuff)
  - [Part 4 - Some more stuff](#part-4---some-other-stuff)
  - [Part 5 - Some more stuff](#part-5---some-other-stuff)
@@ -39,7 +58,7 @@ There is some initial setup, which is best done on one computer, then shared to 
 
 I recommend reading through the entire document before actually starting on anything.
 
-## Step 1 - Features
+## Step 1.1 - Requirements
 This assignment is open-ended, meaning we provide you with a few minimum requirements, which must be completed. We also have suggestions on how to expand upon the system, should you wish to. Or you can come up with your own ideas.
 
 ### Feature description
@@ -59,7 +78,7 @@ Further feature suggestions, if you are brave:
 •	A user becomes moderator of a sub forum, they created, meaning they can delete comments and posts.
 •	Feel free to add further ideas yourself.
 
-## Step 2 - Create Solution
+## Step 1.2 - Create Solution
 First, you need a new, fresh solution. You may work in groups, so only one group member does the initial setup.
 Create a new Solution in Rider:
  
@@ -75,16 +94,16 @@ And then:
 ![alt text](Images/image-1.png)
 
 Now you should have a new, fresh, empty solution.
-## Step 3 - GitHub
+## Step 1.3 - GitHub
 You must use Git and GitHub for your assignments. You may use whatever branching strategy, you like. Each hand-in on itslearning is typically a link to your main branch. 
 A good start is to now commit your *.sln file. E.g.: DnpAssignmentXYZ.sln. This file ”binds” your entire application together.
-## Step 4 - Domain Model
+## Step 1.4 - Domain Model
 Based on the above requirements, you must create a domain model diagram, where we can see:
 •	The entities of the system
 •	The properties (attributes) on the entities
 •	The relationships between entities, e.g. Post is written by a User. Remember multiplicities at both ends. Like you were taught for the Entity Relationship Diagram in DBS, or the Domain Model in SWE. 
 
-## Step 5 - Entities
+## Step 1.5 - Entities
 It’s time to implement the domain model, i.e. the entities as classes. These will just be data container classes, using properties. 
 First, create a new Solution Folder, call it Server. This folder will contain all server related code:
  
@@ -157,18 +176,18 @@ public class Post
 
 You may add constructor(s) if you find this needed. It will be later, and it will then be explained how to do it. Or you can just use the object initializer approach.
 
-## Step 6 - Implement your Entities
+## Step 1.6 - Implement your Entities
 Implement all your entities now.
 
 
-## Step 7 - Repositories
+## Step 1.7 - Repositories
 Repository pattern is similar to Data Access Pattern, if you are familiar with that. 
 A Repository is an abstraction of data-access for a single entity. This means a Repository is an interface, and the implementation manages how to persist a specific entity-type, somehow. We will initially use a List (i.e. no actual persistence), then a file, and then a database, as we progress through the course.
 The Repository interface comes in different shapes, but it will generally provide some standard methods, usually like Create, Read, Update, Delete (i.e. CRUD for short), though maybe renamed.
 The Command Line Interface (assignment 2) and Web API (assignment 4) will use a Repository to save incoming data, or extract requested data, etc.
 Both the ”presentation/network” layer, and the persistence layer will change over time, but the Repository-interfaces remain the same. This means they must live in their own respective project. It becomes similar to the layered architecture you have seen on second semester, and each project becomes a layer. Sort of.
 
-## Step 8 - Repository Contracts Project
+## Step 1.8 - Repository Contracts Project
 The Repositories live on the server side, and is only used on the server side.
 We need a project to house the Repository interfaces, aka ”contracts”. The actual implementations will go elsewhere, later.
 Create a new Class Library Project, first:
@@ -250,7 +269,7 @@ It requires us to return a Task, sometimes wrapping the actual value, e.g. Task<
 By convention asynchronous methods have their method names suffixed with ”Async”, to indicate they are used differently from normal methods.
 Again, we will come back to this later.	
 
-## Step 9 - In-memory Repository Implementations
+## Step 1.9 - In-memory Repository Implementations
 We will create initial implementations for the repository interfaces. We start by just keeping the data in a list, i.e. nothing is actually saved to disk or database, this comes later. But it let’s us create a ”complete” system by assignment 2, which we can actually play around with.
 
 ### New project
@@ -400,19 +419,229 @@ You might even consider some optimization, so you don’t have so much duplicate
 Each of your repositories could create some initial dummy data, just so you have a few posts, users, comments, etc, when the application starts. Next time it will be easier to test things, when you have this initial data.
 You can e.g. create this data in each of the constructors. You may benefit from having a specific method for this, which the constructor could call.
 
-## Step 10 - Formalities
+## Step 1.10 - Formalities
 You may work on this assignment in groups.
 You must have your assignment on github.
 You will hand in a link to your GitHub repository on itslearning.
 Deadline can be found on itslearning.
 
-# Part 2 - Some other stuff
-Introductionary text...
-## Step 1
+# Part 2 - Command Line Interface
+In this assignment, you will expand your application with a Command Line Interface (aka CLI). This is a simple text-based interface in your console/terminal. You read commands from the terminal and you output data to the terminal.
 
-## Step 2
+You will create some kind of functioning user interface to support the requirements specified last time.
 
-## Step 3
+## Step 2.1 - Requirements:
+
+- Create new user (user name, password, etc.)
+- Create new post (title, body, user id)
+- Add comment to existing post (body, user id, post id)
+- View posts overview (just display `[title, id]` for each post)
+- View specific post (see title, body, and comments on the post)
+
+You have some freedom in how you structure the output and how you read the input. You are of course welcome to add more functionality to your CLI application:
+
+### Manage users:
+
+- Create new.
+- Update existing.
+- Delete user.
+- See all users.
+
+### Manage posts:
+
+- Create new.
+- Update existing.
+- Delete post.
+- See overview of posts, e.g., just id and title.
+- View single post.
+
+**”CRUD”** operations on the other entities.
+
+When viewing a list of some entity, consider adding filtering options:
+
+- See all posts by a specific user id.
+- See all comments a specific user has made.
+- See all users with some specific word in their username.
+
+See the previous assignment for other examples.
+
+## Step 2.2 - Status
+
+Last time you implemented the domain model repository interfaces and some simple in-memory repository implementations which just used a list to keep track of the entities. Your application (hopefully) looks like this:
+
+![alt text](Images/part2image.png)
+
+Or as a component diagram, we can show it like this (each box is a project):
+
+![alt text](Images/part2image-1.png)
+
+The arrows indicate dependencies between projects. The repository interfaces in the `RepositoryContracts` project manage the entities, and your repository implementations implement the repository interfaces.
+
+## Step 2.3 - Setup
+
+First, we need a new project for the Command Line Interface.
+
+### Create a Console Application project on the Server side:
+
+- Select **Console Application**. This will be a runnable project, i.e., it has a main method (though implicit), so we can actually start the application.
+- Give the project a name.
+- Make sure the project is located in the Server folder.
+- Pick SDK if possible.
+- The language is obviously C#.
+- Use the latest framework.
+- We don’t need Docker.
+- Create the project.
+
+
+![alt text](Images/part2image-2.png)
+
+You then get this. There’s the CLI project with a `Program.cs` class, which has an "implicit" main-method. I.e., there is no method at all. You should just think of the method signature as invisible, and the file contains the actual method body.
+
+![alt text](Images/part2image-3.png)
+
+You can run this main method by right-clicking on the CLI project:
+
+![alt text](Images/part2image-4.png)
+
+Give it a go and verify "Hello World!" is printed to the console.
+
+## Step 2.4 - Dependencies
+
+Your new CLI project needs to have dependencies on:
+
+- `Entities`
+- `RepositoryContracts`
+- `InMemoryRepositories`
+
+1. Right-click and select "reference"
+
+![alt text](Images/part2image-5.png)
+
+2. Select projects to reference.
+3. Click add.
+
+![alt text](Images/part2image-6.png)
+
+Now the component diagram looks like this:
+
+![alt text](Images/part2image-7.png)
+
+
+Dependencies are transient. 
+For example, in the above, we have the following dependencies:
+
+    RepositoryContracts -> Entities
+    CLI -> RepositoryContracts
+
+Which also means:
+	
+    CLI -> Entities
+
+
+## Step 2.5 - UI Class
+We probably don’t want all the UI logic in the `Program` file. The `Program` file is just used to create an instance of your UI class and pass in repository instances, and then “start” the UI.
+
+So create a new directory, call it e.g., "UI." And inside this directory, create the class which will manage your CLI UI. Something like this:
+
+![alt text](Images/part2image-8.png)![alt text](Images/part2image-9.png)
+
+### `Program.cs`
+
+This class is now supposed to just create the necessary classes and start the UI. It could look something like this:
+
+![alt text](Images/part2image-10.png)
+
+The main point is:
+
+- `Program.cs` initially instantiates whatever needs to be created, probably primarily repositories.
+- They are passed to the `CliApp`.
+- Then the `CliApp` is started. This call is `await`ed. When you start using asynchronous programming, your entire app is quickly infiltrated with "Async" and `Tasks`. In the app, eventually, an async method on a repository is called, and async methods can only be called by other async methods. "It’s turtles all the way down," as they say.
+
+You may rework this structure as you see fit. I strongly recommend splitting your UI logic into separate classes, and then you could potentially instead pass the repositories to the specific classes. This will make parallel team-work easier too.
+
+You could consider which "views" are necessary and create a class responsible for a specific view.
+
+The overall organization of your classes is left to you. Here is my initial attempt, which can currently just create a new user and view a list of users:
+
+![alt text](Images/part2image-11.png)
+
+
+The `CliApp` may create a new `ManageUserView` instance. This is then responsible for instantiating `CreateUserView` and `ListUsersView` when needed.
+
+## Step 2.6 - Implement CLI Application
+
+You must implement the CLI application so that it fulfills the stated minimum requirements. You must print to the console and read from the console as needed.
+
+### Dependency Injection
+
+You **MUST** only instantiate the repositories in the `Program.cs` class! This is the only place where you have `IPostRepository postRepo = new InMemoryRepository();`.
+
+You then pass this variable `postRepo` around as needed through the constructors of other UI classes. If you have a class to handle the creation of a new post, this class should receive an `IPostRepository` as an argument in its constructor.
+
+Otherwise, your classes might use different repository instances, meaning if you create a post and later want to view it, this may not be possible. If all UI classes share the same instance, it will be the same list of entities you have access to.
+
+It will also be easier in Assignment 3 to swap out the repository implementations.
+
+This is my `Program.cs` file; notice the instantiation of repositories:
+
+![alt text](Images/part2image-12.png)
+
+
+And this, for example, is part of my UI class handling the creation of posts:
+
+![alt text](Images/part2image-13.png)
+
+
+The repository is injected through the constructor. Notice the field variable type is the interface, not the concrete implementation. With this approach, future updates to your application will be much simpler. This is the Dependency Inversion Principle from SOLID in action.
+
+Next assignment, you will implement new versions of your repositories, and you will (hopefully) only have to update the `Program.cs` class of your CLI app in order to swap out implementations. If you have done it correctly.
+
+## Step 2.7 - Business Logic
+
+Consider implementing some minimal business logic:
+
+- Is the user input correct?
+- If adding a comment to a post by a user, do both post and user IDs actually exist?
+- When creating a user, is the username already taken?
+- Etc.
+
+## Step 2.8 - Asynchronous Programming
+
+As mentioned previously, once you start using asynchronous programming, most of your methods quickly become asynchronous, all the way up to the main method.
+
+The general approach is whenever you call an asynchronous method, the calling method will `await` the call. Here’s an example. We are adding a user to the `IUserRepository`; this is a call to an asynchronous method:
+
+```csharp
+private async Task AddUserAsync(string name, string password)
+{
+    // ...
+    User created = await userRepository.AddAsync(user);
+    // ...
+}
+```
+
+We can identify the asynchronous method by the suffixed ”Async”. Or that it returns a Task:
+
+![alt text](Images/part2image-14.png)
+
+We put `await` in front of the call. This will ”pause” the code execution here, until the Task is finished, and then extract the contained object within the Task. In this case the User.
+In my case, I print out the generated Id of the new User (this part is not shown here).
+When we want to use the await keyword, we must make the containing method async too, and make it return Task instead of void, or return a Task<Something> instead of returning just Something.
+So, my AddUserAsync method is marked as async, returning a Task.
+This escalates upward, so the method calling AddUserAsync must also await the method call, and that method must itself be async. And so on. All the way out to the main method. Turtles all the way down. Or up. Depending on where you view it from.
+
+### Initial dummy data
+Each of your repositories must create some initial dummy data, say 3-5 entities, just so you have a few posts, users, comments, etc, when the application starts. It will be easier to test things, when you have this initial data.
+
+## Step 2.9 - Formalities
+You may work on this assignment in groups.
+You must have your assignment on github.
+You will hand in a link to the new part on your GitHub repository on itslearning. That means on GitHub you navigate into your CLI project, and copy the link from there:
+
+
+![alt text](Images/part2image-15.png)
+
+Deadline can be found on itslearning.
 
 # Part 3 - Some other stuff
 Introductionary text...
