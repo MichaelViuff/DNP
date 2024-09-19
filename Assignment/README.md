@@ -825,10 +825,6 @@ Each place where you reference an implementation, e.g., `PostInMemoryRepository`
 
 Deadline can be found on itslearning.
 
-## Step 2
-
-## Step 3
-
 # Part 4 - Some other stuff
 Introductionary text...
 
