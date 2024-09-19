@@ -11,7 +11,7 @@
     - [Step 1.8 - Repository Contracts Project](#step-18---repository-contracts-project)
     - [Step 1.9 - In-memory Repository Implementations](#step-19---in-memory-repository-implementations)
     - [Step 1.10 - Formalities](#step-110---formalities)
- - [Part 2 - Some more stuff](#part-2---command-line-interface)
+ - [Part 2 - Command Line Interface (CLI)](#part-2---command-line-interface)
     - [Step 2.1 - Requirements](#step-21---requirements)
     - [Step 2.2 - Status](#step-22---status)
     - [Step 2.3 - Setup](#step-23---setup)
@@ -21,7 +21,12 @@
     - [Step 2.7 - Business Logic](#step-27---business-logic)
     - [Step 2.8 - Asynchronous Programming](#step-28---asynchronous-programming)
     - [Step 2.9 - Formalities](#step-29---formalities)
- - [Part 3 - Some more stuff](#part-3---some-other-stuff)
+ - [Part 3 - File Persistence](#part-3---file-persistence)
+    - [Step 3.1 - Status](#step-31---status)
+    - [Step 3.2 - Setup](#step-32---setup)
+    - [Step 3.3 - File Repository Implementations](#step-33---file-repository-implementations)
+    - [Step 3.4 - Update CLI Project](#step-34---update-cli-project)
+    - [Step 3.5 - Formalities](#step-35---formalities)
  - [Part 4 - Some more stuff](#part-4---some-other-stuff)
  - [Part 5 - Some more stuff](#part-5---some-other-stuff)
  - [Part 6 - Some more stuff](#part-6---some-other-stuff)
@@ -425,7 +430,7 @@ You must have your assignment on github.
 You will hand in a link to your GitHub repository on itslearning.
 Deadline can be found on itslearning.
 
-# Part 2 - Command Line Interface
+# Part 2 - Command Line Interface (CLI)
 In this assignment, you will expand your application with a Command Line Interface (aka CLI). This is a simple text-based interface in your console/terminal. You read commands from the terminal and you output data to the terminal.
 
 You will create some kind of functioning user interface to support the requirements specified last time.
@@ -643,10 +648,212 @@ You will hand in a link to the new part on your GitHub repository on itslearning
 
 Deadline can be found on itslearning.
 
-# Part 3 - Some other stuff
-Introductionary text...
+# Part 3 - File Persistence
 
-## Step 1
+In this assignment, you will expand your app to save data in files. This way, data is saved even when the app is restarted. The content of the files will be in JSON format.
+
+## Step 3.1 - Status
+
+Last time, you implemented a command line user interface.  
+Your application should look something like this:
+
+![alt text](Images/part3image.png)
+
+Or as a component diagram, we can show it like this:
+
+![alt text](Images/part3image-1.png)
+
+The arrows indicate dependencies between projects.  
+We will expand with a new project to contain new implementations for the repository interfaces, this time using files to store data so that the data is actually persisted between sessions of the application running.
+
+## Step 3.2 - Setup
+
+Again, we need a new project, this time for the new improved better repository implementations.
+
+- Create a Class Library project on the Server side.
+
+![alt text](Images/part3image-2.png)
+
+And then:
+
+1. Select **Class Library**.
+2. Give the project a meaningful name.
+3. Make sure the project is located in **Server**.
+4. Pick SDK language framework if possible.
+5. And create the project.
+
+![alt text](Images/part3image-3.png)
+
+As usual, delete the `Class1.cs`.  
+And do git version control.
+
+### Dependencies
+
+Your new FileRepository project needs to have dependencies on:
+
+- `RepositoryContracts`
+- `Entities` (though this automatically happens through `RepositoryContracts` as it is a transitive dependency)
+
+Your CLI needs a dependency on your `FileRepositories`.
+
+Now your component diagram looks like this:
+
+![alt text](Images/part3image-4.png)
+
+The red X indicates this dependency is no longer needed after the completion of this assignment.
+
+## Step 3.3 - File Repository Implementations
+
+Inside your new project, you must create an implementation for each of the repository interfaces.  
+You will not have a private field variable of some list containing entities. Instead, this “list” is represented by the file.
+
+Each method must then, as needed, do:
+
+1. Read the text (JSON) from the file.
+2. Deserialize JSON-text into a list.
+3. Interact with this list, e.g.:
+   - Add new entity.
+   - Retrieve entity.
+   - Delete entity.
+   - Overwrite entity.
+4. Serialize the list to JSON.
+5. Write the JSON back to the file, overwriting the existing content.
+
+You should use the async file interaction methods: `ReadAllTextAsync`, `WriteAllTextAsync`, etc.
+
+### Example of AddAsync Method
+
+I provide below an example of the `AddAsync` method. The others are similar in the way they use JSON and the file to get a list, and the list is then used similar to the InMemory versions:
+
+```diff
++ public class CommentFileRepository : ICommentRepository
++ {
++     private readonly string filePath = "comments.json";
++         
++     public CommentFileRepository()
++     {
++         if (!File.Exists(filePath))
++         {
++             File.WriteAllText(filePath, "[]");
++         }
++     }
++     
++     public async Task<Comment> AddAsync(Comment comment)
++     {
++         string commentsAsJson = await File.ReadAllTextAsync(filePath);
++         List<Comment> comments = JsonSerializer.Deserialize<List<Comment>>(commentsAsJson)!;
++         int maxId = comments.Count > 0 ? comments.Max(c => c.Id) : 1;
++         comment.Id = maxId + 1;
++         comments.Add(comment);
++         commentsAsJson = JsonSerializer.Serialize(comments);
++         await File.WriteAllTextAsync(filePath, commentsAsJson);
++         return comment;
++     }
++ }
+```
+
+
+
+
+```csharp
+public class CommentFileRepository : ICommentRepository
+{
+    private readonly string filePath = "comments.json";
+        
+    public CommentFileRepository()
+    {
+        if (!File.Exists(filePath))
+        {
+            File.WriteAllText(filePath, "[]");
+        }
+    }
+    
+    public async Task<Comment> AddAsync(Comment comment)
+    {
+        string commentsAsJson = await File.ReadAllTextAsync(filePath);
+        List<Comment> comments = JsonSerializer.Deserialize<List<Comment>>(commentsAsJson)!;
+        int maxId = comments.Count > 0 ? comments.Max(c => c.Id) : 1;
+        comment.Id = maxId + 1;
+        comments.Add(comment);
+        commentsAsJson = JsonSerializer.Serialize(comments);
+        await File.WriteAllTextAsync(filePath, commentsAsJson);
+        return comment;
+    }
+}
+```
+
+### Explanations:
+- **Line 3**: Here we define the file path. We create a file per entity.
+- **Line 5-10**: The constructor ensures there actually is a file. If none exists (e.g., the first time the program is run), a new file is created with the content of an empty list, i.e., no entities. The `"[]"` is an empty collection in JSON.
+- **Line 13**: This is the method header, asynchronous, returning a `Task` containing the “finalized” comment, i.e., it now has an ID.
+- **Line 15**: We read all the content from the file; this is, of course, in JSON format.
+- **Line 16**: The JSON is deserialized into a list of comments.
+- **Line 17**: We calculate the next ID to use.
+- **Line 18**: Set the ID.
+- **Line 19**: Add the comment to the list.
+- **Line 20**: Serialize the list to JSON.
+- **Line 21**: Write the JSON back to the file.
+- **Line 22**: Return the finalized comment now that it has an ID.
+
+
+**Hint**: I have afterward extracted the loading and saving to helper methods to minimize code duplication.
+
+### GetMany Detail
+
+Sometimes you may not be able to await a `Task`. Instead, you can call `Result` on a task as in the first statement at the end:
+
+```csharp
+public IQueryable<Comment> GetMany() {
+    string commentsAsJson = File.ReadAllTextAsync(filePath).Result;
+    List<Comment> comments = JsonSerializer.Deserialize<List<Comment>>(commentsAsJson)!;
+    return comments.AsQueryable();
+}
+```
+
+`ReadAllTextAsync()` returns a `Task` containing a string. Calling `Result` instead of awaiting will extract the string. This is generally not advisable because we lose the async behavior and optimization, but in this case, the method header is not async as defined in the interface, so we have to “cheat.”  
+Again, the lack of async on this method is made clearer when we get to the database part.
+
+## Step 3.4 - Update CLI Project
+
+Your CLI project must now use the new repositories instead of the InMemory versions.
+
+1. **Add Reference to FileRepositories**  
+   Add a reference from the CLI project to the FileRepositories project so your CLI app can use the new repositories (if you didn’t do this above).
+
+2. **Remove Reference to InMemoryRepositories**  
+   The easiest approach to make sure you update all references to the InMemory repositories is to delete the dependency reference from the CLI project to InMemoryRepository.
+
+   - You do this by editing the `CLI.csproj` file.
+   - Go to File System view:
+
+![alt text](Images/part3image-5.png)
+
+   - Find the `CLI.csproj` file:
+
+![alt text](Images/part3image-6.png)
+
+   - Delete the reference to the InMemoryProject.
+
+![alt text](Images/part3image-7.png)
+
+   - Go back to the solution view.
+   - Watch your CLI project fail to compile now. All errors are where you are referencing a repository implementation, not the interface; those live in a different project, the RepositoryContracts.
+
+### Update Repository Implementation References
+
+Each place where you reference an implementation, e.g., `PostInMemoryRepository`, you must change the class to `PostFileRepository`. Hopefully, you only need to modify about three lines of code in the `CLI/Program.cs` class. Notice I instantiate file repositories here instead:
+
+![alt text](Images/part3image-8.png)
+
+## Step 3.5 - Formalities
+
+- You may work on this assignment in groups.
+- You must have your assignment on GitHub.
+- You must hand in a link to the specific GitHub file-repository-folder on itslearning, like this:
+
+![alt text](Images/part3image-9.png)
+
+Deadline can be found on itslearning.
 
 ## Step 2
 
