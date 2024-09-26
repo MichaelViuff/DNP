@@ -1,1 +1,387 @@
-# Exercises 04
+# 04 Exercises: Web API
+
+## 4.1 HTTP GET Request
+
+**Objective:**  
+Understand the basic structure of a GET request using an API test tool and observe how the server responds.
+
+**Task:**  
+Send a GET request to the [JSONPlaceholder API](https://jsonplaceholder.typicode.com/) to retrieve a list of posts and analyze the response.
+
+**Steps:**
+
+1. Use [Postman](https://www.postman.com/), [cURL](https://curl.se/), [HTTPie](https://httpie.io/app), or any other tool you want.
+2. Send a GET request to retrieve a list of posts from the API endpoint `/posts`.
+3. Analyze the status code, response headers, and the JSON body.
+
+<blockquote>
+<details>
+<summary>Display solution...</summary>
+<p>
+
+```
+GET https://jsonplaceholder.typicode.com/posts/
+```
+
+The response should display the status code <code>(200 OK)</code>, response headers, and the JSON body containing the list of posts, like this:
+
+```json
+[
+  {
+    "userId": 1,
+    "id": 1,
+    "title": "sunt aut facere repellat provident occaecati excepturi optio reprehenderit",
+    "body": "quia et suscipit\nsuscipit..."
+  },
+  ...
+]
+```
+
+</p>
+</details>
+</blockquote>
+
+## 4.2 HTTP POST Requests
+
+**Objective:**  
+Learn how to send data to a server using a POST request and understand server responses.
+
+**Task:**  
+Send a POST request to create a new resource on the [JSONPlaceholder API server](https://jsonplaceholder.typicode.com/).
+
+**Steps:**
+
+1. Generate a JSON string with the content of a new post.
+2. Set the appropriate headers (`Content-Type: application/json`) to inform the server about the data format.
+3. Send a POST request to the API endpoint `/posts` with the JSON data in the body to create a new post.
+4. Analyze the response, focusing on the status code and the newly created resource.
+
+**Solution using HTTPie Command Line:**
+
+<blockquote>
+<details>
+<summary>Display solution...</summary>
+<p>
+
+Data in JSON format
+
+```json
+{
+  "id": 1,
+  "title": "foo",
+  "body": "bar",
+  "userId": 1
+}
+```
+
+```bash
+POST https://jsonplaceholder.typicode.com/posts
+```
+
+The response should display the status code (`201 Created`), response headers, and the JSON body containing the new post.
+
+```json
+{
+  "id": 101,
+  "title": "foo",
+  "body": "bar",
+  "userId": 1
+}
+```
+
+**Note** that no actual changes takes place on the JSONPlaceholder API server. The response is faked, and the data remains the same.
+
+</p>
+</details>
+</blockquote>
+
+## 4.3 HTTP PUT Request to update data
+
+**Objective:**  
+Understand how to update existing resources on a server using PUT requests.
+
+**Task:**  
+Send a PUT request to update a post on the [JSONPlaceholder API](https://jsonplaceholder.typicode.com/) and examine how the server responds.
+
+**Steps:**
+
+1. Generate a JSON string with the updated values of an existing post.
+2. Send a PUT request to the API endpoint `/posts/1` to update the existing post.
+3. Analyze the response, focusing on the status code and the updated resource.
+
+<blockquote>
+<details>
+<summary>Display solution...</summary>
+<p>
+
+Data in JSON format
+
+```json
+{
+  "id": 1,
+  "title": "updated title",
+  "body": "updated body",
+  "userId": 1
+}
+```
+
+```bash
+PUT https://jsonplaceholder.typicode.com/posts/1
+```
+
+The response should display the status code (`200 OK`), response headers, and the JSON body containing the updated post.
+
+```json
+{
+  "id": 1,
+  "title": "updated title",
+  "body": "updated body",
+  "userId": 1
+}
+```
+
+**Note** that no actual changes takes place on the JSONPlaceholder API server. The response is faked, and the data remains the same.
+
+</p>
+</details>
+</blockquote>
+
+## 4.4 GET Request using `HttpClient`
+
+**Objective:**  
+Understand how to use the existing `HttpClient`class in the .NET library to send HTTP requests.
+
+**Task:**  
+Use the `HttpClient` to send the same request as you did in exercise 4.1 on the [JSONPlaceholder API](https://jsonplaceholder.typicode.com/) and examine how the server responds.
+
+**Steps:**
+
+1. Create a Main-method where you create an instance of the `HttpClient` class.
+2. Make a GET request using the `GetAsync()` method and store the result in a `HttpResponseMessage` variable.
+3. Extract the body from the `HttpResponseMessage` and print it to console
+
+<blockquote>
+<details>
+<summary>Display solution...</summary>
+<p>
+
+```csharp
+class Program
+{
+    static async Task Main()
+    {
+        HttpClient client = new HttpClient();
+        HttpResponseMessage response = await client.GetAsync("https://jsonplaceholder.typicode.com/posts");
+        string responseBody = await response.Content.ReadAsStringAsync();
+        Console.WriteLine($"Status Code: {response.StatusCode}");
+        Console.WriteLine($"Response Body: {responseBody}");
+    }
+}
+```
+
+</p>
+</details>
+</blockquote>
+
+## 4.5 POST Request using `HttpClient`
+
+**Objective:**  
+Understand how to use the existing `HttpClient`class in the .NET library to send HTTP requests.
+
+**Task:**  
+Use the `HttpClient` to send the same request as you did in exercise 4.2 on the [JSONPlaceholder API](https://jsonplaceholder.typicode.com/) and examine how the server responds.
+
+**Steps:**
+
+1. Create a Main-method where you create an instance of the `HttpClient` class.
+2. Create a JSON string containing the values for the new Post to create.
+3. Convert the string to a `StringContent` object with proper encoding.
+4. Make a POST request using the `PostAsync()` method with your JSON data, and store the result in a `HttpResponseMessage` variable.
+5. Extract the body from the `HttpResponseMessage` and print it to console
+
+<blockquote>
+<details>
+<summary>Display solution...</summary>
+<p>
+
+```csharp
+using System.Text;
+
+class Program
+{
+    static async Task Main()
+    {
+        HttpClient client = new HttpClient();
+        string jsonData = "{\"title\": \"foo\", \"body\": \"bar\", \"userId\": 1}";
+        StringContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
+        HttpResponseMessage response = await client.PostAsync("https://jsonplaceholder.typicode.com/posts", content);
+        string responseBody = await response.Content.ReadAsStringAsync();
+        Console.WriteLine($"Status Code: {response.StatusCode}");
+        Console.WriteLine($"Response Body: {responseBody}");
+    }
+}
+```
+
+</p>
+</details>
+</blockquote>
+
+## 4.6 PUT Request using `HttpClient`
+
+**Objective:**  
+Understand how to use the existing `HttpClient`class in the .NET library to send HTTP requests.
+
+**Task:**  
+Use the `HttpClient` to send the same request as you did in exercise 4.3 on the [JSONPlaceholder API](https://jsonplaceholder.typicode.com/) and examine how the server responds.
+
+**Steps:**
+
+1. Create a Main-method where you create an instance of the `HttpClient` class.
+2. Create a JSON string containing the updated values for the Post to update.
+3. Convert the string to a `StringContent` object with proper encoding.
+4. Make a PUT request using the `PutAsync()` method with your JSON data, and store the result in a `HttpResponseMessage` variable.
+5. Extract the body from the `HttpResponseMessage` and print it to console
+
+<blockquote>
+<details>
+<summary>Display solution...</summary>
+<p>
+
+```csharp
+using System.Text;
+
+class Program
+{
+    static async Task Main()
+    {
+        HttpClient client = new HttpClient();
+        string jsonData = "{\"id\": 1, \"title\": \"updated title\", \"body\": \"updated body\", \"userId\": 1}";
+        StringContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
+        HttpResponseMessage response = await client.PutAsync("https://jsonplaceholder.typicode.com/posts/1", content);
+        string responseBody = await response.Content.ReadAsStringAsync();
+        Console.WriteLine($"Status Code: {response.StatusCode}");
+        Console.WriteLine($"Response Body: {responseBody}");
+    }
+}
+```
+
+</p>
+</details>
+</blockquote>
+
+## 4.7 Setting Up a Basic Minimal API
+
+**Objective:**  
+Create a basic minimal API using ASP.NET Core that will act as the foundation for a small application.
+
+**Task:**  
+Set up a new minimal API project and create a simple GET endpoint.
+
+**Steps:**
+
+1. Create a new ASP.NET Console project
+2. Install the `aspnetcore.openapi` package (right click dependencies -> Manage NuGet packages -> search for "aspnetcore.openapi" -> select a version compatible with your project (probably version 8.0.0) -> install in your project)
+3. Modify the `Program.cs` file to create a Builder using the `WebApplication` class, and run the `Build()` method.
+4. Map a GET request to your "/" endpoint and have it output "Hello, Minimal API!".
+5. Run your program
+6. Open your browser and navigate to http://localhost:5000/ and verify that your output is displayed
+
+<blockquote>
+<details>
+<summary>Display solution...</summary>
+<p>
+
+```csharp
+using Microsoft.AspNetCore.Builder;
+
+namespace MinimalWebAPI;
+
+internal class Program
+{
+    private static void Main()
+    {
+        var builder = WebApplication.CreateBuilder();
+        var app = builder.Build();
+
+        // Test GET endpoint
+        app.MapGet("/", () => "Hello, Minimal API!");
+
+        app.Run();
+    }
+}
+```
+
+</p>
+</details>
+</blockquote>
+
+## 4.8 Create a Basic GET Endpoint for `Posts`
+
+**Objective:**  
+Create a simple GET endpoint to return a list of posts using in-memory data.
+
+**Task:**  
+Add a GET endpoint that retrieves all posts from an in-memory list.
+
+**Steps:**
+
+1. Create a new class `Post`. It must contain a `Id`, `UserId`, `Title`, and `Body`
+2. Open the `Program.cs` file.
+3. Define a list of posts with some initial data.
+4. Map a GET endpoint to return the list of posts.
+5. Run your program
+6. Open your browser and navigate to http://localhost:5000/posts and verify that all posts are displayed
+
+<blockquote>
+<details>
+<summary>Display solution...</summary>
+<p>
+
+```csharp
+namespace MinimalWebAPI;
+
+public class Post
+{
+    public int Id { get; set; }
+    public int UserId { get; set; }
+    public string Title { get; set; }
+    public string Body { get; set; }
+}
+```
+
+```csharp
+using Microsoft.AspNetCore.Builder;
+
+namespace MinimalWebAPI;
+
+internal class Program
+{
+    private static void Main()
+    {
+        var builder = WebApplication.CreateBuilder();
+        var app = builder.Build();
+
+        // In-memory list of posts
+        var posts = new List<Post>
+        {
+            new Post { Id = 1, UserId = 1, Title = "Post 1", Body = "Body of Post 1" },
+            new Post { Id = 2, UserId = 1, Title = "Post 2", Body = "Body of Post 2" }
+        };
+
+        // GET endpoint to retrieve all posts
+        app.MapGet("/posts", () => posts);
+
+        app.Run();
+    }
+}
+```
+
+</p>
+</details>
+</blockquote>
+
+## 4.9 Create a GET Endpoint to Retrieve a Specific Post
+
+## 4.10 Create a POST Endpoint to Add a New Post
+
+## 4.11 Create PUT and DELETE Endpoints
