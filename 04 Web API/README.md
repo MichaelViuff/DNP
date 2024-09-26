@@ -283,7 +283,7 @@ Set up a new minimal API project and create a simple GET endpoint.
 2. Install the `aspnetcore.openapi` package (right click dependencies -> Manage NuGet packages -> search for "aspnetcore.openapi" -> select a version compatible with your project (probably version 8.0.0) -> install in your project)
 3. Modify the `Program.cs` file to create a Builder using the `WebApplication` class, and run the `Build()` method.
 4. Map a GET request to your "/" endpoint and have it output "Hello, Minimal API!".
-5. Run your program
+5. Run your program.
 6. Open your browser and navigate to http://localhost:5000/ and verify that your output is displayed
 
 <blockquote>
@@ -329,7 +329,7 @@ Add a GET endpoint that retrieves all posts from an in-memory list.
 2. Open the `Program.cs` file.
 3. Define a list of posts with some initial data.
 4. Map a GET endpoint to return the list of posts.
-5. Run your program
+5. Run your program.
 6. Open your browser and navigate to http://localhost:5000/posts and verify that all posts are displayed
 
 <blockquote>
@@ -382,6 +382,209 @@ internal class Program
 
 ## 4.9 Create a GET Endpoint to Retrieve a Specific Post
 
+**Objective:**  
+Add functionality to retrieve a specific post by its ID.
+
+**Task:**  
+Create a GET endpoint that takes an ID as a parameter and returns the corresponding post.
+
+**Steps:**
+
+1. Open the `Program.cs` file.
+2. Map a new GET endpoint that accepts an ID and retrieves the post with the matching ID.
+3. Run your program.
+4. Open your browser and navigate to http://localhost:5000/posts/1 and verify that all the specific post is displayed.
+
+<blockquote>
+<details>
+<summary>Display solution...</summary>
+<p>
+
+```csharp
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
+
+namespace MinimalWebAPI;
+
+internal class Program
+{
+    private static void Main()
+    {
+        var builder = WebApplication.CreateBuilder();
+        var app = builder.Build();
+
+        var posts = new List<Post>
+        {
+            new Post { Id = 1, UserId = 1, Title = "Post 1", Body = "Body of Post 1" },
+            new Post { Id = 2, UserId = 1, Title = "Post 2", Body = "Body of Post 2" }
+        };
+
+        // GET endpoint to retrieve all posts
+        app.MapGet("/posts", () => posts);
+
+        // GET endpoint to retrieve a specific post by ID
+        app.MapGet("/posts/{id:int}", (int id) =>
+        {
+            var post = posts.FirstOrDefault(p => p.Id == id);
+            return post is not null ? Results.Ok(post) : Results.NotFound("Post not found");
+        });
+
+        app.Run();
+    }
+}
+```
+
+</p>
+</details>
+</blockquote>
+
 ## 4.10 Create a POST Endpoint to Add a New Post
 
+**Objective:**  
+Add functionality to create a new post and add it to the in-memory list.
+
+**Task:**  
+Create a POST endpoint that accepts post data and adds it to the list.
+
+**Steps:**
+
+1. Open the `Program.cs` file.
+2. Map a new POST endpoint to receive a new post from the client, assign it a new ID, and add it to the list (ensure that the ID is unique).
+3. Run your program.
+4. Test your endpoint using either `HttpClient` or a Web API test tool.
+
+<blockquote>
+<details>
+<summary>Display solution...</summary>
+<p>
+
+```csharp
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
+
+namespace MinimalWebAPI;
+
+internal class Program
+{
+    private static void Main()
+    {
+        var builder = WebApplication.CreateBuilder();
+        var app = builder.Build();
+
+        var posts = new List<Post>
+        {
+            new Post { Id = 1, UserId = 1, Title = "Post 1", Body = "Body of Post 1" },
+            new Post { Id = 2, UserId = 1, Title = "Post 2", Body = "Body of Post 2" }
+        };
+
+        // GET endpoint to retrieve all posts
+        app.MapGet("/posts", () => posts);
+
+        // GET endpoint to retrieve a specific post by ID
+        app.MapGet("/posts/{id:int}", (int id) =>
+        {
+            var post = posts.FirstOrDefault(p => p.Id == id);
+            return post is not null ? Results.Ok(post) : Results.NotFound("Post not found");
+        });
+
+        // POST endpoint to add a new post
+        app.MapPost("/posts", (Post newPost) =>
+        {
+            newPost.Id = posts.Max(p => p.Id) + 1; // Assign a new ID
+            posts.Add(newPost);
+            return Results.Created($"/posts/{newPost.Id}", newPost);
+        });
+
+        app.Run();
+    }
+}
+```
+
+</p>
+</details>
+</blockquote>
+
 ## 4.11 Create PUT and DELETE Endpoints
+
+**Objective:**  
+Implement the functionality to update and delete posts.
+
+**Task:**  
+Create PUT and DELETE endpoints for updating and deleting posts by their ID.
+
+**Steps:**
+1. Open the `Program.cs` file.
+2. Map a new DELETE endpoint to remove an element with a specific ID from the list.
+3. Map a new PUT endpoint to update an existing element with a specific ID with new values.
+3. Run your program.
+4. Test your endpoint using either `HttpClient` or a Web API test tool.
+
+<blockquote>
+<details>
+<summary>Display solution...</summary>
+<p>
+
+```csharp
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
+
+namespace MinimalWebAPI;
+
+internal class Program
+{
+    private static void Main()
+    {
+        var builder = WebApplication.CreateBuilder();
+        var app = builder.Build();
+
+        var posts = new List<Post>
+        {
+            new Post { Id = 1, UserId = 1, Title = "Post 1", Body = "Body of Post 1" },
+            new Post { Id = 2, UserId = 1, Title = "Post 2", Body = "Body of Post 2" }
+        };
+
+        // GET endpoint to retrieve all posts
+        app.MapGet("/posts", () => posts);
+
+        // GET endpoint to retrieve a specific post by ID
+        app.MapGet("/posts/{id:int}", (int id) =>
+        {
+            var post = posts.FirstOrDefault(p => p.Id == id);
+            return post is not null ? Results.Ok(post) : Results.NotFound("Post not found");
+        });
+
+        // POST endpoint to add a new post
+        app.MapPost("/posts", (Post newPost) =>
+        {
+            newPost.Id = posts.Max(p => p.Id) + 1; // Assign a new ID
+            posts.Add(newPost);
+            return Results.Created($"/posts/{newPost.Id}", newPost);
+        });
+
+        // PUT endpoint to update an existing post
+        app.MapPut("/posts/{id:int}", (int id, Post updatedPost) =>
+        {
+            var postIndex = posts.FindIndex(p => p.Id == id);
+            if (postIndex == -1) return Results.NotFound("Post not found");
+            updatedPost.Id = id; //Ensuring Id isn't changed maliciously 
+            posts[postIndex] = updatedPost;
+            return Results.Ok(posts[postIndex]);
+        });
+        
+        // DELETE endpoint to delete a post by ID
+        app.MapDelete("/posts/{id:int}", (int id) =>
+        {
+            var post = posts.FirstOrDefault(p => p.Id == id);
+            if (post is null) return Results.NotFound("Post not found");
+
+            posts.Remove(post);
+            return Results.NoContent();
+        });
+
+        app.Run();
+    }
+}
+```
+
+</p>
+</details>
