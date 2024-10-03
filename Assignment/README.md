@@ -27,7 +27,14 @@
     - [Step 3.3 - File Repository Implementations](#step-33---file-repository-implementations)
     - [Step 3.4 - Update CLI Project](#step-34---update-cli-project)
     - [Step 3.5 - Formalities](#step-35---formalities)
- - [Part 4 - Some more stuff](#part-4---some-other-stuff)
+ - [Part 4 - REST Web API](#part-4---creating-a-rest-web-api)
+    - [Step 4.1 - Status](#step-41---status)
+    - [Step 4.2 - Setup](#step-42---setup)
+    - [Step 4.3 - Register Repository Implementations](#step-43---register-repository-implementations)
+    - [Step 4.4 - Implement Controllers](#step-44---implement-controllers)
+    - [Step 4.5 - GetMany Query Parameters](#step-45---getmany-query-parameters)
+    - [Step 4.5 - Global Exception Handler (OPTIONAL)](#step-46---global-exception-handler-optional)
+    - [Step 4.5 - Formalities](#step-47---formalities)
  - [Part 5 - Some more stuff](#part-5---some-other-stuff)
  - [Part 6 - Some more stuff](#part-6---some-other-stuff)
  - [Part 7 - Some more stuff](#part-7---some-other-stuff)
@@ -825,14 +832,295 @@ Each place where you reference an implementation, e.g., `PostInMemoryRepository`
 
 Deadline can be found on itslearning.
 
-# Part 4 - Some other stuff
-Introductionary text...
+# Part 4 - Creating a REST Web API
+In this assignment you will expand your app with a Web API. Now, external clients like other applications or web sites can access your program to manipulate and retrieve forum data.
 
-## Step 1
+## Step 4.1 - Status
+Last time you implemented a new component in the persistence layer, which was working with files. This had the effect of actually storing data between sessions of your program running.
 
-## Step 2
+Your application should look something like this:
 
-## Step 3
+![alt text](Images/part4image.png)
+
+Or as a *component diagram*, we can show it like this:
+
+![alt text](Images/part4image-1.png)
+
+The arrows indicate dependencies between projects.
+
+At this point, you should be able to safely delete the InMemoryRepository project, as it is no longer used. You may also choose to keep it, that’s up to you.
+
+Did you notice how easy it was to swap out which repository implementation to use in the Program.cs class? Assuming you did set things up correctly.
+
+We will expand with a new project, to contain the Web API, upgrading the system to a server, which various clients can connect to.
+
+Illustrating with a component diagram, your system will look like this:
+
+![alt text](Images/part4image-2.png)
+
+## Step 4.2 - Setup
+We need two things: the Web API itself, and the objects sent back and forth. They go in two different projects.
+
+### DTO's
+Sometimes it is valid to use the actual entity classes, which you already have, to transport data between client and server. But quite often, they are not designed for this purpose, and it can become cumbersome.
+
+We therefore usually create dedicated Data Transfer Objects, which are just simple classes dedicated to transport data. These classes become part of the public API of your server.
+
+For these, we need a new project, which is going to be shared between server and client.
+
+First, create a new solution folder, call it Shared:
+
+![alt text](Images/part4image-3.png)
+
+And then like this:
+
+![alt text](Images/part4image-4.png)
+
+In this Shared folder, you create a new class library:
+
+1)	Select class library
+2)	Give the project a name. E.g. ApiContracts, or DTOs, or whatever you feel makes sense.
+3)	Put it into Shared folder.
+4)	The usual
+5)	Create project
+
+![alt text](Images/part4image-5.png)
+
+Delete the `Class1.cs`
+
+Put the `ApiContracts.csproj` under  version control.
+
+**Note:** In your SEP3, if you use a 3-tier system, you might want to send your entities between logic and data tier, e.g. 2, and 3.
+
+Between the user-facing-client and the server, you are often better off using specialized DTOs. In this system we will have a client and a server, so we’re going with DTOs.
+
+### Web API
+
+And again, we need a new project.
+
+Create a Web API project, on the Server side.
+
+![alt text](Images/part4image-14.png)
+
+And then:
+
+1)	Select WEB. This is where we find everything related to web development.
+2)	Give the project a meaningful name.
+3)	Make sure the project is located in Server.
+4)	Pick SDK, language, framework, if possible.
+5)	Select the Web API Template. This part is important! You have many choices for what kind of template project you want. If pick the wrong, it may look almost correct, but be completely wrong. Pay attention here.
+6)	No authentication, and no Docker. Thes eshould be ”off” by default, but just make sure.
+7)  Check the "UseControllers" box - this will allow us to start with a Controller based template.
+8)	Finally, create the project.
+
+![alt text](Images/part4image-7.png)
+
+This time you get a few more files. Put them under version control:
+
+![alt text](Images/part4image-8.png)
+
+And remember the `.csproj` file too. Either by going to File System view. Or just select the git panel to see unversioned files:
+
+![alt text](Images/part4image-9.png)
+
+### Dependencies
+Your new Web API needs access to several projects, so, add dependencies from Web API to::
+
+ - RepositoryContracts
+ - Entities
+ - FileRepositories
+ - ApiContracts (or DTOs, or..)
+
+ We no longer use the CLI or InMemoryRepositories, so, no dependencies to those.
+
+ ![alt text](Images/part4image-10.png)
+
+ Here is now the updated component diagram (with unused components removed):
+
+ ![alt text](Images/part4image-11.png)
+
+ ## Step 4.3 - Register Repository Implementations
+ for the Web API we are going to use Dependency Injection. This means, we must register all ”services”, which a Web API controller can request. In our case that will be the repositories.
+
+ In the `Program.cs` file, you must add your services:
+
+ ![alt text](Images/part4image-12.png)
+
+ If you have other repositories, like `SubForumRepository` or `LikeRepository`, they too should be added.
+
+ Now, a Controller can request any of the I*Repository interfaces, as needed, and the Dependency Injection functionality will handle creation for us. This is very convenient. 
+
+ Similar to the CLI project, the creation of specific implementations is isolated to a single place, so when we later need to swap out the repository implementations again, it will be very easy. We just modify these three lines of code.
+
+ ## Step 4.4 - Implement Controllers
+Finally, the task has come to implement the controllers.
+
+Create a controller for each entity in your system! PostsController, UsersController, CommentsController, etc.
+
+Create an endpoint for each standard method, per entity:
+ - Create
+ - Update
+ - GetSingle
+ - GetMany (consider which search parameters might be relevant)
+ - Delete
+
+ Use correct HTTP action verbs.
+
+ Follow REST convention for routing.
+
+Consider which entities belong to other entities. Define routes accordingly, e.g. “localhost:port/orders/{id}/orderlines”. 
+
+These endpoints can be placed in the parent (Orders) controller. Other endpoints for the child entity (orderlines) can go into the ChildController. The design choice is yours.
+
+Any DTOs you need will be placed in the ApiContracts project, so that your client eventually can also use these.
+
+**Considerations:**
+It is up to you to decide what the return data (DTO or Entity?) should look like. When you request a Post, do you just get the Post? Or do you get all comments too? Maybe include a parameter to indicate, whether you want the comments included.
+
+If you wish to display a Post, you may need username of the author as well.
+
+## Step 4.5 - GetMany query parameters
+For the GetMany users endpoint, it must be possible to filter the users by whether the user name contains a certain string. You may add more filter criteria.
+
+For the GetMany posts endpoint, it must be possible to filter by:
+
+ - Title contains a certain string
+ - Post is written by a certain user (id and/or name)
+ - You may add more filter criteria, e.g. get the top 10 most liked posts or...
+
+ For the GetMany comments endpoint, it must be possible to filter by:
+
+ - user id and/or name. 
+ - Post id.
+ - You may add more filter criteria.
+
+For other GetMany endpoints, you decide which query parameters make sense.
+
+### Comment about business logic
+We have made a two-layered system: Web API layer and persistence layer. Usually, you will have a layer in between for business logic, validation, rules, etc. We have neglected that, as architecture design is not a focus for this project.
+
+Should you wish to implement business logic, you can do this directly in the controller methods.
+
+For example, when creating a new Post, it references a user. You could first verify, that the user exists.
+
+Or when creating a new User, you could check if the username is already in use.
+
+If you are bold, you would add a new library project specifically for business logic classes, and achieve a 3-layered architecture. This is out of scope of the requirements for this project.
+
+Often you would have a PostsService, and UsersService, etc, with appropriate methods, which then calls relevant repositories.
+
+### User Controller implementation example
+To get you started, here’s the initial code for my UserController:
+
+![alt text](Images/part4image-13.png)
+
+ - `[ApiController]` marks this class as a controller, which must be picked by the application when it startes. That’s the ”builder.Services.AddControllers()” call we did above.
+ - `[Route("[controller]")]` says the route to this controller will be: ”localhost:port/Users”, because the class starts with Users(Controller)
+ - The class extends ControllerBase, which gives access to helper methods, and other stuff.
+ - The class receives a repository through the constructor, which each endpoint can use to manipulate.
+
+### Create endpoint
+The following is my create user endpoint:
+
+```csharp
+[HttpPost]
+public async Task<ActionResult<UserDto>> AddUser([FromBody] CreateUserDto request)
+{
+    await VerifyUserNameIsAvailableAsync(request.UserName);
+
+    User user = new(request.UserName, request.Password);
+    User created = await userRepo.AddAsync(user);
+    UserDto dto = new()
+    {
+        Id = created.Id,
+        UserName = created.UserName
+    }
+    return Created($"/Users/{dto.Id}", created); 
+}
+```
+
+We mark the method `[HttpPost]`, so a POST request to ”localhost:port/users” will hit this method.
+
+The method is async, and returns an ActionResult containing a UserDto object. We generally don’t want to expose our domain entities to the clients, for example in this case, the User entity contains a password. So I create a UserDto containing only Id and UserName, and put it in the ApiContracts project.
+
+The ActionResult is an “http message”, it contains all kinds of potentially useful meta information, along with the User object as JSON.
+
+The [FromBody] tells the Web API where to find the data for this parameter, in the body of the HTTP request message sent from the client. This attribute is not always strictly necessary, as the Web API is decent at figuring out the parameters by itself. But I like to be explicit.
+
+Line 4 verifies the username is available. I have a private helper method for this. It just tries to find an existing user with the given username.
+
+Line 6 creates a new User entity from the CreateUserDto object.
+
+Line 7 uses the repository to create the user. The ”finalized” user is returned (the ‘created’ variable), now this variable has an ID.
+
+Line 8 returns the newly created User, and tells the client which route will return it.
+
+Exceptions might be thrown from lower layers, e.g. persistence, so those can be caught here. Though, in my case I have gone with the optional exercise below, and made one class to handle all exceptions.
+
+If you want to handle exceptions here instead, you wrap the entire method body in a try-catch, and catch Exception, e.g.:
+
+```csharp
+[HttpPost]
+public async Task<ActionResult<User>> AddUser([FromBody] CreateUserDto request)
+{
+    try
+    {
+        await VerifyUserNameIsAvailableAsync(request.UserName);
+
+        User user = new(request.UserName, request.Password);
+        ...
+    }
+    catch (Exception e)
+    {
+        Console.WriteLine(e);
+        return StatusCode(500, e.Message);
+    }
+}
+```
+
+We just return a 500-server error, with the exception message. You could differentiate your exceptions, i.e. have multiple catch clauses, and return more specific error codes. 
+
+If it is validation logic, which fails, perhaps it is a 400-BadRequest error code, instead of 500-ServerError.
+
+If an entity is not found, return 404-NotFound error code. I have a NotFoundException, which is thrown from the repository in these cases.
+
+Here is the CreateUserDto class. It contains the specific information the client needs to fill out, in order to create a User. I.e. there is no UserId property, because the server is responsible for this:
+
+```csharp
+public class CreateUserDto
+{
+    public required string UserName { get; set; }
+    public required string Password { get; set; }
+}
+```
+
+I use the `required` keyword to indicate that when creating a CreateUserDto these properties must be set. Otherwise the compiler will complain.
+
+## Step 4.6 - Global Exception handler (OPTIONAL)
+Tired of try-catch in all your endpoints? You can make a global exception handler, i.e. one place, which will handle all exceptions.
+
+Have a look here: [Handle errors in ASP.NET Core web APIs | Microsoft Learn](https://learn.microsoft.com/en-us/aspnet/core/web-api/handle-errors?view=aspnetcore-8.0)
+
+Alternatively you can use a Middleware filter, like this: [Error Handling in .NET Core Web API with Custom Middleware (c-sharpcorner.com)](https://www.c-sharpcorner.com/article/error-handling-in-net-core-web-api-with-custom-middleware/)
+
+This could be a starting point for the implementation:
+
+![alt text](Images/part4image-15.png)
+
+I have here my own custom `NotFoundException`, which is thrown from the repository implementation, if no entity with a given ID was found.
+
+My own approach is to create a class which implements the IMiddleware interface, as described in the second link, I believe.
+
+## Step 4.7 - Formalities
+You may work on this assignment in groups.
+
+You must have your assignment on GitHub.
+
+You will hand in a link to your specific Web API folder on Github on itslearning, like this:
+
+![alt text](Images/part4image-16.png)
+
+Deadline can be found on itslearning.
 
 # Part 5 - Some other stuff
 Introductionary text...
