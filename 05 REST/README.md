@@ -1,4 +1,4 @@
-# 05 Exercises: Web API
+# 05 Exercises: REST and Controllers
 
 ## 5.1 Setting Up a Basic Controller-based WEB API
 
