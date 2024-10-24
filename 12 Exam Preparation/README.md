@@ -1,5 +1,2 @@
-# Assignment
-
-## Work on Assignment
-
-Today you will work on your assignment
+# Exam Preparation
+Today we will look at how to prepare for the exam
