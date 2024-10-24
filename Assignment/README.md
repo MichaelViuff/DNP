@@ -1135,13 +1135,13 @@ Last time you implemented a Web API. This had the effect of exposing your system
 
 Your application should look something like this:
 
-![alt text](image.png)
+![alt text](Images/part%205/image.png)
 
 Or as a *component diagram*, we can show it like below. 
 
 I have removed unused projects (CLI, and Inmemory repositories):
 
-![alt text](image-1.png)
+![alt text](Images/part%205/image-1.png)
 
 The arrows indicate dependencies between projects. 
 
@@ -1153,20 +1153,20 @@ As always there is a bit of setting up, before you can get started on the code. 
 ### Client solution folder
 First, we need to create a new solution folder, to house the client code. 
 
-![alt text](image-2.png)
+![alt text](Images/part%205/image-2.png)
 
 And then:
 
-![alt text](image-3.png)
+![alt text](Images/part%205/image-3.png)
 
 Resulting in this solution structure:
 
-![alt text](image-4.png)
+![alt text](Images/part%205/image-4.png)
 
 ### Blazor project
 Next up, you need to create a new project with the Blazor template, in the Client folder:
 
-![alt text](image-5.png)
+![alt text](Images/part%205/image-5.png)
 
 And then select and setup the project template:
 
@@ -1177,7 +1177,7 @@ And then select and setup the project template:
 5)	No authentication, we will apply our own later on.
 6)	Create the project.
 
-![alt text](image-6.png)
+![alt text](Images/part%205/image-6.png)
 
 ### Add project reference
 Your Web API receives DTOs, and these are sent from the Blazor app. This means that the Blazor project should reference your ApiContracts project in the Shared solution folder.
@@ -1187,7 +1187,7 @@ Remember to set the default render mode, so that your pages are not static.
 
 Open the App.razor file, and add:
 
-![alt text](image-7.png)
+![alt text](Images/part%205/image-7.png)
 
 ## Step 5.3 - User management
 Most of your entities are probably connected to a user, e.g. a post is written by a user, or a comment is written by a user.
@@ -1208,7 +1208,7 @@ You don’t get a lot of help this time around, I instead expect you to rely on 
 ### Http structure
 You Blazor app will, somehow, use the HttpClient class to contact the Web API (as taught in a previous session). To keep some separation of concern, you will put your HttpServices in a separate folder:
 
-![alt text](image-8.png)
+![alt text](Images/part%205/image-8.png)
 
 And for each service, you will create an interface. For example:
 
@@ -1223,7 +1223,7 @@ public interface IUserService
 
 This interface will have an implementation, which uses the HttpClient to contact the Web API.
 
-![alt text](image-9.png)
+![alt text](Images/part%205/image-9.png)
 
 With some initial code:
 
@@ -1258,7 +1258,7 @@ Blazor supports dependency injection, similar to the Web API. So, we need to reg
 
 The HttpClient is registered in the BlazorApp/Program.cs file like this:
 
-![alt text](image-10.png)
+![alt text](Images/part%205/image-10.png)
 
 The BaseAddress property must point to your Web API, so the port, 7005, is probably different in your app. When you run the Web API, the address is printed to the console. Notice it is the https value.
 
