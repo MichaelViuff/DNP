@@ -437,9 +437,10 @@ Each of your repositories could create some initial dummy data, just so you have
 You can e.g. create this data in each of the constructors. You may benefit from having a specific method for this, which the constructor could call.
 
 ## Step 1.10 - Formalities
-You may work on this assignment in groups.
-You must have your assignment on github.
-You will hand in a link to your GitHub repository on itslearning.
+ - You may work on this assignment in groups.
+ - You must have your assignment on github.
+ - You will hand in a link to your GitHub repository on itslearning.
+
 Deadline can be found on itslearning.
 
 # Part 2 - Command Line Interface (CLI)
@@ -651,12 +652,8 @@ This escalates upward, so the method calling AddUserAsync must also await the me
 Each of your repositories must create some initial dummy data, say 3-5 entities, just so you have a few posts, users, comments, etc, when the application starts. It will be easier to test things, when you have this initial data.
 
 ## Step 2.9 - Formalities
-You may work on this assignment in groups.
-You must have your assignment on github.
-You will hand in a link to the new part on your GitHub repository on itslearning. That means on GitHub you navigate into your CLI project, and copy the link from there:
-
-
-![alt text](Images/part2image-15.png)
+ - You may work on this assignment in groups.
+ - You must have your assignment on github.
 
 Deadline can be found on itslearning.
 
@@ -828,12 +825,8 @@ Each place where you reference an implementation, e.g., `PostInMemoryRepository`
 ![alt text](Images/part3image-8.png)
 
 ## Step 3.5 - Formalities
-
-- You may work on this assignment in groups.
-- You must have your assignment on GitHub.
-- You must hand in a link to the specific GitHub file-repository-folder on itslearning, like this:
-
-![alt text](Images/part3image-9.png)
+ - You may work on this assignment in groups.
+ - You must have your assignment on GitHub.
 
 Deadline can be found on itslearning.
 
@@ -1117,13 +1110,8 @@ I have here my own custom `NotFoundException`, which is thrown from the reposito
 My own approach is to create a class which implements the IMiddleware interface, as described in the second link, I believe.
 
 ## Step 4.7 - Formalities
-You may work on this assignment in groups.
-
-You must have your assignment on GitHub.
-
-You will hand in a link to your specific Web API folder on Github on itslearning, like this:
-
-![alt text](Images/part4image-16.png)
+ - You may work on this assignment in groups.
+ - You must have your assignment on github.
 
 Deadline can be found on itslearning.
 
@@ -1312,9 +1300,10 @@ Various previous assignments have suggested different features, again, you can d
  You probably have all kinds of other end-points in your Web API, so consider creating more pages (implement more features) to use these end-points.
 
  ## Step 5.5 - Formalities
-You may work on this assignment in groups.
+ - You may work on this assignment in groups.
+ - You must have your assignment on github.
 
-You must have your assignment on GitHub.
+Deadline can be found on itslearning.
 
 
 # Part 6 - Some other stuff
