@@ -35,7 +35,12 @@
     - [Step 4.5 - GetMany Query Parameters](#step-45---getmany-query-parameters)
     - [Step 4.5 - Global Exception Handler (OPTIONAL)](#step-46---global-exception-handler-optional)
     - [Step 4.5 - Formalities](#step-47---formalities)
- - [Part 5 - Some more stuff](#part-5---some-other-stuff)
+ - [Part 5 - Blazor](#part-5---blazor)
+    - [Step 5.1 - Status](#step-51---status)
+    - [Step 5.2 - Setup](#step-52---setup)
+    - [Step 5.3 - User Management](#step-53---user-management)
+    - [Step 5.4 - Develop Blazor App](#step-54---develop-blazor-app)
+    - [Step 5.5 - Formalities](#step-55---formalities) 
  - [Part 6 - Some more stuff](#part-6---some-other-stuff)
  - [Part 7 - Some more stuff](#part-7---some-other-stuff)
 
@@ -1122,10 +1127,10 @@ You will hand in a link to your specific Web API folder on Github on itslearning
 
 Deadline can be found on itslearning.
 
-# Part 5 - Blazor Server
+# Part 5 - Blazor
 In this assignment you will expand your app with a client front end, built using Blazor. This is the user facing UI of your app.
 
-## Step 1 - Status
+## Step 5.1 - Status
 Last time you implemented a Web API. This had the effect of exposing your system to the internet.
 
 Your application should look something like this:
@@ -1142,7 +1147,7 @@ The arrows indicate dependencies between projects.
 
 We will expand the application with a new project, to contain the Blazor front-end, upgrading the system to a client-server arhictecture.
 
-## Step 2 - Setup
+## Step 5.2 - Setup
 As always there is a bit of setting up, before you can get started on the code. This involves creating a Blazor project.
 
 ### Client solution folder
@@ -1172,8 +1177,145 @@ And then select and setup the project template:
 5)	No authentication, we will apply our own later on.
 6)	Create the project.
 
+![alt text](image-6.png)
 
-## Step 3
+### Add project reference
+Your Web API receives DTOs, and these are sent from the Blazor app. This means that the Blazor project should reference your ApiContracts project in the Shared solution folder.
+
+### Set default render mode
+Remember to set the default render mode, so that your pages are not static.
+
+Open the App.razor file, and add:
+
+![alt text](image-7.png)
+
+## Step 5.3 - User management
+Most of your entities are probably connected to a user, e.g. a post is written by a user, or a comment is written by a user.
+
+This might mean, your web api checks for an existing user, when you add a new post or comment.
+
+This assignment will not deal with user management, so when you create a post or comment, or something else connected to a user, you might just hardcode the id foreign key reference to 1, and make sure you have a user with that id.
+
+This obviously means all posts, comments, etc, will be written by the same user.
+
+In the next assignment we will add a login system, so you can distinguish between users, and who is logged in. In that case, you can update your code, so when a post, comment, whatever is created in Blazor, you can check who is logged in, get their ID, and then assign the correct ID to the post, comment, whatever.
+
+## Step 5.4 - Develop Blazor App
+Now it’s time to develop the actual app.
+
+You don’t get a lot of help this time around, I instead expect you to rely on the online documentation linked to in itslearning. Do note that this documentation probably uses the WebAssembly approach, though almost everything else should be the same. I strongly recommend you use a Blazor Server approach, as it it easier to work with, and debug.
+
+### Http structure
+You Blazor app will, somehow, use the HttpClient class to contact the Web API (as taught in a previous session). To keep some separation of concern, you will put your HttpServices in a separate folder:
+
+![alt text](image-8.png)
+
+And for each service, you will create an interface. For example:
+
+```csharp
+public interface IUserService
+{
+    public Task<UserDto> AddUserAsync(CreateUserDto request);
+    public Task UpdateUserAsync(int id, UpdateUserDto request);
+    // ... more methods
+}
+```
+
+This interface will have an implementation, which uses the HttpClient to contact the Web API.
+
+![alt text](image-9.png)
+
+With some initial code:
+
+```csharp
+public class HttpUserService : IUserService
+{
+    private readonly HttpClient client;
+
+    public HttpUserService(HttpClient client)
+    {
+        this.client = client;
+    }
+
+    public Task<UserDto> AddUserAsync(CreateUserDto request)
+    {
+        // todo...
+    }
+
+    public Task UpdateUserAsync(int id, UpdateUserDto request)
+    {
+        // todo...
+    }
+    
+    // more methods...
+}
+```
+
+Notice the HttpClient is injected through the constructor. This happens automatically when we use the dependency injection functionality.
+
+### Add HttpClient for dependency injection
+Blazor supports dependency injection, similar to the Web API. So, we need to register services (our own, e.g. UserService, PostService, etc), and also an HttpClient.
+
+The HttpClient is registered in the BlazorApp/Program.cs file like this:
+
+![alt text](image-10.png)
+
+The BaseAddress property must point to your Web API, so the port, 7005, is probably different in your app. When you run the Web API, the address is printed to the console. Notice it is the https value.
+
+### HTTP service implementation example
+Most of the methods in the services are pretty similar:
+
+ - You want to send something to the server
+ - You want to handle the response, whether success or failure
+
+And so, the code gets repetitive. I provide here an example for the AddUserAsync method:
+
+```csharp
+public async Task<UserDto> AddUserAsync(CreateUserDto request)
+{
+    HttpResponseMessage httpResponse = await client.PostAsJsonAsync("users", request);
+    string response = await httpResponse.Content.ReadAsStringAsync();
+    if (!httpResponse.IsSuccessStatusCode)
+    {
+        throw new Exception(response);
+    }
+    return JsonSerializer.Deserialize<UserDto>(response, new JsonSerializerOptions
+    {
+        PropertyNameCaseInsensitive = true
+    })!;
+}
+```
+
+We use the PostAsJsonAsync method on the client. This simplifies the process, because we would otherwise have to manually serialize the CreateUserDto request parameter.
+
+The method call sends the information to the Web API, which hits the POST /Users endpoint. This endpoint returns some result, as json.
+
+The result, i.e., httpResponse.Content, is read to a string. This string is either the UserDto or some error message.
+
+If the status code of the http response is not a success, we throw an exception. This can be caught in a Blazor page, and a message can be shown to the user.
+
+Otherwise, the response is deserialized into the expected object, UserDto, and returned. You might need this, e.g. to navigate to the user’s home page or whatever.
+
+### Required features
+Various previous assignments have suggested different features, again, you can decide your own, but you must at least support:
+
+ - Add new user.
+ - Create post.
+ - View a list of posts (just title, and perhaps author name).
+ - Be able to click a post from the list in 3) and see the details of that post:
+   - Title.
+   - Body.
+   - Author name.
+   - Comments.
+ - Add comment to a post.
+
+ You probably have all kinds of other end-points in your Web API, so consider creating more pages (implement more features) to use these end-points.
+
+ ## Step 5.5 - Formalities
+You may work on this assignment in groups.
+
+You must have your assignment on GitHub.
+
 
 # Part 6 - Some other stuff
 Introductionary text...
