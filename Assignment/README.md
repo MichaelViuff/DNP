@@ -1122,12 +1122,56 @@ You will hand in a link to your specific Web API folder on Github on itslearning
 
 Deadline can be found on itslearning.
 
-# Part 5 - Some other stuff
-Introductionary text...
+# Part 5 - Blazor Server
+In this assignment you will expand your app with a client front end, built using Blazor. This is the user facing UI of your app.
 
-## Step 1
+## Step 1 - Status
+Last time you implemented a Web API. This had the effect of exposing your system to the internet.
 
-## Step 2
+Your application should look something like this:
+
+![alt text](image.png)
+
+Or as a *component diagram*, we can show it like below. 
+
+I have removed unused projects (CLI, and Inmemory repositories):
+
+![alt text](image-1.png)
+
+The arrows indicate dependencies between projects. 
+
+We will expand the application with a new project, to contain the Blazor front-end, upgrading the system to a client-server arhictecture.
+
+## Step 2 - Setup
+As always there is a bit of setting up, before you can get started on the code. This involves creating a Blazor project.
+
+### Client solution folder
+First, we need to create a new solution folder, to house the client code. 
+
+![alt text](image-2.png)
+
+And then:
+
+![alt text](image-3.png)
+
+Resulting in this solution structure:
+
+![alt text](image-4.png)
+
+### Blazor project
+Next up, you need to create a new project with the Blazor template, in the Client folder:
+
+![alt text](image-5.png)
+
+And then select and setup the project template:
+
+1)	This is found in the ASP.NET Core Web Application template section.
+2)	Give the project a name.
+3)	Select the directory, notice I put it in “Client”, to match the solution structure shown in Rider.
+4)	Select “Blazor Web App” as the template type. An alternative is “Blazor WebAssembly Standalone App”, this is also doable, but in my experience the former is easier to work with. It makes little difference.
+5)	No authentication, we will apply our own later on.
+6)	Create the project.
+
 
 ## Step 3
 
