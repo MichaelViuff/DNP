@@ -41,13 +41,13 @@
     - [Step 5.3 - User Management](#step-53---user-management)
     - [Step 5.4 - Develop Blazor App](#step-54---develop-blazor-app)
     - [Step 5.5 - Formalities](#step-55---formalities) 
- - [Part 6 - Some more stuff](#part-6---some-other-stuff)
+ - [Part 6 - Authentication and Authorization](#part-6---authentication-and-authorization)
+    - [Step 6.1 - Status](#step-61---status)
+    - [Step 6.2 - Authentication](#step-62---authentication)
+    - [Step 6.3 - Authorization](#step-63-authorization)
+    - [Step 6.4 - Update your app](#step-64-update-your-app)
+    - [Step 6.5 - Formalities](#step-65-formalities)
  - [Part 7 - Some more stuff](#part-7---some-other-stuff)
-
-
-
-
-
 
 # Part 1 - Entities & Repositories
 
@@ -1306,14 +1306,661 @@ Various previous assignments have suggested different features, again, you can d
 Deadline can be found on itslearning.
 
 
-# Part 6 - Some other stuff
-Introductionary text...
+# Part 6 - Authentication and Authorization
+In this assignment you will expand your app with a login system. The assignment here is this time around more a tutorial.
 
-## Step 1
+Authentication and authorization are not part of the DNP exam, but it is probably relevant for your SEP3.
 
-## Step 2
+## Step 6.1 - Status
+At this point you should have a somewhat working blazor application.
 
-## Step 3
+## Step 6.2 - Authentication
+We are going to add a login system. It will be quite simple, and not particularly secure, but it is enough to simulate having different users with different access and privileges.
+
+The login works roughly as follows:
+
+1)	User types in user name and password.
+2)	This is sent to a specific endpoint in a specific controller in your Web API.
+3)	The endpoint will check that the user exists, and the password matches.
+4)	The server will return a UserDto containing all relevant information about the user.
+5)	The Blazor receives the UserDto, converts it to a list of [Claims](https://learn.microsoft.com/en-us/dotnet/api/system.security.claims.claim?view=net-8.0), which it stores in a specific class: SimpleAuthService.
+6)	The Blazor framework uses SimpleAuthService to retrieve the list of claims whenever the framework needs to know if someone is logged in, and who they are.
+
+First, we deal with the server, which you can then test through the swagger page. Then we expand upon the Blazor app.
+
+### Web API
+First, we implement the server side. It will require a new controller and perhaps some DTOs. Nothing too elaborate.
+
+#### Login info
+You need a way to send the username and password to the server. This could be a DTO class. I call mine LoginRequest and put it in the Shared/ApiContracts.
+
+#### AuthController
+Now, let’s add the server-side login functionality. I recommend a dedicated Controller:
+
+![alt text](image.png)
+
+Notice the location. And the code is the initial template.
+
+Your controller needs access to the IUserRepository, so that it can find the given user.
+
+Your controller needs a POST endpoint, with the route “auth/login”, which receives the DTO class defined above.
+
+1)	Find the user by its username
+2)	If the user does not exist, return an error code, e.g. Unauthorized.
+3)	If the password is incorrect, return an error code, e.g. Unauthorized.
+4)	Convert the User to a UserDto (so we don’t send back the password, or other sensitive information)
+5)	Return the UserDto
+
+#### Test AuthController
+You should be able to run the Web API now and try out the login endpoint. Give it a go. Verify you get back JSON representing your UserDto.
+
+Does it behave correctly, when you provide incorrect user information?
+
+Here’s the result I get back:
+
+![alt text](image-1.png)
+
+You can see my UserDto as JSON. I don’t have that many properties, but you might have more: email, date of birth, a list of sub-forums the user moderates, etc.
+
+Now your server is ready. Let’s move on to the client side.
+
+### Blazor
+On the client side we must add some authentication functionality, a class responsible for providing authentication information to the Blazor framework, and a login page.
+
+#### Add NuGet packages
+First, we must add some functionality to the Blazor app. This is done with NuGet packages.
+
+NuGet is a “marketplace”, where we can get access to all kinds of functionality created by others. In SEP2 you had to import a postgres jar file, so your server could access the database. NuGet is similar, just simpler.
+
+Open the NuGet view:
+
+![alt text](image-2.png)
+
+You can also click the NuGet icon to the lower left: 
+
+![alt text](image-3.png)
+
+Add the package "Microsoft.AspNetCore.Components.Authorization"
+
+To your Blazor application:
+
+![alt text](image-4.png)
+
+1)	Open NuGet
+2)	Type in package name
+3)	Select package
+4)	Just pick latest version, which matches your current .NET version, i.e. probably 8.0.x
+5)	Click the plus button to add the package to the Blazor app project.
+
+#### Wrap Blazor application in authentication
+We need to wrap the entire Blazor app in some authentication information. This means that everywhere in your app, you can request information about the currently logged in user, if any.
+
+Open the file BlazorApp/Components/Routes.razor.
+
+The content must be modified to look like this:
+
+```csharp
+
+<CascadingAuthenticationState>
+    <Router AppAssembly="typeof(Program).Assembly">
+        <Found Context="routeData">
+            <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(Layout.MainLayout)">
+                <NotAuthorized>
+                    <img width="600" src="https://i.kym-cdn.com/entries/icons/original/000/002/144/You_Shall_Not_Pass!_0-1_screenshot.jpg"/>
+                    <p>You'll have to log in!</p>
+                </NotAuthorized>
+            </AuthorizeRouteView>
+            <RouteView RouteData="routeData" DefaultLayout="typeof(Layout.MainLayout)"/>
+            <FocusOnNavigate RouteData="routeData" Selector="h1"/>
+        </Found>
+    </Router>
+</CascadingAuthenticationState>
+
+```
+
+Notice the first tag, which surrounds everything: <CascadingAuthenticationState>. This provides authentication state to your pages, when you need it.
+
+And then there is a part in the middle, the <AuthorizeRouteView tag, which is also new. This is just to show an image to the user, if they try to access a page, they are not allowed to. You can change the <img> tag with a message or something else, if you prefer.
+
+Rider should display the <CascadingAuthenticationState> in a different colour than e.g. the <Router> tag (this is not the case in the above snippet). This is because <CascadingAuthenticationState> is not yet recognized as a Blazor component, but rather just a normal HTML tag. 
+
+So, we must tell the app that <CascadingAuthenticationState> is a component.
+
+We do this by opening BlazorApp/Components/_Imports.razor. At the end just insert the following two using statements:
+
+ - @using Microsoft.AspNetCore.Components.Authorization
+ - @using Microsoft.AspNetCore.Authorization
+
+This will import the above-mentioned component, from the NuGet package (library) which you imported above. Now your Blazor app knows about the CascadingAuthenticationState component.
+
+NOTE: My entire app blew up and showed errors in many places after the import, but opening each file removed the error. Or you might just rebuild the project.
+
+Go back to the Routes.razor file. Notice the color of CascadingAuthenticationState has changed, it is now recognized as a Blazor component, instead of an HTML tag.
+
+#### SimpleAuthProvider
+This class is responsible for providing the a of claims representing your user, whenever the Blazor framework needs to authorize anything.
+
+Create a new folder, Auth, and inside a new class: SimpleAuthProvider
+
+This is the first version of the class. We will expand a bit later on:
+
+```csharp
+
+public class SimpleAuthProvider : AuthenticationStateProvider
+{
+    public override Task<AuthenticationState> GetAuthenticationStateAsync()
+    {
+        throw new NotImplementedException();
+    }
+}
+
+```
+
+This method is inherited from AuthenticationStateProvider, which is a class already in Blazor. The method must return an AuthenticationState, i.e. information about the user. This is where the list of claims come in. Shortly.
+
+This class is going to work as follows:
+
+1)	We create a Login method. This will contact your web api, and receive back the UserDto.
+2)	The UserDto is converted to a list of claims.
+3)	The list of claims is packaged in a ClaimsPrincipal, and stored in a field variable for future use.
+4)	We must notify the app about a change in authentication state, this will cause the app to refresh and request the new authentication state.
+5)	When the Blazor app needs to get the authentication state, the ClaimsPrincipal is wrapped in an Authentication state and returned.
+
+So, we start with the Login method.
+
+##### Login Method
+Add the following method to SimpleAuthProvider. The method receives a username and password and sends this to the web api:
+
+```csharp
+
+public class SimpleAuthProvider : AuthenticationStateProvider
+{
+    private readonly HttpClient httpClient;
+    private ClaimsPrincipal currentClaimsPrincipal;
+
+    public SimpleAuthProvider(HttpClient httpClient)
+    {
+        this.httpClient = httpClient;
+    }
+
+    public async Task Login(string userName, string password)
+    {
+        HttpResponseMessage response = await httpClient.PostAsJsonAsync(
+            "auth/login",
+            new LoginRequest(userName, password));
+
+        string content = await response.Content.ReadAsStringAsync();
+        if (!response.IsSuccessStatusCode)
+        {
+            throw new Exception(content);
+        }
+        UserDto userDto = JsonSerializer.Deserialize<UserDto>(content, new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true
+        })!;
+
+
+        List<Claim> claims = new List<Claim>()
+        {
+            new Claim(ClaimTypes.Name, userDto.UserName),
+            new Claim(“Id”, userDto.Id.ToString()),
+            // Add more claims here with your own claim type as a string, e.g.:
+            // new Claim("DateOfBirth", userDto.DateOfBirth.ToString("yyyy-MM-dd"))
+            // new Claim("IsAdmin", userDto.IsAdmin.ToString())
+            // new Claim("IsModerator", userDto.IsModerator.ToString())
+            // new Claim("Email", userDto.Email)
+        };
+        ClaimsIdentity identity = new ClaimsIdentity(claims, "apiauth");
+        currentClaimsPrincipal = new ClaimsPrincipal(identity);
+
+        NotifyAuthenticationStateChanged(
+            Task.FromResult(new AuthenticationState(currentClaimsPrincipal))
+        );
+    }
+
+```
+
+Okay, now we have some stuff to talk about:
+
+ - Notice the field variable of HttpClient, this is used to contact the web api.
+ - Notice also the field variable of ClaimsPrincipal, this stores our current authentication state. It is initialized to an “empty” Principal, i.e. there is no ClaimsIdentity in it. This basically means, there is no user information, and no-one is logged in.
+ - The HttpClient is injected through the constructor.
+ - The Login method is implemented, described below.
+
+ The Login method shown above works as follows:
+
+ 1)	Call the web api with a LoginRequest, containing relevant information.
+2)	Read the content of the response. This a string, either:
+    a.	An error message, e.g. if the user name or password was incorrect
+    b.	A list of claims, representing the user object, as JSON.
+3)	If the request was unsuccessful, we throw an exception, which can be caught in a page, and the error message can be displayed to the user.
+4)	Otherwise, we deserialize the JSON into a UserDto. Notice the JSON options parameter, this is because the JSON uses camelCase, but my UserDto properties are PascalCase. So, we must tell the serializer to ignore casing, when looking for the correct properties to put values into.
+5)	The UserDto is converted to a list of claims.
+6)	The list of claims is packaged into a ClaimsIdentity.
+7)	The ClaimsIdentity is packaged into a ClaimsPrincipal, which is saved in the field variable.
+8)	And finally, we notify the app about a change in authentication state. Blazor will then update and change accordingly. Maybe some pages/components/whatever is now visible, or hidden, based on the state.
+
+##### GetAuthenticationState
+We are now ready to implement this method, it was left to just throw an exception. Remember, this is the method, which the Blazor framework will call to access the current authentication state.
+
+It just returns the ClaimsPrincipal field variable:
+
+```csharp
+public override async Task<AuthenticationState> GetAuthenticationStateAsync()
+{
+    return new AuthenticationState(currentClaimsPrincipal ?? new ());
+}
+```
+
+The ?? is a [null coalescing operator](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/operators/null-coalescing-operator). It will check if currentClaimsPrincipal is null, and if so, then return the part after the ??, i.e. a new instance of ClaimsPrincipal.
+
+##### Log out
+We might want to log out at some point.
+
+To log out, we “reset” the ClaimsPrincipal to an empty one, and notify the framework about a change in authentication state.
+
+Just add the following method:
+
+```csharp
+public void Logout()
+{
+    currentClaimsPrincipal = new();
+    NotifyAuthenticationStateChanged(Task.FromResult(new AuthenticationState(currentClaimsPrincipal)));
+}
+```
+
+And that should be it.
+
+##### Register AuthenticationStateProvider
+Finally, we need to register our class here as a service, so the Blazor framework knows about our specific authentication state provider.
+
+Open BlazorApp/Program.cs, and register the state provider as a service:
+
+```csharp
+
+var builder = WebApplication.CreateBuilder(args);
+
+// Add services to the container.
+builder.Services.AddRazorComponents()
+    .AddInteractiveServerComponents();
+
+builder.Services.AddScoped(sp => new HttpClient
+    {
+        BaseAddress = new Uri("https://localhost:7005")
+    }
+);
+
+builder.Services.AddScoped<IUserService, HttpUserService>();
+builder.Services.AddScoped<IPostService, HttpPostService>();
+builder.Services.AddScoped<AuthenticationStateProvider, SimpleAuthProvider>();
+```
+
+#### Login page
+We need a page, where the user can insert username and password. 
+
+So, create a new page in an Authentication folder (just create it):
+
+![alt text](image-5.png)
+
+In this page, we must add the necessary input fields, along with some code.
+
+##### The code
+First, we start with the code part, then we can do the view afterwards:
+
+```csharp
+
+@page "/login"
+@using BlazorApp.Auth
+@inject AuthenticationStateProvider AuthProvider
+@inject NavigationManager navMgr
+
+<h3>This is where you login</h3>
+
+@code {
+    private string userName;
+    private string password;
+    private string errorLabel;
+
+    private async Task LoginAsync()
+    {
+        errorLabel = "";
+        try
+        {
+            await ((SimpleAuthProvider)AuthProvider).Login(userName, password);
+            navMgr.NavigateTo("/");
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            errorLabel = $"Error: {e.Message}";
+        }
+    }
+}
+
+```
+
+We add the route at the top: “login”. We inject an AuthenticationStateProvider. Because of the way we registered this in Program.cs, whenever we request an AuthenticationStateProvider, we actually get our custom SimpleAuthProvider.
+
+We also inject a NavigationManager.
+
+The @code block defines fields for user name and password, and an error.
+
+Then the method, it just calls the Login on SimpleAuthProvider, if everything succeeds, the user is taken back to the front page. We do have to cast the AuthenticationStateProvider to a SimpleAuthProvider, because that’s where the Login method is defined. This looks a bit ugly, but it’s the simplest approach.
+
+##### The view
+Then for the view, it’s a bit more involved:
+
+```csharp
+<AuthorizeView>
+    <NotAuthorized>
+        <h3>Please login</h3>
+        <label>User name:</label>
+        <input type="text" @bind="userName"/>
+        <label>Password:</label>
+        <input type="password" @bind="password"/>
+        @if (!string.IsNullOrEmpty(errorLabel))
+        {
+            <label style="color: red">
+                @errorLabel
+            </label>
+        }
+        <button @onclick="LoginAsync">Log in</button>
+    </NotAuthorized>
+    <Authorized>
+        <h3>Hello, @context.User.Identity.Name</h3>
+    </Authorized>
+</AuthorizeView>
+```
+
+We wrap everything in <AuthorizeView> tags. This tag gets the current authentication state, and inside the tag, we can then define two views, one for when no-one is logged in, and one for when a user is logged in. 
+
+The html to show when no-one is logged in is inside the <NotAuthorized> tags. So, everything inside this tag is only shown, when no-one is authorized, i.e. logged in. You can probably guess what the <Authorized> tag does.
+
+I have really stripped this to the bone, there are no divs to organize anything. You might make this more pretty with styling and tag-organization, if you wish.
+
+#### Test
+Currently the authentication works sort of okay, so we can test it out. I will suggest an optional improvement later. 
+
+Open the Home page file, and modify it to this:
+
+```csharp
+@page "/"
+@inject NavigationManager NavMgr
+<PageTitle>Home</PageTitle>
+
+<h1>Reddit Clone</h1>
+
+<AuthorizeView>
+    <Authorized>
+        <h3>Hello, @context.User.Identity.Name</h3>
+    </Authorized>
+    <NotAuthorized>
+        lol you are not logged in!
+    </NotAuthorized>
+</AuthorizeView>
+Here you can browse interesting posts.
+<button @onclick='() => NavMgr.NavigateTo("login")'>go to login</button>
+```
+
+Notice the AuthorizeView component. Inside such a component we can access a variable called context, which will contain the ClaimsPrincipal we return from our SimpleAuthProvider. The Name property is set because of this specific claim in the SimpleAuthProvider class:
+
+```csharp
+new Claim(ClaimTypes.Name, userDto.UserName)
+```
+
+There are some pre-defined claim types, which are sort of special.
+
+Now: Run the Web API, then run the Blazor.
+
+On the home page click the [go to login] button, which takes you to the login page:
+
+![alt text](image-6.png)
+
+Here you log in, which will take you back to the home page.
+
+You should now see the user name displayed:
+
+![alt text](image-7.png)
+
+On successful login, you are redirected to the front page. If you manually navigate back to the login page again, you should see this:
+
+![alt text](image-8.png)
+
+If this works for you, congratulations, you now have a simple login system, and you can use the <AuthorizeView> tag to show/hide parts of your application. We can do more as well, which will be described in the Authorization section further down.
+
+#### Improvement by caching the user (Optional)
+This part is optional. Everything will still work if you skip this. But it may work in a slightly annoying way.
+
+As long as you only use the NavigationManager to navigate between pages, you will not notice problems.
+
+But, if you use the browser back or forward buttons, or if you manually type in an address in the browser’s address bar, or if you refresh your browser, you will be logged out.
+
+Here’s what’s going on:
+
+ - When you open Blazor a new instance of SimpleAuthProvider is created, i.e. no-one is logged in.
+ - The SimpleAuthProvider is added as scoped service. This means whenever a new tab is opened, or the current tab is refreshed, you get a new instance.
+ - When you get a new instance, the cached user info in the instance variable is lost. And you are logged out again.
+
+Is this unconvenient? Sure. Would this be allowed in a real web site? Surely not. Is it really important for this assignment, or for SEP3? Not really.
+
+But we can improve it a bit, so that the browser remembers log-in information. This will mean all tabs will share log in, so if you want to log in with multiple users, e.g. for testing purposes, you will probably need either incognito mode or multiple browsers, e.g. Edge, Chrome, and Firefox.
+
+##### Caching the user in the browser
+This sub-section will put the logged in user in the browser cache.
+
+Open SimpleAuthProvider.
+
+Update the constructor and field variable like so:
+
+```csharp
+public class SimpleAuthProvider : AuthenticationStateProvider
+{
+    private readonly HttpClient httpClient;
+    private readonly IJSRuntime jsRuntime;
+
+
+    public SimpleAuthProvider(HttpClient httpClient, IJSRuntime jsRuntime)
+    {
+        this.httpClient = httpClient;
+        this.jsRuntime = jsRuntime;
+    }
+```
+
+Notice the new constructor argument. This class is used to activate Java Script. Also notice the removal of the currentClaimsPrincipal field. Instead of caching the user here, we will do it in the browser cache.
+
+Next up, the LoginAsync() method. When a UserDto is retrieved, cache it, and proceed as usual:
+
+```csharp
+public async Task LoginASync(string userName, string password)
+{
+    HttpResponseMessage response = await httpClient.PostAsJsonAsync(
+        "auth/login",
+        new LoginRequest(userName, password));
+
+    string content = await response.Content.ReadAsStringAsync();
+    if (!response.IsSuccessStatusCode)
+    {
+        throw new Exception(content);
+    }
+
+    UserDto userDto = JsonSerializer.Deserialize<UserDto>(content, new JsonSerializerOptions
+    {
+        PropertyNameCaseInsensitive = true
+    })!;
+    
+    string serialisedData = JsonSerializer.Serialize(userDto);
+    await jsRuntime.InvokeVoidAsync("sessionStorage.setItem", "currentUser", serialisedData);
+    
+    List<Claim> claims = new List<Claim>()
+    {
+        new Claim(ClaimTypes.Name, userDto.UserName),
+        new Claim(ClaimTypes.NameIdentifier, userDto.Id.ToString()),
+    };
+    ClaimsIdentity identity = new ClaimsIdentity(claims, "apiauth");
+    ClaimsPrincipal claimsPrincipal = new ClaimsPrincipal(identity);
+
+    NotifyAuthenticationStateChanged(
+        Task.FromResult(new AuthenticationState(claimsPrincipal))
+    );
+}
+```
+
+Notice after the userDto variable, it is JSON-fied, and added to the browser’s “sessionStorage”.
+
+Then the GetAuthenticationStateAsync() method must be updated. We retrieve the current user from the browser’s session storage:
+
+```csharp
+public override async Task<AuthenticationState> GetAuthenticationStateAsync()
+{
+    string userAsJson = "";
+    try
+    {
+        userAsJson = await jsRuntime.InvokeAsync<string>("sessionStorage.getItem", "currentUser");
+    }
+    catch (InvalidOperationException e)
+    {
+        return new AuthenticationState(new());
+    }
+
+    if (string.IsNullOrEmpty(userAsJson))
+    {
+        return new AuthenticationState(new());
+    }
+
+    UserDto userDto = JsonSerializer.Deserialize<UserDto>(userAsJson)!;
+    List<Claim> claims = new List<Claim>()
+    {
+        new Claim(ClaimTypes.Name, userDto.UserName),
+        new Claim(ClaimTypes.NameIdentifier, userDto.Id.ToString()),
+    };
+    ClaimsIdentity identity = new ClaimsIdentity(claims, "apiauth");
+    ClaimsPrincipal claimsPrincipal = new ClaimsPrincipal(identity);
+    return new AuthenticationState(claimsPrincipal);
+}
+```
+
+This is a bit unnerving looking, true. Here’s what’s going on:
+
+ - We define an empty string for the user as JSON.
+ - We try to fetch the JSON from the session storage. Blazor has a life-cycle, and jsruntime is not available initially, and so this may fail. That’s why it is wrapped in a try-catch. Upon failure an empty ClaimsPrincipal is returned, from the catch-clause.
+ - If the jsruntime does not fail, we then check if the return userAsJson is null or empty, in which case no one is logged in, so a new ClaimsPrincipal is returned.
+ - Then we get to the point, where we have a user-as-JSON. It is deserialized into a UserDto.
+ - The rest you have seen before.
+
+You should now be able to test your application again, and refreshing the web site should keep you logged in.
+
+##### How to log out?
+We must reset the browser’s session storage.
+
+```csharp
+public async Task Logout()
+{
+    await jsRuntime.InvokeVoidAsync("sessionStorage.setItem", "currentUser", "");
+    NotifyAuthenticationStateChanged(Task.FromResult(new AuthenticationState(new())));
+}
+```
+
+Notice the change in method signature, it is now async Task.
+
+##### Further improvements
+Currently we will every time retrieve the user-as-JSON. We could introduce again a field variable in the class as a “primary cache”. If this field is null or empty, look in the browser’s session storage. If this is also null or empty, then no user is logged in. I leave this to you. It’s just a minor optimization, but you will probably not notice a big difference.
+
+## Step 6.3 Authorization
+Currently, your app can know whether someone is logged in or not. But you probably also need different privileges based on who is logged in. For example, perhaps only the original author of a post can edit this post.
+
+Or maybe some parts of your app is off limits based on the users age or other.
+
+### Policies
+A policy is a somewhat simple mechanic, where you can define a rule, and users fulfilling this rule gets access to “whatever”.
+
+They are limited, however, so instead of going over this here, you should check out this [ASP.NET Core Blazor authentication and authorization | Microsoft Learn](https://learn.microsoft.com/en-us/aspnet/core/blazor/security/?view=aspnetcore-8.0#role-based-and-policy-based-authorization)
+
+This page essentially contains everything about authorization, but I will explain a few examples below.
+
+Policies are more general, does a user fulfil a certain criteria. But they can (probably) not check more specific details, like does a user moderate a specific forum, or is the user viewing their own post or someone else’s post.
+
+For these scenarios, we need a bit more programming.
+
+#### Block page access
+You can block access to a page by adding the following line at the top of the page:
+
+```csharp 
+@attribute [Authorize]
+```
+
+Then the page can only be accessed, if the user is logged in.
+
+![alt text](image-9.png)
+
+#### Auth context
+Inside an <AuthorizeView><Authorized> block you can access the context variable, which contains information about the user:
+![alt text](image-10.png)
+
+### Retrieving current user
+Because we initially “wrapped the application in authentication”, we can anywhere request information about the currently logged in user.
+
+In the code  block you can define the following property:
+
+```csharp
+@code {
+    [CascadingParameter] public Task<AuthenticationState> State { get; set; }
+```
+
+This contains a ClaimsPrincipal, which contains a ClaimsIdentity, which then contains a list of claims. And the user Id, and name.
+
+We can retrieve this information anywhere in your code block, but generally it is probably a good idea to do it in the OnInitializedAsync() method, because then you have the authentication state from the start:
+
+```csharp
+AuthenticationState authenticationState = await State;
+ClaimsPrincipal claimsPrincipal = authenticationState.User;
+if(claimsPrincipal.Identity is null || !claimsPrincipal.Identity.IsAuthenticated)
+{
+    // the user is not logged in
+    return;
+}
+string? userName = claimsPrincipal.Identity?.Name;
+IEnumerable<Claim> claims = claimsPrincipal.Claims;
+string userIdAsString = claims.Single(c => c.Type == "Id").Value;
+userId = int.Parse(userIdAsString);
+```
+
+The above method is inherited from ComponentBase, which all your pages inherit from. The method is called automatically when the page loads.
+
+The statements show how to extract different information from the AuthenticationState, e.g. ClaimsPrincipal, ClaimsIdentity, and Claims. All this information is what you have set in your SimpleAuthProvider.
+
+Lines:
+
+1)	Get the AuthenticationState.
+2)	Get the ClaimsPrincipal
+3)	Checking if there is a ClaimsIdentity, or if that ClaimsIdentity is authenticated.
+4)	If not authenticated, then no-one is logged in. And we cannot extract further information about the user. Because no-one is logged in.
+5)	Get the list of Claims, which you defined. My example far above just set the Name and a custom “Id” value.
+6)	Extract the user name of the currently logged in user. There is a question mark, because Identity may be null, in which case the statement will assign null to username.
+7)	From the list of Claims I extract a single Claim based on the Type being “Id”. Then I get the Value of this claim, which is the user id, although as a string. You should probably convert it to int. Maybe.
+8)	You might extract other claims, e.g. a comma-separated list-as-string of forum IDs, which the user moderates. 
+
+If you assign any of these above variables to a field variable, you can then use them in the view part of the page. 
+
+For example, if the user owns the post, we might show an edit button:
+
+```csharp
+@if (userId == postDto.UserId)
+{
+    <button @onclick="EditPost">Edit Post</button>
+}
+```
+
+The user id can now also be used when you create a new post, to automatically set the author id of that post. Or similarly for comments.
+
+## Step 6.4 Update your app
+Now you should be able to add authentication and authorization to your app. You probably have a few different places you need to update, now that you have a user id of the logged in user, e.g.: creating a post or comment.
+
+## Step 6.5 Formalities
+You may work on this assignment in groups.
+
+You must have your assignment on GitHub.
+
+Deadline can be found on itslearning.
 
 # Part 7 - Some other stuff
 Introductionary text...
