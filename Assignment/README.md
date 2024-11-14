@@ -1337,7 +1337,7 @@ You need a way to send the username and password to the server. This could be a 
 #### AuthController
 Now, let’s add the server-side login functionality. I recommend a dedicated Controller:
 
-![alt text](image.png)
+![alt text](Images/part%206/image.png)
 
 Notice the location. And the code is the initial template.
 
@@ -1358,7 +1358,7 @@ Does it behave correctly, when you provide incorrect user information?
 
 Here’s the result I get back:
 
-![alt text](image-1.png)
+![alt text](Images/part%206/image-1.png)
 
 You can see my UserDto as JSON. I don’t have that many properties, but you might have more: email, date of birth, a list of sub-forums the user moderates, etc.
 
@@ -1374,17 +1374,17 @@ NuGet is a “marketplace”, where we can get access to all kinds of functional
 
 Open the NuGet view:
 
-![alt text](image-2.png)
+![alt text](Images/part%206/image-2.png)
 
 You can also click the NuGet icon to the lower left: 
 
-![alt text](image-3.png)
+![alt text](Images/part%206/image-3.png)
 
 Add the package "Microsoft.AspNetCore.Components.Authorization"
 
 To your Blazor application:
 
-![alt text](image-4.png)
+![alt text](Images/part%206/image-4.png)
 
 1)	Open NuGet
 2)	Type in package name
@@ -1600,7 +1600,7 @@ We need a page, where the user can insert username and password.
 
 So, create a new page in an Authentication folder (just create it):
 
-![alt text](image-5.png)
+![alt text](Images/part%206/image-5.png)
 
 In this page, we must add the necessary input fields, along with some code.
 
@@ -1714,17 +1714,17 @@ Now: Run the Web API, then run the Blazor.
 
 On the home page click the [go to login] button, which takes you to the login page:
 
-![alt text](image-6.png)
+![alt text](Images/part%206/image-6.png)
 
 Here you log in, which will take you back to the home page.
 
 You should now see the user name displayed:
 
-![alt text](image-7.png)
+![alt text](Images/part%206/image-7.png)
 
 On successful login, you are redirected to the front page. If you manually navigate back to the login page again, you should see this:
 
-![alt text](image-8.png)
+![alt text](Images/part%206/image-8.png)
 
 If this works for you, congratulations, you now have a simple login system, and you can use the <AuthorizeView> tag to show/hide parts of your application. We can do more as well, which will be described in the Authorization section further down.
 
@@ -1890,11 +1890,11 @@ You can block access to a page by adding the following line at the top of the pa
 
 Then the page can only be accessed, if the user is logged in.
 
-![alt text](image-9.png)
+![alt text](Images/part%206/image-9.png)
 
 #### Auth context
 Inside an <AuthorizeView><Authorized> block you can access the context variable, which contains information about the user:
-![alt text](image-10.png)
+![alt text](Images/part%206/image-10.png)
 
 ### Retrieving current user
 Because we initially “wrapped the application in authentication”, we can anywhere request information about the currently logged in user.
