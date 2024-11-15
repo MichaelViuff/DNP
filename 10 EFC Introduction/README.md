@@ -62,6 +62,49 @@ Implement the above diagram using EFC.
 <summary>Display solution...</summary>
 <p>
 
+```csharp
+public class Child
+{
+    public string Name { get; set; }
+    
+    public Employee Employee { get; set; }
+}
+```
+
+```csharp
+public class Employee
+{
+    
+    public int SSN { get; set; }
+    public double Salary { get; set; }
+    public string Phone_number { get; set; }
+}
+```
+
+```csharp
+using EFC_Example.Entities;
+using Microsoft.EntityFrameworkCore;
+
+public class AppContext : DbContext
+{
+    public DbSet<Child> Childs => Set<Child>();
+    
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        optionsBuilder.UseSqlite("Data Source=EFC_Example.db");
+    }
+    
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Child>().HasKey(c => c.Name);
+        modelBuilder.Entity<Employee>().HasKey(e => e.SSN);
+    }
+}
+```
+
+
+
+
 </p>
 </details>
 </blockquote>
