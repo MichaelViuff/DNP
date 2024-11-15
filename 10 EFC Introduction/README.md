@@ -40,7 +40,7 @@ Implement the above diagram using EFC.
 
 Here is another diagram, with a relationship attribute
 
-![alt text](Images/image-1.png)
+![alt text](Images/image8.png)
 
 **Objective:**  
 Understand how relationship attributes can be implemented.
