@@ -32,36 +32,6 @@ Implement the above diagram using EFC.
 <summary>Display solution...</summary>
 <p>
 
-</p>
-</details>
-</blockquote>
-
-## 10.2 Simple Library
-
-Here is another diagram, with a relationship attribute
-
-![alt text](Images/image8.png)
-
-**Objective:**  
-Understand how relationship attributes can be implemented.
-
-**Task:**  
-Implement the above diagram using EFC.
-
-**Steps:**
-
-1. Create a new CLI project
-2. Create entities
-3. Configure relationships
-4. Create/Setup PKs
-5. Generate migration
-6. Create database
-
-<blockquote>
-<details>
-<summary>Display solution...</summary>
-<p>
-
 ```csharp
 public class Child
 {
@@ -101,6 +71,38 @@ public class AppContext : DbContext
     }
 }
 ```
+
+</p>
+</details>
+</blockquote>
+
+## 10.2 Simple Library
+
+Here is another diagram, with a relationship attribute
+
+![alt text](Images/image8.png)
+
+**Objective:**  
+Understand how relationship attributes can be implemented.
+
+**Task:**  
+Implement the above diagram using EFC.
+
+**Steps:**
+
+1. Create a new CLI project
+2. Create entities
+3. Configure relationships
+4. Create/Setup PKs
+5. Generate migration
+6. Create database
+
+<blockquote>
+<details>
+<summary>Display solution...</summary>
+<p>
+
+
 
 
 
