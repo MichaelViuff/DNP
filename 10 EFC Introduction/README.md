@@ -48,6 +48,8 @@ public class Employee
     public int SSN { get; set; }
     public double Salary { get; set; }
     public string Phone_number { get; set; }
+    
+    public Department Department { get; set; }
 }
 ```
 
@@ -57,8 +59,6 @@ using Microsoft.EntityFrameworkCore;
 
 public class AppContext : DbContext
 {
-    public DbSet<Child> Childs => Set<Child>();
-    
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.UseSqlite("Data Source=EFC_Example.db");
@@ -68,6 +68,7 @@ public class AppContext : DbContext
     {
         modelBuilder.Entity<Child>().HasKey(c => c.Name);
         modelBuilder.Entity<Employee>().HasKey(e => e.SSN);
+        modelBuilder.Entity<Department>().HasKey(d => d.Code);
     }
 }
 ```
