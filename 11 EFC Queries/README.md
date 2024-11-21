@@ -1,6 +1,12 @@
 # 11 Exercises: EFC Queries
 
-## 11.1 Book Shop Exercises
+## 11.1 Book Shop Exercises - part 1
+
+Clone the [BookShopEfc repository](https://github.com/TroelsMortensen/BookShopEfc)
+
+Remember to update the path to your database (probably have to use absolute path)
+
+Solve the following exercises:
 
 1. Find the books with id less than 10 and print out Id, Title, Price
 2. Find the reviews for book with id 42, and print them out
@@ -10,7 +16,7 @@
 6. Who wrote the book with title “Dreamers and Wanderers”?
 7. How many books has author “Michael Lawson” written, or co-written?
 
-## 11.2 Book Shop Exercises
+## 11.2 Book Shop Exercises - part 2
 
 1. What are the categories of book with id 15?
 2. Print the names of the authors of the book named ” A World Apart”?
@@ -18,10 +24,10 @@
 4. How many reviews are there for the book with title ”The Last Ember”? (Hint: There is a Count() method on collections.)
 5. Print the titles of the books written by ”Emily Hart”.
 
-## 11.3 Book Shop Exercises
+## 11.3 Book Shop Exercises - part 3
 
 1. What is the average rating of the book with title ”A Dance of Shadows”?
-2. What is the sum of the prices of the three following books, (remember to consider PriceOffers): 
+2. What is the sum of the prices of the three following books, (remember to consider PriceOffers):
    - Whispers in the Wind
    - The Forgotten Kingdom
    - Of Gods and Mortals

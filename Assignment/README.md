@@ -1,84 +1,96 @@
 # Table of Contents:
 
- - [Part 1 - Entities & Repositories](#part-1---entities--repositories)
-    - [Step 1.1 - Requirements](#step-11---requirements)
-    - [Step 1.2 - Create Solution](#step-12---create-solution)
-    - [Step 1.3 - GitHub](#step-13---github)
-    - [Step 1.4 - Domain Model](#step-14---domain-model)
-    - [Step 1.5 - Entities](#step-15---entities)
-    - [Step 1.6 - Implement your entities](#step-16---implement-your-entities)
-    - [Step 1.7 - Repositories](#step-17---repositories)
-    - [Step 1.8 - Repository Contracts Project](#step-18---repository-contracts-project)
-    - [Step 1.9 - In-memory Repository Implementations](#step-19---in-memory-repository-implementations)
-    - [Step 1.10 - Formalities](#step-110---formalities)
- - [Part 2 - Command Line Interface (CLI)](#part-2---command-line-interface)
-    - [Step 2.1 - Requirements](#step-21---requirements)
-    - [Step 2.2 - Status](#step-22---status)
-    - [Step 2.3 - Setup](#step-23---setup)
-    - [Step 2.4 - Dependencies](#step-24---dependencies)
-    - [Step 2.5 - UI Class](#step-25---ui-class)
-    - [Step 2.6 - Implement CLI Application](#step-26---implement-cli-application)
-    - [Step 2.7 - Business Logic](#step-27---business-logic)
-    - [Step 2.8 - Asynchronous Programming](#step-28---asynchronous-programming)
-    - [Step 2.9 - Formalities](#step-29---formalities)
- - [Part 3 - File Persistence](#part-3---file-persistence)
-    - [Step 3.1 - Status](#step-31---status)
-    - [Step 3.2 - Setup](#step-32---setup)
-    - [Step 3.3 - File Repository Implementations](#step-33---file-repository-implementations)
-    - [Step 3.4 - Update CLI Project](#step-34---update-cli-project)
-    - [Step 3.5 - Formalities](#step-35---formalities)
- - [Part 4 - REST Web API](#part-4---creating-a-rest-web-api)
-    - [Step 4.1 - Status](#step-41---status)
-    - [Step 4.2 - Setup](#step-42---setup)
-    - [Step 4.3 - Register Repository Implementations](#step-43---register-repository-implementations)
-    - [Step 4.4 - Implement Controllers](#step-44---implement-controllers)
-    - [Step 4.5 - GetMany Query Parameters](#step-45---getmany-query-parameters)
-    - [Step 4.5 - Global Exception Handler (OPTIONAL)](#step-46---global-exception-handler-optional)
-    - [Step 4.5 - Formalities](#step-47---formalities)
- - [Part 5 - Blazor](#part-5---blazor)
-    - [Step 5.1 - Status](#step-51---status)
-    - [Step 5.2 - Setup](#step-52---setup)
-    - [Step 5.3 - User Management](#step-53---user-management)
-    - [Step 5.4 - Develop Blazor App](#step-54---develop-blazor-app)
-    - [Step 5.5 - Formalities](#step-55---formalities) 
- - [Part 6 - Authentication and Authorization](#part-6---authentication-and-authorization)
-    - [Step 6.1 - Status](#step-61---status)
-    - [Step 6.2 - Authentication](#step-62---authentication)
-    - [Step 6.3 - Authorization](#step-63-authorization)
-    - [Step 6.4 - Update your app](#step-64-update-your-app)
-    - [Step 6.5 - Formalities](#step-65-formalities)
- - [Part 7 - Some more stuff](#part-7---some-other-stuff)
+- [Part 1 - Entities & Repositories](#part-1---entities--repositories)
+  - [Step 1.1 - Requirements](#step-11---requirements)
+  - [Step 1.2 - Create Solution](#step-12---create-solution)
+  - [Step 1.3 - GitHub](#step-13---github)
+  - [Step 1.4 - Domain Model](#step-14---domain-model)
+  - [Step 1.5 - Entities](#step-15---entities)
+  - [Step 1.6 - Implement your entities](#step-16---implement-your-entities)
+  - [Step 1.7 - Repositories](#step-17---repositories)
+  - [Step 1.8 - Repository Contracts Project](#step-18---repository-contracts-project)
+  - [Step 1.9 - In-memory Repository Implementations](#step-19---in-memory-repository-implementations)
+  - [Step 1.10 - Formalities](#step-110---formalities)
+- [Part 2 - Command Line Interface (CLI)](#part-2---command-line-interface)
+  - [Step 2.1 - Requirements](#step-21---requirements)
+  - [Step 2.2 - Status](#step-22---status)
+  - [Step 2.3 - Setup](#step-23---setup)
+  - [Step 2.4 - Dependencies](#step-24---dependencies)
+  - [Step 2.5 - UI Class](#step-25---ui-class)
+  - [Step 2.6 - Implement CLI Application](#step-26---implement-cli-application)
+  - [Step 2.7 - Business Logic](#step-27---business-logic)
+  - [Step 2.8 - Asynchronous Programming](#step-28---asynchronous-programming)
+  - [Step 2.9 - Formalities](#step-29---formalities)
+- [Part 3 - File Persistence](#part-3---file-persistence)
+  - [Step 3.1 - Status](#step-31---status)
+  - [Step 3.2 - Setup](#step-32---setup)
+  - [Step 3.3 - File Repository Implementations](#step-33---file-repository-implementations)
+  - [Step 3.4 - Update CLI Project](#step-34---update-cli-project)
+  - [Step 3.5 - Formalities](#step-35---formalities)
+- [Part 4 - REST Web API](#part-4---creating-a-rest-web-api)
+  - [Step 4.1 - Status](#step-41---status)
+  - [Step 4.2 - Setup](#step-42---setup)
+  - [Step 4.3 - Register Repository Implementations](#step-43---register-repository-implementations)
+  - [Step 4.4 - Implement Controllers](#step-44---implement-controllers)
+  - [Step 4.5 - GetMany Query Parameters](#step-45---getmany-query-parameters)
+  - [Step 4.5 - Global Exception Handler (OPTIONAL)](#step-46---global-exception-handler-optional)
+  - [Step 4.5 - Formalities](#step-47---formalities)
+- [Part 5 - Blazor](#part-5---blazor)
+  - [Step 5.1 - Status](#step-51---status)
+  - [Step 5.2 - Setup](#step-52---setup)
+  - [Step 5.3 - User Management](#step-53---user-management)
+  - [Step 5.4 - Develop Blazor App](#step-54---develop-blazor-app)
+  - [Step 5.5 - Formalities](#step-55---formalities)
+- [Part 6 - Authentication and Authorization](#part-6---authentication-and-authorization)
+  - [Step 6.1 - Status](#step-61---status)
+  - [Step 6.2 - Authentication](#step-62---authentication)
+  - [Step 6.3 - Authorization](#step-63-authorization)
+  - [Step 6.4 - Update your app](#step-64-update-your-app)
+  - [Step 6.5 - Formalities](#step-65-formalities)
+- [Part 7 - Entity Framework Core](#part-7---entity-framework-core)
+  - [Step 7.1 - Status](#step-71---status)
+  - [Step 7.2 - Setup](#step-72---setup)
+  - [Step 7.3 - Add EFC packages](#step-73-add-efc-packages)
+  - [Step 7.4 - Add context](#step-74---add-context)
+  - [Step 7.5 - Update entity relationships](#step-75---update-entity-relationships)
+  - [Step 7.6 - Generate migration](#step-76--generate-migration)
+  - [Step 7.7 - Create database](#step-77---create-database)
+  - [Step 7.8 - Implement repositories](#step-78---implement-repositories)
+  - [Step 7.9 - Update Web API](#step-79---update-web-api)
+  - [Step 7.10 - Formalities](#step-710---formalities)
 
 # Part 1 - Entities & Repositories
 
-In this assignment series you will build out a small forum app. 
+In this assignment series you will build out a small forum app.
 
-For each assignment you will add something new to the project, and at the end of the semester you will have a fully working forum app (hopefully...). 
+For each assignment you will add something new to the project, and at the end of the semester you will have a fully working forum app (hopefully...).
 
-It will consist of a simple CRUD focused Web API, with Entity Framework Core and a SQLite database to store data. 
+It will consist of a simple CRUD focused Web API, with Entity Framework Core and a SQLite database to store data.
 
 For the front-end you will have a Blazor web app.
 
 In this first assignment you will create the entities for your domain model, and you will define repository interfaces (repository is explained later).
 
-Because your app will evolve over time (different parts will be added and swapped out) we need to design the system with modularity in mind. 
+Because your app will evolve over time (different parts will be added and swapped out) we need to design the system with modularity in mind.
 
-We do this by creating multiple *projects*, each responsible for something specific. It will be a simplified layered application.
+We do this by creating multiple _projects_, each responsible for something specific. It will be a simplified layered application.
 
-**The Web API** (i.e. server) will contain two layers; a network layer and a persistence layer. 
+**The Web API** (i.e. server) will contain two layers; a network layer and a persistence layer.
 
-Often you will have a business logic layer in between, but we are skipping that, and simplifying the server to focus on the .NET tools rather than good SOLID architecture design. 
+Often you will have a business logic layer in between, but we are skipping that, and simplifying the server to focus on the .NET tools rather than good SOLID architecture design.
 
 You should probably have this extra layer in your semester project.
 
-There is some initial setup, which is best done on one computer, then shared to others through GitHub. 
+There is some initial setup, which is best done on one computer, then shared to others through GitHub.
 
 I recommend reading through the entire document before actually starting on anything.
 
 ## Step 1.1 - Requirements
+
 This assignment is open-ended, meaning we provide you with a few minimum requirements, which must be completed. We also have suggestions on how to expand upon the system, should you wish to. Or you can come up with your own ideas.
 
 ### Feature description
+
 We need a User, having at least user name, and a password. It needs an Id of type int.
 We need a Post. It is written by a User. It contains a Title and a Body. It also needs an Id, of type int.
 A User can also write a Comment on a Post. A Comment just contains a Body, and an Id of type int.
@@ -87,88 +99,98 @@ All entities must have an Id of type int.
 The way we create relationships between the Entities is described in detail further below. In short, we use foreign keys, rather than associations.
 
 ### Optional features
+
 Further feature suggestions, if you are brave:
-•	A user can like/dislike a post.
-•	A user can like/dislike a comment.
-•	A user can create a SubForum, meaning a post now belongs to a specific SubForum instead.
-•	A user can comment on a comment.
-•	A user becomes moderator of a sub forum, they created, meaning they can delete comments and posts.
-•	Feel free to add further ideas yourself.
+• A user can like/dislike a post.
+• A user can like/dislike a comment.
+• A user can create a SubForum, meaning a post now belongs to a specific SubForum instead.
+• A user can comment on a comment.
+• A user becomes moderator of a sub forum, they created, meaning they can delete comments and posts.
+• Feel free to add further ideas yourself.
 
 ## Step 1.2 - Create Solution
+
 First, you need a new, fresh solution. You may work in groups, so only one group member does the initial setup.
 Create a new Solution in Rider:
- 
+
 ![alt text](Images/image.png)
 
 And then:
-1)	Select Empty Solution
-2)	Give your solution a name
-3)	Place it somewhere
-4)	Create a new directory, this is probably checked already
-5)	Check this to create a git repository. You must have your assignment on GitHub, and hand in a link to your repository. It’s easier if this is checked initially, then you get some extra setup prepared for you, like a git ignore file.
- 
+
+1. Select Empty Solution
+2. Give your solution a name
+3. Place it somewhere
+4. Create a new directory, this is probably checked already
+5. Check this to create a git repository. You must have your assignment on GitHub, and hand in a link to your repository. It’s easier if this is checked initially, then you get some extra setup prepared for you, like a git ignore file.
+
 ![alt text](Images/image-1.png)
 
 Now you should have a new, fresh, empty solution.
+
 ## Step 1.3 - GitHub
-You must use Git and GitHub for your assignments. You may use whatever branching strategy, you like. Each hand-in on itslearning is typically a link to your main branch. 
-A good start is to now commit your *.sln file. E.g.: DnpAssignmentXYZ.sln. This file ”binds” your entire application together.
+
+You must use Git and GitHub for your assignments. You may use whatever branching strategy, you like. Each hand-in on itslearning is typically a link to your main branch.
+A good start is to now commit your \*.sln file. E.g.: DnpAssignmentXYZ.sln. This file ”binds” your entire application together.
+
 ## Step 1.4 - Domain Model
+
 Based on the above requirements, you must create a domain model diagram, where we can see:
-•	The entities of the system
-•	The properties (attributes) on the entities
-•	The relationships between entities, e.g. Post is written by a User. Remember multiplicities at both ends. Like you were taught for the Entity Relationship Diagram in DBS, or the Domain Model in SWE. 
+• The entities of the system
+• The properties (attributes) on the entities
+• The relationships between entities, e.g. Post is written by a User. Remember multiplicities at both ends. Like you were taught for the Entity Relationship Diagram in DBS, or the Domain Model in SWE.
 
 ## Step 1.5 - Entities
-It’s time to implement the domain model, i.e. the entities as classes. These will just be data container classes, using properties. 
+
+It’s time to implement the domain model, i.e. the entities as classes. These will just be data container classes, using properties.
 First, create a new Solution Folder, call it Server. This folder will contain all server related code:
- 
+
 ![alt text](Images/image-2.png)
 
 Now, your solution looks like this:
- 
- ![alt text](Images/image-3.png)
+
+![alt text](Images/image-3.png)
 
 Then, create a new class library to contain your domain entities, inside the Server folder:
- 
+
 ![alt text](Images/image-4.png)
 
 Then, setup the project as follows:
-1)	Select Class Library
-2)	Give the project a name
-3)	Specify the directory, i.e. put this project into Server
-4)	Select SDK and Framework, if available. If you only have one version installed, these are probably greyed out, or not there at all.
-5)	Select Create
- 
+
+1. Select Class Library
+2. Give the project a name
+3. Specify the directory, i.e. put this project into Server
+4. Select SDK and Framework, if available. If you only have one version installed, these are probably greyed out, or not there at all.
+5. Select Create
+
 ![alt text](Images/image-5.png)
 
 Now your solution looks like this:
- 
+
 ![alt text](Images/image-6.png)
 
-You can safely delete the Class1.cs file inside Entities. 
+You can safely delete the Class1.cs file inside Entities.
 Now, you can create your entities, e.g. Post, User, etc, in this project:
- 
- ![alt text](Images/image-7.png)
+
+![alt text](Images/image-7.png)
 
 Remember, all your classes should be under git version control. But you must also tell git about your projects.
-This is done by adding and committing the *.csproj file for each project.
+This is done by adding and committing the \*.csproj file for each project.
 Initially, a new project will have its name in red font, meaning git does not know about it. E.g.:
- 
+
 ![alt text](Images/image-8.png)
 
-You must then find the *.csproj file and add it. First, change the view from ”Solution” to ”File system”:
- 
+You must then find the \*.csproj file and add it. First, change the view from ”Solution” to ”File system”:
+
 ![alt text](Images/image-9.png)
 
 Then add the .csproj file in the project to git:
- 
- ![alt text](Images/image-10.png)
+
+![alt text](Images/image-10.png)
 
 Do this for your Entities library project.
 
 ### Entity Relationships Modelling
+
 You are used to model relationships with associations, e.g. a Post has many Comments. Then the Post would have a List of Comments.
 We don’t initially do this. It comes later in the course.
 
@@ -180,7 +202,7 @@ This means a Comment will have a property called PostId, which references the po
 A Post might have a SubForumId, which references the Sub Forum it belongs to. If you make this feature.
 A Post will also have a UserId property, referencing the User, which wrote the post. Similar for the Comment. And so on.
 Here is what your Post might initially look like. We use auto-properties instead of field variables! This is important!
- 
+
 ```csharp
 public class Post
 {
@@ -194,59 +216,65 @@ public class Post
 You may add constructor(s) if you find this needed. It will be later, and it will then be explained how to do it. Or you can just use the object initializer approach.
 
 ## Step 1.6 - Implement your Entities
+
 Implement all your entities now.
 
-
 ## Step 1.7 - Repositories
-Repository pattern is similar to Data Access Pattern, if you are familiar with that. 
+
+Repository pattern is similar to Data Access Pattern, if you are familiar with that.
 A Repository is an abstraction of data-access for a single entity. This means a Repository is an interface, and the implementation manages how to persist a specific entity-type, somehow. We will initially use a List (i.e. no actual persistence), then a file, and then a database, as we progress through the course.
 The Repository interface comes in different shapes, but it will generally provide some standard methods, usually like Create, Read, Update, Delete (i.e. CRUD for short), though maybe renamed.
 The Command Line Interface (assignment 2) and Web API (assignment 4) will use a Repository to save incoming data, or extract requested data, etc.
 Both the ”presentation/network” layer, and the persistence layer will change over time, but the Repository-interfaces remain the same. This means they must live in their own respective project. It becomes similar to the layered architecture you have seen on second semester, and each project becomes a layer. Sort of.
 
 ## Step 1.8 - Repository Contracts Project
+
 The Repositories live on the server side, and is only used on the server side.
 We need a project to house the Repository interfaces, aka ”contracts”. The actual implementations will go elsewhere, later.
 Create a new Class Library Project, first:
- 
+
 ![alt text](Images/image-12.png)
 
 And then setup the project:
-1)	Select type
-2)	Input project name
-3)	Update the path, so the project is located in a ”Server” folder.
-4)	Select versions
-5)	Select to create
+
+1. Select type
+2. Input project name
+3. Update the path, so the project is located in a ”Server” folder.
+4. Select versions
+5. Select to create
 
 ![alt text](Images/image-13.png)
- 
+
 And finally the new solution structure:
- 
+
 ![alt text](Images/image-14.png)
 
 You can, again, delete Class1.cs. And put the RepositoryContracts.csproj file under version control, like before with the Entities project.
 
 ### Add Reference
+
 The new RepositoryContracts project need to work with your entities. These are located in a separate project, and so we need to add a reference from RepositoryContracts to Entities.
 Right click on the ”Dependencies” inside RepositoryContracts.
- 
+
 ![alt text](Images/image-15.png)
 
 And then select the project, you want to referece, in our case the Entities:
- 
+
 ![alt text](Images/image-16.png)
 
 Finally, select [Add].
 Note: In the image above, it says <Shared>. In yours it says <Server>.
 
 ### Create Repository Interfaces
+
 In this project you put Repository interfaces. One for each entity. And you will have at least 3 entities: Post, User, Comment. Maybe more, if you decide to expand your application with more features.
 Our repository interfaces will define 5 standard methods:
-1)	Add – Used to store a new post
-2)	Update – Used to update an existing.
-3)	Delete – Delete an existing post.
-4)	GetSingle – Get a single post.
-5)	GetMany – Get multiple posts.
+
+1. Add – Used to store a new post
+2. Update – Used to update an existing.
+3. Delete – Delete an existing post.
+4. GetSingle – Get a single post.
+5. GetMany – Get multiple posts.
 
 Here is an example for the IPostRepository interface. The others look almost identical:
 
@@ -272,76 +300,84 @@ Method descriptions:
 
 **GetSingle** will return the Post matching the given ID. If no Post is found, an exception is thrown.
 
-**GetMany** will return an IQueryable. This is an interface which can looped over in a for-each loop to extract the relevant entities. Or we can use LINQ, which we will see later in the course. 
-This makes filtering the Posts by some criteria easier (using predicates, later). 
+**GetMany** will return an IQueryable. This is an interface which can looped over in a for-each loop to extract the relevant entities. Or we can use LINQ, which we will see later in the course.
+This makes filtering the Posts by some criteria easier (using predicates, later).
 Maybe we want to fetch all Posts with a specific sub-string in the postname. Or some other property on the Post.
 The method is not async, the reason of which we will get back to, when we add a database.
 
 > [!IMPORTANT]
-> You will define such an I*Repository interface per entity!
+> You will define such an I\*Repository interface per entity!
 
 ### What is Task and Async?
+
 We will come back to this in session 2. It is asynchronous programming. It’s an optimization approach, so that different tasks/jobs/pieces of code can automatically be executed in parallel. Sort of like automatic multithreading. It is just managed for us, instead of us having to explicitly create threads.
 It requires us to return a Task, sometimes wrapping the actual value, e.g. Task<User>. This is a Task which will eventually return a User. We can then extract the User from the Task, when the Task is finished.
 By convention asynchronous methods have their method names suffixed with ”Async”, to indicate they are used differently from normal methods.
-Again, we will come back to this later.	
+Again, we will come back to this later.
 
 ## Step 1.9 - In-memory Repository Implementations
+
 We will create initial implementations for the repository interfaces. We start by just keeping the data in a list, i.e. nothing is actually saved to disk or database, this comes later. But it let’s us create a ”complete” system by assignment 2, which we can actually play around with.
 
 ### New project
+
 Again, we need a new project. We are going to use his approach a lot, creating new projects to organize our code by technical responsibility.
 The project goes into the Server package, it is a class library, and is named InMemoryRepositories.
 Create a new class library like this, by right-clicking on the Server folder:
- 
+
 ![alt text](Images/image-17.png)
 
 And then:
-1)	Select Class Library
-2)	Choose project name. Meaningful names are important.
-3)	Make sure it goes into the Server folder
-4)	Pick versions, if possible.
-5)	Select Create.
+
+1. Select Class Library
+2. Choose project name. Meaningful names are important.
+3. Make sure it goes into the Server folder
+4. Pick versions, if possible.
+5. Select Create.
 
 ![alt text](Images/image-18.png)
- 
+
 Delete Class1.cs.
 Put the project under version control, as previously.
 
 ### Dependency
+
 You need to add a dependency from InMemoryRepositories project to the Entities project, as you have done before.
 This is so your repository implementations can know about the entities they manage.
 You will also need a dependency from InMemoryRepositories project to the RepositoryContracts project, because this is where the interfaces are located:
- 
+
 ![alt text](Images/image-19.png)
 
 Now your solution structure looks like this:
 
 ![alt text](Images/image-20.png)
- 
 
 ### Implementations
+
 You will inside your new project create an implementation per repository interface.
 The repository implementation just uses a list to store entities in.
 Below is a description of the PostInMemoryRepository, step by step. You will then repeat the process for the other repository implementations. You could easily divide the work amongst group members here.
 
 #### Post Repository class
+
 First, you need a class, which implements the IPostRepository:
 
 ![alt text](Images/image-21.png)
- 
+
 Notice the location of the class, and the class definition in the file.
 
 #### List to contain the entities
+
 You must add a field variable of type List<Post>. I have called it ”posts”, you can call it whatever makes sense to you. This will contain our entities.
 
 #### Add method
+
 This is the AddAsync method:
 
 ```csharp
 public Task<Post> AddAsync(Post post)
 {
-    post.Id = posts.Any() 
+    post.Id = posts.Any()
         ? posts.Max(p => p.Id) + 1
         : 1;
     posts.Add(post);
@@ -353,7 +389,9 @@ It takes a Post as parameter, and returns a Post (inside a Task).
 We first set the Id of the post. This is done by finding the current maximum Id of all the posts, and incrementing that value. Better and cleverer approaches exist, but we will eventually use a database to generate the Id. I use a [ternary operator](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/operators/conditional-operator) to check if there are any posts in the list, and if so, use the current maximum Id plus 1. Otherwise just use Id 1. It’s a short-hand if-else.
 The Post is added to the list, i.e. the field variable you just created.
 This method is not doing anything asynchronous. This will come later. So, to return a Task containing a Post, we have to explicitly wrap our post into a Task. That happens in the last line.
+
 #### Update method
+
 This is the update method:
 
 ```csharp
@@ -429,21 +467,25 @@ A list, or most types of collections, can be converted to an IQueryable. This is
 So, we convert the list of posts to an IQueryable<Post>.
 
 ### Other repositories
-You must now implement your other repositories. They will look very similar! 
+
+You must now implement your other repositories. They will look very similar!
 You might even consider some optimization, so you don’t have so much duplicate code. If you are brave.
 
 ### Optional: Initial dummy data
+
 Each of your repositories could create some initial dummy data, just so you have a few posts, users, comments, etc, when the application starts. Next time it will be easier to test things, when you have this initial data.
 You can e.g. create this data in each of the constructors. You may benefit from having a specific method for this, which the constructor could call.
 
 ## Step 1.10 - Formalities
- - You may work on this assignment in groups.
- - You must have your assignment on github.
- - You will hand in a link to your GitHub repository on itslearning.
+
+- You may work on this assignment in groups.
+- You must have your assignment on github.
+- You will hand in a link to your GitHub repository on itslearning.
 
 Deadline can be found on itslearning.
 
 # Part 2 - Command Line Interface (CLI)
+
 In this assignment, you will expand your application with a Command Line Interface (aka CLI). This is a simple text-based interface in your console/terminal. You read commands from the terminal and you output data to the terminal.
 
 You will create some kind of functioning user interface to support the requirements specified last time.
@@ -510,7 +552,6 @@ First, we need a new project for the Command Line Interface.
 - We don’t need Docker.
 - Create the project.
 
-
 ![alt text](Images/part2image-2.png)
 
 You then get this. There’s the CLI project with a `Program.cs` class, which has an "implicit" main-method. I.e., there is no method at all. You should just think of the method signature as invisible, and the file contains the actual method body.
@@ -544,19 +585,17 @@ Now the component diagram looks like this:
 
 ![alt text](Images/part2image-7.png)
 
-
-Dependencies are transient. 
+Dependencies are transient.
 For example, in the above, we have the following dependencies:
 
     RepositoryContracts -> Entities
     CLI -> RepositoryContracts
 
 Which also means:
-	
-    CLI -> Entities
-
+CLI -> Entities
 
 ## Step 2.5 - UI Class
+
 We probably don’t want all the UI logic in the `Program` file. The `Program` file is just used to create an instance of your UI class and pass in repository instances, and then “start” the UI.
 
 So create a new directory, call it e.g., "UI." And inside this directory, create the class which will manage your CLI UI. Something like this:
@@ -583,7 +622,6 @@ The overall organization of your classes is left to you. Here is my initial atte
 
 ![alt text](Images/part2image-11.png)
 
-
 The `CliApp` may create a new `ManageUserView` instance. This is then responsible for instantiating `CreateUserView` and `ListUsersView` when needed.
 
 ## Step 2.6 - Implement CLI Application
@@ -604,11 +642,9 @@ This is my `Program.cs` file; notice the instantiation of repositories:
 
 ![alt text](Images/part2image-12.png)
 
-
 And this, for example, is part of my UI class handling the creation of posts:
 
 ![alt text](Images/part2image-13.png)
-
 
 The repository is injected through the constructor. Notice the field variable type is the interface, not the concrete implementation. With this approach, future updates to your application will be much simpler. This is the Dependency Inversion Principle from SOLID in action.
 
@@ -649,11 +685,13 @@ So, my AddUserAsync method is marked as async, returning a Task.
 This escalates upward, so the method calling AddUserAsync must also await the method call, and that method must itself be async. And so on. All the way out to the main method. Turtles all the way down. Or up. Depending on where you view it from.
 
 ### Initial dummy data
+
 Each of your repositories must create some initial dummy data, say 3-5 entities, just so you have a few posts, users, comments, etc, when the application starts. It will be easier to test things, when you have this initial data.
 
 ## Step 2.9 - Formalities
- - You may work on this assignment in groups.
- - You must have your assignment on github.
+
+- You may work on this assignment in groups.
+- You must have your assignment on github.
 
 Deadline can be found on itslearning.
 
@@ -738,7 +776,7 @@ I provide below an example of the `AddAsync` method. The others are similar in t
 public class CommentFileRepository : ICommentRepository
 {
     private readonly string filePath = "comments.json";
-        
+
     public CommentFileRepository()
     {
         if (!File.Exists(filePath))
@@ -746,7 +784,7 @@ public class CommentFileRepository : ICommentRepository
             File.WriteAllText(filePath, "[]");
         }
     }
-    
+
     public async Task<Comment> AddAsync(Comment comment)
     {
         string commentsAsJson = await File.ReadAllTextAsync(filePath);
@@ -762,6 +800,7 @@ public class CommentFileRepository : ICommentRepository
 ```
 
 ### Explanations:
+
 - **Line 3**: Here we define the file path. We create a file per entity.
 - **Line 5-10**: The constructor ensures there actually is a file. If none exists (e.g., the first time the program is run), a new file is created with the content of an empty list, i.e., no entities. The `"[]"` is an empty collection in JSON.
 - **Line 13**: This is the method header, asynchronous, returning a `Task` containing the “finalized” comment, i.e., it now has an ID.
@@ -773,7 +812,6 @@ public class CommentFileRepository : ICommentRepository
 - **Line 20**: Serialize the list to JSON.
 - **Line 21**: Write the JSON back to the file.
 - **Line 22**: Return the finalized comment now that it has an ID.
-
 
 **Hint**: I have afterward extracted the loading and saving to helper methods to minimize code duplication.
 
@@ -807,16 +845,16 @@ Your CLI project must now use the new repositories instead of the InMemory versi
 
 ![alt text](Images/part3image-5.png)
 
-   - Find the `CLI.csproj` file:
+- Find the `CLI.csproj` file:
 
 ![alt text](Images/part3image-6.png)
 
-   - Delete the reference to the InMemoryProject.
+- Delete the reference to the InMemoryProject.
 
 ![alt text](Images/part3image-7.png)
 
-   - Go back to the solution view.
-   - Watch your CLI project fail to compile now. All errors are where you are referencing a repository implementation, not the interface; those live in a different project, the RepositoryContracts.
+- Go back to the solution view.
+- Watch your CLI project fail to compile now. All errors are where you are referencing a repository implementation, not the interface; those live in a different project, the RepositoryContracts.
 
 ### Update Repository Implementation References
 
@@ -825,22 +863,25 @@ Each place where you reference an implementation, e.g., `PostInMemoryRepository`
 ![alt text](Images/part3image-8.png)
 
 ## Step 3.5 - Formalities
- - You may work on this assignment in groups.
- - You must have your assignment on GitHub.
+
+- You may work on this assignment in groups.
+- You must have your assignment on GitHub.
 
 Deadline can be found on itslearning.
 
 # Part 4 - Creating a REST Web API
+
 In this assignment you will expand your app with a Web API. Now, external clients like other applications or web sites can access your program to manipulate and retrieve forum data.
 
 ## Step 4.1 - Status
+
 Last time you implemented a new component in the persistence layer, which was working with files. This had the effect of actually storing data between sessions of your program running.
 
 Your application should look something like this:
 
 ![alt text](Images/part4image.png)
 
-Or as a *component diagram*, we can show it like this:
+Or as a _component diagram_, we can show it like this:
 
 ![alt text](Images/part4image-1.png)
 
@@ -857,9 +898,11 @@ Illustrating with a component diagram, your system will look like this:
 ![alt text](Images/part4image-2.png)
 
 ## Step 4.2 - Setup
+
 We need two things: the Web API itself, and the objects sent back and forth. They go in two different projects.
 
 ### DTO's
+
 Sometimes it is valid to use the actual entity classes, which you already have, to transport data between client and server. But quite often, they are not designed for this purpose, and it can become cumbersome.
 
 We therefore usually create dedicated Data Transfer Objects, which are just simple classes dedicated to transport data. These classes become part of the public API of your server.
@@ -876,17 +919,17 @@ And then like this:
 
 In this Shared folder, you create a new class library:
 
-1)	Select class library
-2)	Give the project a name. E.g. ApiContracts, or DTOs, or whatever you feel makes sense.
-3)	Put it into Shared folder.
-4)	The usual
-5)	Create project
+1. Select class library
+2. Give the project a name. E.g. ApiContracts, or DTOs, or whatever you feel makes sense.
+3. Put it into Shared folder.
+4. The usual
+5. Create project
 
 ![alt text](Images/part4image-5.png)
 
 Delete the `Class1.cs`
 
-Put the `ApiContracts.csproj` under  version control.
+Put the `ApiContracts.csproj` under version control.
 
 **Note:** In your SEP3, if you use a 3-tier system, you might want to send your entities between logic and data tier, e.g. 2, and 3.
 
@@ -902,14 +945,14 @@ Create a Web API project, on the Server side.
 
 And then:
 
-1)	Select WEB. This is where we find everything related to web development.
-2)	Give the project a meaningful name.
-3)	Make sure the project is located in Server.
-4)	Pick SDK, language, framework, if possible.
-5)	Select the Web API Template. This part is important! You have many choices for what kind of template project you want. If pick the wrong, it may look almost correct, but be completely wrong. Pay attention here.
-6)	No authentication, and no Docker. Thes eshould be ”off” by default, but just make sure.
-7)  Check the "UseControllers" box - this will allow us to start with a Controller based template.
-8)	Finally, create the project.
+1. Select WEB. This is where we find everything related to web development.
+2. Give the project a meaningful name.
+3. Make sure the project is located in Server.
+4. Pick SDK, language, framework, if possible.
+5. Select the Web API Template. This part is important! You have many choices for what kind of template project you want. If pick the wrong, it may look almost correct, but be completely wrong. Pay attention here.
+6. No authentication, and no Docker. Thes eshould be ”off” by default, but just make sure.
+7. Check the "UseControllers" box - this will allow us to start with a Controller based template.
+8. Finally, create the project.
 
 ![alt text](Images/part4image-7.png)
 
@@ -922,51 +965,55 @@ And remember the `.csproj` file too. Either by going to File System view. Or jus
 ![alt text](Images/part4image-9.png)
 
 ### Dependencies
+
 Your new Web API needs access to several projects, so, add dependencies from Web API to::
 
- - RepositoryContracts
- - Entities
- - FileRepositories
- - ApiContracts (or DTOs, or..)
+- RepositoryContracts
+- Entities
+- FileRepositories
+- ApiContracts (or DTOs, or..)
 
- We no longer use the CLI or InMemoryRepositories, so, no dependencies to those.
+We no longer use the CLI or InMemoryRepositories, so, no dependencies to those.
 
- ![alt text](Images/part4image-10.png)
+![alt text](Images/part4image-10.png)
 
- Here is now the updated component diagram (with unused components removed):
+Here is now the updated component diagram (with unused components removed):
 
- ![alt text](Images/part4image-11.png)
+![alt text](Images/part4image-11.png)
 
- ## Step 4.3 - Register Repository Implementations
- for the Web API we are going to use Dependency Injection. This means, we must register all ”services”, which a Web API controller can request. In our case that will be the repositories.
+## Step 4.3 - Register Repository Implementations
 
- In the `Program.cs` file, you must add your services:
+for the Web API we are going to use Dependency Injection. This means, we must register all ”services”, which a Web API controller can request. In our case that will be the repositories.
 
- ![alt text](Images/part4image-12.png)
+In the `Program.cs` file, you must add your services:
 
- If you have other repositories, like `SubForumRepository` or `LikeRepository`, they too should be added.
+![alt text](Images/part4image-12.png)
 
- Now, a Controller can request any of the I*Repository interfaces, as needed, and the Dependency Injection functionality will handle creation for us. This is very convenient. 
+If you have other repositories, like `SubForumRepository` or `LikeRepository`, they too should be added.
 
- Similar to the CLI project, the creation of specific implementations is isolated to a single place, so when we later need to swap out the repository implementations again, it will be very easy. We just modify these three lines of code.
+Now, a Controller can request any of the I\*Repository interfaces, as needed, and the Dependency Injection functionality will handle creation for us. This is very convenient.
 
- ## Step 4.4 - Implement Controllers
+Similar to the CLI project, the creation of specific implementations is isolated to a single place, so when we later need to swap out the repository implementations again, it will be very easy. We just modify these three lines of code.
+
+## Step 4.4 - Implement Controllers
+
 Finally, the task has come to implement the controllers.
 
 Create a controller for each entity in your system! PostsController, UsersController, CommentsController, etc.
 
 Create an endpoint for each standard method, per entity:
- - Create
- - Update
- - GetSingle
- - GetMany (consider which search parameters might be relevant)
- - Delete
 
- Use correct HTTP action verbs.
+- Create
+- Update
+- GetSingle
+- GetMany (consider which search parameters might be relevant)
+- Delete
 
- Follow REST convention for routing.
+Use correct HTTP action verbs.
 
-Consider which entities belong to other entities. Define routes accordingly, e.g. “localhost:port/orders/{id}/orderlines”. 
+Follow REST convention for routing.
+
+Consider which entities belong to other entities. Define routes accordingly, e.g. “localhost:port/orders/{id}/orderlines”.
 
 These endpoints can be placed in the parent (Orders) controller. Other endpoints for the child entity (orderlines) can go into the ChildController. The design choice is yours.
 
@@ -978,23 +1025,25 @@ It is up to you to decide what the return data (DTO or Entity?) should look like
 If you wish to display a Post, you may need username of the author as well.
 
 ## Step 4.5 - GetMany query parameters
+
 For the GetMany users endpoint, it must be possible to filter the users by whether the user name contains a certain string. You may add more filter criteria.
 
 For the GetMany posts endpoint, it must be possible to filter by:
 
- - Title contains a certain string
- - Post is written by a certain user (id and/or name)
- - You may add more filter criteria, e.g. get the top 10 most liked posts or...
+- Title contains a certain string
+- Post is written by a certain user (id and/or name)
+- You may add more filter criteria, e.g. get the top 10 most liked posts or...
 
- For the GetMany comments endpoint, it must be possible to filter by:
+For the GetMany comments endpoint, it must be possible to filter by:
 
- - user id and/or name. 
- - Post id.
- - You may add more filter criteria.
+- user id and/or name.
+- Post id.
+- You may add more filter criteria.
 
 For other GetMany endpoints, you decide which query parameters make sense.
 
 ### Comment about business logic
+
 We have made a two-layered system: Web API layer and persistence layer. Usually, you will have a layer in between for business logic, validation, rules, etc. We have neglected that, as architecture design is not a focus for this project.
 
 Should you wish to implement business logic, you can do this directly in the controller methods.
@@ -1008,16 +1057,18 @@ If you are bold, you would add a new library project specifically for business l
 Often you would have a PostsService, and UsersService, etc, with appropriate methods, which then calls relevant repositories.
 
 ### User Controller implementation example
+
 To get you started, here’s the initial code for my UserController:
 
 ![alt text](Images/part4image-13.png)
 
- - `[ApiController]` marks this class as a controller, which must be picked by the application when it startes. That’s the ”builder.Services.AddControllers()” call we did above.
- - `[Route("[controller]")]` says the route to this controller will be: ”localhost:port/Users”, because the class starts with Users(Controller)
- - The class extends ControllerBase, which gives access to helper methods, and other stuff.
- - The class receives a repository through the constructor, which each endpoint can use to manipulate.
+- `[ApiController]` marks this class as a controller, which must be picked by the application when it startes. That’s the ”builder.Services.AddControllers()” call we did above.
+- `[Route("[controller]")]` says the route to this controller will be: ”localhost:port/Users”, because the class starts with Users(Controller)
+- The class extends ControllerBase, which gives access to helper methods, and other stuff.
+- The class receives a repository through the constructor, which each endpoint can use to manipulate.
 
 ### Create endpoint
+
 The following is my create user endpoint:
 
 ```csharp
@@ -1033,7 +1084,7 @@ public async Task<ActionResult<UserDto>> AddUser([FromBody] CreateUserDto reques
         Id = created.Id,
         UserName = created.UserName
     }
-    return Created($"/Users/{dto.Id}", created); 
+    return Created($"/Users/{dto.Id}", created);
 }
 ```
 
@@ -1076,7 +1127,7 @@ public async Task<ActionResult<User>> AddUser([FromBody] CreateUserDto request)
 }
 ```
 
-We just return a 500-server error, with the exception message. You could differentiate your exceptions, i.e. have multiple catch clauses, and return more specific error codes. 
+We just return a 500-server error, with the exception message. You could differentiate your exceptions, i.e. have multiple catch clauses, and return more specific error codes.
 
 If it is validation logic, which fails, perhaps it is a 400-BadRequest error code, instead of 500-ServerError.
 
@@ -1095,6 +1146,7 @@ public class CreateUserDto
 I use the `required` keyword to indicate that when creating a CreateUserDto these properties must be set. Otherwise the compiler will complain.
 
 ## Step 4.6 - Global Exception handler (OPTIONAL)
+
 Tired of try-catch in all your endpoints? You can make a global exception handler, i.e. one place, which will handle all exceptions.
 
 Have a look here: [Handle errors in ASP.NET Core web APIs | Microsoft Learn](https://learn.microsoft.com/en-us/aspnet/core/web-api/handle-errors?view=aspnetcore-8.0)
@@ -1110,36 +1162,41 @@ I have here my own custom `NotFoundException`, which is thrown from the reposito
 My own approach is to create a class which implements the IMiddleware interface, as described in the second link, I believe.
 
 ## Step 4.7 - Formalities
- - You may work on this assignment in groups.
- - You must have your assignment on github.
+
+- You may work on this assignment in groups.
+- You must have your assignment on github.
 
 Deadline can be found on itslearning.
 
 # Part 5 - Blazor
+
 In this assignment you will expand your app with a client front end, built using Blazor. This is the user facing UI of your app.
 
 ## Step 5.1 - Status
+
 Last time you implemented a Web API. This had the effect of exposing your system to the internet.
 
 Your application should look something like this:
 
 ![alt text](Images/part%205/image.png)
 
-Or as a *component diagram*, we can show it like below. 
+Or as a _component diagram_, we can show it like below.
 
 I have removed unused projects (CLI, and Inmemory repositories):
 
 ![alt text](Images/part%205/image-1.png)
 
-The arrows indicate dependencies between projects. 
+The arrows indicate dependencies between projects.
 
 We will expand the application with a new project, to contain the Blazor front-end, upgrading the system to a client-server arhictecture.
 
 ## Step 5.2 - Setup
+
 As always there is a bit of setting up, before you can get started on the code. This involves creating a Blazor project.
 
 ### Client solution folder
-First, we need to create a new solution folder, to house the client code. 
+
+First, we need to create a new solution folder, to house the client code.
 
 ![alt text](Images/part%205/image-2.png)
 
@@ -1152,25 +1209,28 @@ Resulting in this solution structure:
 ![alt text](Images/part%205/image-4.png)
 
 ### Blazor project
+
 Next up, you need to create a new project with the Blazor template, in the Client folder:
 
 ![alt text](Images/part%205/image-5.png)
 
 And then select and setup the project template:
 
-1)	This is found in the ASP.NET Core Web Application template section.
-2)	Give the project a name.
-3)	Select the directory, notice I put it in “Client”, to match the solution structure shown in Rider.
-4)	Select “Blazor Web App” as the template type. An alternative is “Blazor WebAssembly Standalone App”, this is also doable, but in my experience the former is easier to work with. It makes little difference.
-5)	No authentication, we will apply our own later on.
-6)	Create the project.
+1. This is found in the ASP.NET Core Web Application template section.
+2. Give the project a name.
+3. Select the directory, notice I put it in “Client”, to match the solution structure shown in Rider.
+4. Select “Blazor Web App” as the template type. An alternative is “Blazor WebAssembly Standalone App”, this is also doable, but in my experience the former is easier to work with. It makes little difference.
+5. No authentication, we will apply our own later on.
+6. Create the project.
 
 ![alt text](Images/part%205/image-6.png)
 
 ### Add project reference
+
 Your Web API receives DTOs, and these are sent from the Blazor app. This means that the Blazor project should reference your ApiContracts project in the Shared solution folder.
 
 ### Set default render mode
+
 Remember to set the default render mode, so that your pages are not static.
 
 Open the App.razor file, and add:
@@ -1178,6 +1238,7 @@ Open the App.razor file, and add:
 ![alt text](Images/part%205/image-7.png)
 
 ## Step 5.3 - User management
+
 Most of your entities are probably connected to a user, e.g. a post is written by a user, or a comment is written by a user.
 
 This might mean, your web api checks for an existing user, when you add a new post or comment.
@@ -1189,11 +1250,13 @@ This obviously means all posts, comments, etc, will be written by the same user.
 In the next assignment we will add a login system, so you can distinguish between users, and who is logged in. In that case, you can update your code, so when a post, comment, whatever is created in Blazor, you can check who is logged in, get their ID, and then assign the correct ID to the post, comment, whatever.
 
 ## Step 5.4 - Develop Blazor App
+
 Now it’s time to develop the actual app.
 
 You don’t get a lot of help this time around, I instead expect you to rely on the online documentation linked to in itslearning. Do note that this documentation probably uses the WebAssembly approach, though almost everything else should be the same. I strongly recommend you use a Blazor Server approach, as it it easier to work with, and debug.
 
 ### Http structure
+
 You Blazor app will, somehow, use the HttpClient class to contact the Web API (as taught in a previous session). To keep some separation of concern, you will put your HttpServices in a separate folder:
 
 ![alt text](Images/part%205/image-8.png)
@@ -1234,7 +1297,7 @@ public class HttpUserService : IUserService
     {
         // todo...
     }
-    
+
     // more methods...
 }
 ```
@@ -1242,6 +1305,7 @@ public class HttpUserService : IUserService
 Notice the HttpClient is injected through the constructor. This happens automatically when we use the dependency injection functionality.
 
 ### Add HttpClient for dependency injection
+
 Blazor supports dependency injection, similar to the Web API. So, we need to register services (our own, e.g. UserService, PostService, etc), and also an HttpClient.
 
 The HttpClient is registered in the BlazorApp/Program.cs file like this:
@@ -1251,10 +1315,11 @@ The HttpClient is registered in the BlazorApp/Program.cs file like this:
 The BaseAddress property must point to your Web API, so the port, 7005, is probably different in your app. When you run the Web API, the address is printed to the console. Notice it is the https value.
 
 ### HTTP service implementation example
+
 Most of the methods in the services are pretty similar:
 
- - You want to send something to the server
- - You want to handle the response, whether success or failure
+- You want to send something to the server
+- You want to handle the response, whether success or failure
 
 And so, the code gets repetitive. I provide here an example for the AddUserAsync method:
 
@@ -1285,56 +1350,63 @@ If the status code of the http response is not a success, we throw an exception.
 Otherwise, the response is deserialized into the expected object, UserDto, and returned. You might need this, e.g. to navigate to the user’s home page or whatever.
 
 ### Required features
+
 Various previous assignments have suggested different features, again, you can decide your own, but you must at least support:
 
- - Add new user.
- - Create post.
- - View a list of posts (just title, and perhaps author name).
- - Be able to click a post from the list in 3) and see the details of that post:
-   - Title.
-   - Body.
-   - Author name.
-   - Comments.
- - Add comment to a post.
+- Add new user.
+- Create post.
+- View a list of posts (just title, and perhaps author name).
+- Be able to click a post from the list in 3) and see the details of that post:
+  - Title.
+  - Body.
+  - Author name.
+  - Comments.
+- Add comment to a post.
 
- You probably have all kinds of other end-points in your Web API, so consider creating more pages (implement more features) to use these end-points.
+You probably have all kinds of other end-points in your Web API, so consider creating more pages (implement more features) to use these end-points.
 
- ## Step 5.5 - Formalities
- - You may work on this assignment in groups.
- - You must have your assignment on github.
+## Step 5.5 - Formalities
+
+- You may work on this assignment in groups.
+- You must have your assignment on github.
 
 Deadline can be found on itslearning.
 
-
 # Part 6 - Authentication and Authorization
+
 In this assignment you will expand your app with a login system. The assignment here is this time around more a tutorial.
 
 Authentication and authorization are not part of the DNP exam, but it is probably relevant for your SEP3.
 
 ## Step 6.1 - Status
+
 At this point you should have a somewhat working blazor application.
 
 ## Step 6.2 - Authentication
+
 We are going to add a login system. It will be quite simple, and not particularly secure, but it is enough to simulate having different users with different access and privileges.
 
 The login works roughly as follows:
 
-1)	User types in user name and password.
-2)	This is sent to a specific endpoint in a specific controller in your Web API.
-3)	The endpoint will check that the user exists, and the password matches.
-4)	The server will return a UserDto containing all relevant information about the user.
-5)	The Blazor receives the UserDto, converts it to a list of [Claims](https://learn.microsoft.com/en-us/dotnet/api/system.security.claims.claim?view=net-8.0), which it stores in a specific class: SimpleAuthService.
-6)	The Blazor framework uses SimpleAuthService to retrieve the list of claims whenever the framework needs to know if someone is logged in, and who they are.
+1. User types in user name and password.
+2. This is sent to a specific endpoint in a specific controller in your Web API.
+3. The endpoint will check that the user exists, and the password matches.
+4. The server will return a UserDto containing all relevant information about the user.
+5. The Blazor receives the UserDto, converts it to a list of [Claims](https://learn.microsoft.com/en-us/dotnet/api/system.security.claims.claim?view=net-8.0), which it stores in a specific class: SimpleAuthService.
+6. The Blazor framework uses SimpleAuthService to retrieve the list of claims whenever the framework needs to know if someone is logged in, and who they are.
 
 First, we deal with the server, which you can then test through the swagger page. Then we expand upon the Blazor app.
 
 ### Web API
+
 First, we implement the server side. It will require a new controller and perhaps some DTOs. Nothing too elaborate.
 
 #### Login info
+
 You need a way to send the username and password to the server. This could be a DTO class. I call mine LoginRequest and put it in the Shared/ApiContracts.
 
 #### AuthController
+
 Now, let’s add the server-side login functionality. I recommend a dedicated Controller:
 
 ![alt text](Images/part%206/image.png)
@@ -1345,13 +1417,14 @@ Your controller needs access to the IUserRepository, so that it can find the giv
 
 Your controller needs a POST endpoint, with the route “auth/login”, which receives the DTO class defined above.
 
-1)	Find the user by its username
-2)	If the user does not exist, return an error code, e.g. Unauthorized.
-3)	If the password is incorrect, return an error code, e.g. Unauthorized.
-4)	Convert the User to a UserDto (so we don’t send back the password, or other sensitive information)
-5)	Return the UserDto
+1. Find the user by its username
+2. If the user does not exist, return an error code, e.g. Unauthorized.
+3. If the password is incorrect, return an error code, e.g. Unauthorized.
+4. Convert the User to a UserDto (so we don’t send back the password, or other sensitive information)
+5. Return the UserDto
 
 #### Test AuthController
+
 You should be able to run the Web API now and try out the login endpoint. Give it a go. Verify you get back JSON representing your UserDto.
 
 Does it behave correctly, when you provide incorrect user information?
@@ -1365,9 +1438,11 @@ You can see my UserDto as JSON. I don’t have that many properties, but you mig
 Now your server is ready. Let’s move on to the client side.
 
 ### Blazor
+
 On the client side we must add some authentication functionality, a class responsible for providing authentication information to the Blazor framework, and a login page.
 
 #### Add NuGet packages
+
 First, we must add some functionality to the Blazor app. This is done with NuGet packages.
 
 NuGet is a “marketplace”, where we can get access to all kinds of functionality created by others. In SEP2 you had to import a postgres jar file, so your server could access the database. NuGet is similar, just simpler.
@@ -1376,7 +1451,7 @@ Open the NuGet view:
 
 ![alt text](Images/part%206/image-2.png)
 
-You can also click the NuGet icon to the lower left: 
+You can also click the NuGet icon to the lower left:
 
 ![alt text](Images/part%206/image-3.png)
 
@@ -1386,13 +1461,14 @@ To your Blazor application:
 
 ![alt text](Images/part%206/image-4.png)
 
-1)	Open NuGet
-2)	Type in package name
-3)	Select package
-4)	Just pick latest version, which matches your current .NET version, i.e. probably 8.0.x
-5)	Click the plus button to add the package to the Blazor app project.
+1. Open NuGet
+2. Type in package name
+3. Select package
+4. Just pick latest version, which matches your current .NET version, i.e. probably 8.0.x
+5. Click the plus button to add the package to the Blazor app project.
 
 #### Wrap Blazor application in authentication
+
 We need to wrap the entire Blazor app in some authentication information. This means that everywhere in your app, you can request information about the currently logged in user, if any.
 
 Open the file BlazorApp/Components/Routes.razor.
@@ -1422,14 +1498,14 @@ Notice the first tag, which surrounds everything: <CascadingAuthenticationState>
 
 And then there is a part in the middle, the <AuthorizeRouteView tag, which is also new. This is just to show an image to the user, if they try to access a page, they are not allowed to. You can change the <img> tag with a message or something else, if you prefer.
 
-Rider should display the <CascadingAuthenticationState> in a different colour than e.g. the <Router> tag (this is not the case in the above snippet). This is because <CascadingAuthenticationState> is not yet recognized as a Blazor component, but rather just a normal HTML tag. 
+Rider should display the <CascadingAuthenticationState> in a different colour than e.g. the <Router> tag (this is not the case in the above snippet). This is because <CascadingAuthenticationState> is not yet recognized as a Blazor component, but rather just a normal HTML tag.
 
 So, we must tell the app that <CascadingAuthenticationState> is a component.
 
-We do this by opening BlazorApp/Components/_Imports.razor. At the end just insert the following two using statements:
+We do this by opening BlazorApp/Components/\_Imports.razor. At the end just insert the following two using statements:
 
- - @using Microsoft.AspNetCore.Components.Authorization
- - @using Microsoft.AspNetCore.Authorization
+- @using Microsoft.AspNetCore.Components.Authorization
+- @using Microsoft.AspNetCore.Authorization
 
 This will import the above-mentioned component, from the NuGet package (library) which you imported above. Now your Blazor app knows about the CascadingAuthenticationState component.
 
@@ -1438,6 +1514,7 @@ NOTE: My entire app blew up and showed errors in many places after the import, b
 Go back to the Routes.razor file. Notice the color of CascadingAuthenticationState has changed, it is now recognized as a Blazor component, instead of an HTML tag.
 
 #### SimpleAuthProvider
+
 This class is responsible for providing the a of claims representing your user, whenever the Blazor framework needs to authorize anything.
 
 Create a new folder, Auth, and inside a new class: SimpleAuthProvider
@@ -1460,15 +1537,16 @@ This method is inherited from AuthenticationStateProvider, which is a class alre
 
 This class is going to work as follows:
 
-1)	We create a Login method. This will contact your web api, and receive back the UserDto.
-2)	The UserDto is converted to a list of claims.
-3)	The list of claims is packaged in a ClaimsPrincipal, and stored in a field variable for future use.
-4)	We must notify the app about a change in authentication state, this will cause the app to refresh and request the new authentication state.
-5)	When the Blazor app needs to get the authentication state, the ClaimsPrincipal is wrapped in an Authentication state and returned.
+1. We create a Login method. This will contact your web api, and receive back the UserDto.
+2. The UserDto is converted to a list of claims.
+3. The list of claims is packaged in a ClaimsPrincipal, and stored in a field variable for future use.
+4. We must notify the app about a change in authentication state, this will cause the app to refresh and request the new authentication state.
+5. When the Blazor app needs to get the authentication state, the ClaimsPrincipal is wrapped in an Authentication state and returned.
 
 So, we start with the Login method.
 
 ##### Login Method
+
 Add the following method to SimpleAuthProvider. The method receives a username and password and sends this to the web api:
 
 ```csharp
@@ -1522,25 +1600,26 @@ public class SimpleAuthProvider : AuthenticationStateProvider
 
 Okay, now we have some stuff to talk about:
 
- - Notice the field variable of HttpClient, this is used to contact the web api.
- - Notice also the field variable of ClaimsPrincipal, this stores our current authentication state. It is initialized to an “empty” Principal, i.e. there is no ClaimsIdentity in it. This basically means, there is no user information, and no-one is logged in.
- - The HttpClient is injected through the constructor.
- - The Login method is implemented, described below.
+- Notice the field variable of HttpClient, this is used to contact the web api.
+- Notice also the field variable of ClaimsPrincipal, this stores our current authentication state. It is initialized to an “empty” Principal, i.e. there is no ClaimsIdentity in it. This basically means, there is no user information, and no-one is logged in.
+- The HttpClient is injected through the constructor.
+- The Login method is implemented, described below.
 
- The Login method shown above works as follows:
+The Login method shown above works as follows:
 
- 1)	Call the web api with a LoginRequest, containing relevant information.
-2)	Read the content of the response. This a string, either:
-    a.	An error message, e.g. if the user name or password was incorrect
-    b.	A list of claims, representing the user object, as JSON.
-3)	If the request was unsuccessful, we throw an exception, which can be caught in a page, and the error message can be displayed to the user.
-4)	Otherwise, we deserialize the JSON into a UserDto. Notice the JSON options parameter, this is because the JSON uses camelCase, but my UserDto properties are PascalCase. So, we must tell the serializer to ignore casing, when looking for the correct properties to put values into.
-5)	The UserDto is converted to a list of claims.
-6)	The list of claims is packaged into a ClaimsIdentity.
-7)	The ClaimsIdentity is packaged into a ClaimsPrincipal, which is saved in the field variable.
-8)	And finally, we notify the app about a change in authentication state. Blazor will then update and change accordingly. Maybe some pages/components/whatever is now visible, or hidden, based on the state.
+1. Call the web api with a LoginRequest, containing relevant information.
+2. Read the content of the response. This a string, either:
+   a. An error message, e.g. if the user name or password was incorrect
+   b. A list of claims, representing the user object, as JSON.
+3. If the request was unsuccessful, we throw an exception, which can be caught in a page, and the error message can be displayed to the user.
+4. Otherwise, we deserialize the JSON into a UserDto. Notice the JSON options parameter, this is because the JSON uses camelCase, but my UserDto properties are PascalCase. So, we must tell the serializer to ignore casing, when looking for the correct properties to put values into.
+5. The UserDto is converted to a list of claims.
+6. The list of claims is packaged into a ClaimsIdentity.
+7. The ClaimsIdentity is packaged into a ClaimsPrincipal, which is saved in the field variable.
+8. And finally, we notify the app about a change in authentication state. Blazor will then update and change accordingly. Maybe some pages/components/whatever is now visible, or hidden, based on the state.
 
 ##### GetAuthenticationState
+
 We are now ready to implement this method, it was left to just throw an exception. Remember, this is the method, which the Blazor framework will call to access the current authentication state.
 
 It just returns the ClaimsPrincipal field variable:
@@ -1555,6 +1634,7 @@ public override async Task<AuthenticationState> GetAuthenticationStateAsync()
 The ?? is a [null coalescing operator](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/operators/null-coalescing-operator). It will check if currentClaimsPrincipal is null, and if so, then return the part after the ??, i.e. a new instance of ClaimsPrincipal.
 
 ##### Log out
+
 We might want to log out at some point.
 
 To log out, we “reset” the ClaimsPrincipal to an empty one, and notify the framework about a change in authentication state.
@@ -1572,6 +1652,7 @@ public void Logout()
 And that should be it.
 
 ##### Register AuthenticationStateProvider
+
 Finally, we need to register our class here as a service, so the Blazor framework knows about our specific authentication state provider.
 
 Open BlazorApp/Program.cs, and register the state provider as a service:
@@ -1596,7 +1677,8 @@ builder.Services.AddScoped<AuthenticationStateProvider, SimpleAuthProvider>();
 ```
 
 #### Login page
-We need a page, where the user can insert username and password. 
+
+We need a page, where the user can insert username and password.
 
 So, create a new page in an Authentication folder (just create it):
 
@@ -1605,6 +1687,7 @@ So, create a new page in an Authentication folder (just create it):
 In this page, we must add the necessary input fields, along with some code.
 
 ##### The code
+
 First, we start with the code part, then we can do the view afterwards:
 
 ```csharp
@@ -1648,6 +1731,7 @@ The @code block defines fields for user name and password, and an error.
 Then the method, it just calls the Login on SimpleAuthProvider, if everything succeeds, the user is taken back to the front page. We do have to cast the AuthenticationStateProvider to a SimpleAuthProvider, because that’s where the Login method is defined. This looks a bit ugly, but it’s the simplest approach.
 
 ##### The view
+
 Then for the view, it’s a bit more involved:
 
 ```csharp
@@ -1672,14 +1756,15 @@ Then for the view, it’s a bit more involved:
 </AuthorizeView>
 ```
 
-We wrap everything in <AuthorizeView> tags. This tag gets the current authentication state, and inside the tag, we can then define two views, one for when no-one is logged in, and one for when a user is logged in. 
+We wrap everything in <AuthorizeView> tags. This tag gets the current authentication state, and inside the tag, we can then define two views, one for when no-one is logged in, and one for when a user is logged in.
 
 The html to show when no-one is logged in is inside the <NotAuthorized> tags. So, everything inside this tag is only shown, when no-one is authorized, i.e. logged in. You can probably guess what the <Authorized> tag does.
 
 I have really stripped this to the bone, there are no divs to organize anything. You might make this more pretty with styling and tag-organization, if you wish.
 
 #### Test
-Currently the authentication works sort of okay, so we can test it out. I will suggest an optional improvement later. 
+
+Currently the authentication works sort of okay, so we can test it out. I will suggest an optional improvement later.
 
 Open the Home page file, and modify it to this:
 
@@ -1729,6 +1814,7 @@ On successful login, you are redirected to the front page. If you manually navig
 If this works for you, congratulations, you now have a simple login system, and you can use the <AuthorizeView> tag to show/hide parts of your application. We can do more as well, which will be described in the Authorization section further down.
 
 #### Improvement by caching the user (Optional)
+
 This part is optional. Everything will still work if you skip this. But it may work in a slightly annoying way.
 
 As long as you only use the NavigationManager to navigate between pages, you will not notice problems.
@@ -1737,15 +1823,16 @@ But, if you use the browser back or forward buttons, or if you manually type in 
 
 Here’s what’s going on:
 
- - When you open Blazor a new instance of SimpleAuthProvider is created, i.e. no-one is logged in.
- - The SimpleAuthProvider is added as scoped service. This means whenever a new tab is opened, or the current tab is refreshed, you get a new instance.
- - When you get a new instance, the cached user info in the instance variable is lost. And you are logged out again.
+- When you open Blazor a new instance of SimpleAuthProvider is created, i.e. no-one is logged in.
+- The SimpleAuthProvider is added as scoped service. This means whenever a new tab is opened, or the current tab is refreshed, you get a new instance.
+- When you get a new instance, the cached user info in the instance variable is lost. And you are logged out again.
 
 Is this unconvenient? Sure. Would this be allowed in a real web site? Surely not. Is it really important for this assignment, or for SEP3? Not really.
 
 But we can improve it a bit, so that the browser remembers log-in information. This will mean all tabs will share log in, so if you want to log in with multiple users, e.g. for testing purposes, you will probably need either incognito mode or multiple browsers, e.g. Edge, Chrome, and Firefox.
 
 ##### Caching the user in the browser
+
 This sub-section will put the logged in user in the browser cache.
 
 Open SimpleAuthProvider.
@@ -1787,10 +1874,10 @@ public async Task LoginASync(string userName, string password)
     {
         PropertyNameCaseInsensitive = true
     })!;
-    
+
     string serialisedData = JsonSerializer.Serialize(userDto);
     await jsRuntime.InvokeVoidAsync("sessionStorage.setItem", "currentUser", serialisedData);
-    
+
     List<Claim> claims = new List<Claim>()
     {
         new Claim(ClaimTypes.Name, userDto.UserName),
@@ -1841,15 +1928,16 @@ public override async Task<AuthenticationState> GetAuthenticationStateAsync()
 
 This is a bit unnerving looking, true. Here’s what’s going on:
 
- - We define an empty string for the user as JSON.
- - We try to fetch the JSON from the session storage. Blazor has a life-cycle, and jsruntime is not available initially, and so this may fail. That’s why it is wrapped in a try-catch. Upon failure an empty ClaimsPrincipal is returned, from the catch-clause.
- - If the jsruntime does not fail, we then check if the return userAsJson is null or empty, in which case no one is logged in, so a new ClaimsPrincipal is returned.
- - Then we get to the point, where we have a user-as-JSON. It is deserialized into a UserDto.
- - The rest you have seen before.
+- We define an empty string for the user as JSON.
+- We try to fetch the JSON from the session storage. Blazor has a life-cycle, and jsruntime is not available initially, and so this may fail. That’s why it is wrapped in a try-catch. Upon failure an empty ClaimsPrincipal is returned, from the catch-clause.
+- If the jsruntime does not fail, we then check if the return userAsJson is null or empty, in which case no one is logged in, so a new ClaimsPrincipal is returned.
+- Then we get to the point, where we have a user-as-JSON. It is deserialized into a UserDto.
+- The rest you have seen before.
 
 You should now be able to test your application again, and refreshing the web site should keep you logged in.
 
 ##### How to log out?
+
 We must reset the browser’s session storage.
 
 ```csharp
@@ -1863,14 +1951,17 @@ public async Task Logout()
 Notice the change in method signature, it is now async Task.
 
 ##### Further improvements
+
 Currently we will every time retrieve the user-as-JSON. We could introduce again a field variable in the class as a “primary cache”. If this field is null or empty, look in the browser’s session storage. If this is also null or empty, then no user is logged in. I leave this to you. It’s just a minor optimization, but you will probably not notice a big difference.
 
 ## Step 6.3 Authorization
+
 Currently, your app can know whether someone is logged in or not. But you probably also need different privileges based on who is logged in. For example, perhaps only the original author of a post can edit this post.
 
 Or maybe some parts of your app is off limits based on the users age or other.
 
 ### Policies
+
 A policy is a somewhat simple mechanic, where you can define a rule, and users fulfilling this rule gets access to “whatever”.
 
 They are limited, however, so instead of going over this here, you should check out this [ASP.NET Core Blazor authentication and authorization | Microsoft Learn](https://learn.microsoft.com/en-us/aspnet/core/blazor/security/?view=aspnetcore-8.0#role-based-and-policy-based-authorization)
@@ -1882,9 +1973,10 @@ Policies are more general, does a user fulfil a certain criteria. But they can (
 For these scenarios, we need a bit more programming.
 
 #### Block page access
+
 You can block access to a page by adding the following line at the top of the page:
 
-```csharp 
+```csharp
 @attribute [Authorize]
 ```
 
@@ -1893,13 +1985,15 @@ Then the page can only be accessed, if the user is logged in.
 ![alt text](Images/part%206/image-9.png)
 
 #### Auth context
+
 Inside an <AuthorizeView><Authorized> block you can access the context variable, which contains information about the user:
 ![alt text](Images/part%206/image-10.png)
 
 ### Retrieving current user
+
 Because we initially “wrapped the application in authentication”, we can anywhere request information about the currently logged in user.
 
-In the code  block you can define the following property:
+In the code block you can define the following property:
 
 ```csharp
 @code {
@@ -1930,16 +2024,16 @@ The statements show how to extract different information from the Authentication
 
 Lines:
 
-1)	Get the AuthenticationState.
-2)	Get the ClaimsPrincipal
-3)	Checking if there is a ClaimsIdentity, or if that ClaimsIdentity is authenticated.
-4)	If not authenticated, then no-one is logged in. And we cannot extract further information about the user. Because no-one is logged in.
-5)	Get the list of Claims, which you defined. My example far above just set the Name and a custom “Id” value.
-6)	Extract the user name of the currently logged in user. There is a question mark, because Identity may be null, in which case the statement will assign null to username.
-7)	From the list of Claims I extract a single Claim based on the Type being “Id”. Then I get the Value of this claim, which is the user id, although as a string. You should probably convert it to int. Maybe.
-8)	You might extract other claims, e.g. a comma-separated list-as-string of forum IDs, which the user moderates. 
+1. Get the AuthenticationState.
+2. Get the ClaimsPrincipal
+3. Checking if there is a ClaimsIdentity, or if that ClaimsIdentity is authenticated.
+4. If not authenticated, then no-one is logged in. And we cannot extract further information about the user. Because no-one is logged in.
+5. Get the list of Claims, which you defined. My example far above just set the Name and a custom “Id” value.
+6. Extract the user name of the currently logged in user. There is a question mark, because Identity may be null, in which case the statement will assign null to username.
+7. From the list of Claims I extract a single Claim based on the Type being “Id”. Then I get the Value of this claim, which is the user id, although as a string. You should probably convert it to int. Maybe.
+8. You might extract other claims, e.g. a comma-separated list-as-string of forum IDs, which the user moderates.
 
-If you assign any of these above variables to a field variable, you can then use them in the view part of the page. 
+If you assign any of these above variables to a field variable, you can then use them in the view part of the page.
 
 For example, if the user owns the post, we might show an edit button:
 
@@ -1953,21 +2047,430 @@ For example, if the user owns the post, we might show an edit button:
 The user id can now also be used when you create a new post, to automatically set the author id of that post. Or similarly for comments.
 
 ## Step 6.4 Update your app
+
 Now you should be able to add authentication and authorization to your app. You probably have a few different places you need to update, now that you have a user id of the logged in user, e.g.: creating a post or comment.
 
 ## Step 6.5 Formalities
+
 You may work on this assignment in groups.
 
 You must have your assignment on GitHub.
 
 Deadline can be found on itslearning.
 
-# Part 7 - Some other stuff
-Introductionary text...
+# Part 7 - Entity Framework Core
 
-## Step 1
+In this assignment you will expand your app with a new repository implementation, this time an actual database, but with EFC on top of it.
 
-## Step 2
+## Step 7.1 - Status
 
-## Step 3
+You now have an actual client-server application, with a web site front end.
 
+Your application should look something like this:
+
+![alt text](Images/part%207/image.png)
+
+Or as a component diagram, we can show it like below. I have removed unused projects (CLI, and In-Memory repositories):
+
+![alt text](Images/part%207/image-1.png)
+
+## Step 7.2 - Setup
+
+In your Server solution folder, create a new class library, I have called mine “EfcRepositories”.
+
+Then add dependencies:
+
+- EfcRepositories -> RepositoryContracts
+- WebAPI -> EfcRepositories
+
+## Step 7.3 Add EFC packages
+
+I recommend using SQLite. If you have a strong urge to use Postgres or other relational database, you are free to do this. You will need other packages, than the ones mentioned below.
+
+Add the following NuGet packages to your new class library:
+
+- Microsoft.EntityFrameworkCore
+- Microsoft.EntityFrameworkCore.Design
+- Microsoft.EntityFrameworkCore.Sqlite
+
+## Step 7.4 - Add Context
+
+Add a DbContext subclass to your new library, I have called mine AppContext. This is the “entry point” to the database.
+
+Define necessary DbSets. This is what my class then looks like:
+
+```csharp
+public class AppContext : DbContext
+{
+    public DbSet<Post> Posts => Set<Post>();
+    public DbSet<User> Users => Set<User>();
+    public DbSet<Comment> Comments => Set<Comment>();
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        optionsBuilder.UseSqlite("Data Source=app.db");
+    }
+}
+```
+
+The class inherits from the DbContext, that’s necessary.
+
+I define DbSets for each entity. Some tutorials will define them differently, as a normal property, that’s also fine.
+
+The DbSet is essentially a representation of a table in the database.
+
+In the OnConfiguring method, we specify to use Sqlite, and the database file is called “app.db”.
+
+## Step 7.5 - Update entity relationships
+
+Now, this step will probably unfortunately break. Currently you are using foreign keys between your entities, one way or another. Or you should. Now, we will add associations, because that’s generally what EFC is using.
+
+So, update the relationships of your domain entities so they match what EFC requires. You should watch my video series on this.
+
+Include navigation properties in both directions.
+
+You may delete the foreign key (which will break a lot, but this should be updated anyway), or specify it to be the foreign key. If you follow the naming conventions, it will happen automatically. Or you may need to specify it explicitly.
+
+I suggest including a private no-argument constructor in each entity, for example:
+
+```csharp
+	private User(){}  // for EFC
+```
+
+This assumes all properties on your entities have a set; and get;. Either public or private.
+
+Afterwards, you should fix potential errors in your Web API (and maybe CLI), which was caused by the change. Maybe there are none.
+
+## Step 7.6 Generate migration
+
+Once your DbContext is in place, and entities are updated, you need to create a migration.
+
+### Db tools
+
+If this is your first time, you need to install some tooling to the CLI.
+Open the terminal, and type in:
+
+```
+dotnet tool install -g dotnet-ef
+```
+
+You only need to do this once on your computer.
+
+### Create migration
+
+To create a migration, in the terminal navigate to your EfcRepositories folder:
+
+![alt text](Images/part%207/image-2.png)
+
+Then you type in the following command:
+
+```
+dotnet ef migrations add initial
+```
+
+The last “initial” is the name of this migration. You should name each migration after what is being changed.
+
+It hopefully succeeds.
+
+You should now see a Migrations directory in your project:
+
+![alt text](Images/part%207/image-3.png)
+
+The selected file is the migration just created, it contains information about which tables and columns to create. Also about foreign keys. You can open it and scroll through.
+
+My files are in red, because they are not tracked by git. If you work in a group, these migration files need to be tracked and shared to group members. Not the *Snapshot file though, this file keeps track of which migrations are applied to your local database. If your database is cloudhosted, the *Snapshot file needs to be tracked too.
+
+If you cloud host your database, I recommend having one group member responsible for creating and applying migrations. It reduces the chance of messing up.
+
+## Step 7.7 - Create database
+
+Now, you have a migration. If you apply that to a non-existing database, the database will be created. In our case of using SQLite, it will create a \*.db file.
+
+In the terminal, type in the following command:
+
+```
+dotnet ef database update
+```
+
+Then, you should notice a new file:
+
+![alt text](Images/part%207/image-4.png)
+
+This is your database. In Rider you can open it by double clicking, which will give you a view similar to DataGrip:
+
+![alt text](Images/part%207/image-5.png)
+
+Please inspect your tables to verify they make sense. Do they have the right columns, primary, and foreign keys?
+
+## Step 7.8 - Implement repositories
+
+It’s time to implement the repositories. They are, again, very similar.
+
+Each repository needs access to the DbContext, so inject that through the constructor:
+
+```csharp
+public class EfcPostRepository : IPostRepository
+{
+    private readonly AppContext ctx;
+
+    public EfcPostRepository(AppContext ctx)
+    {
+        this.ctx = ctx;
+    }
+```
+
+Then implement each method. Remember to call ctx.SaveChanges() when relevant.
+
+### Add
+
+This is my code for the add post:
+
+```csharp
+public async Task<Post> AddAsync(Post post)
+{
+    EntityEntry<Post> entityEntry = await ctx.Posts.AddAsync(post);
+    await ctx.SaveChangesAsync();
+    return entityEntry.Entity;
+}
+```
+
+When adding a post, it gets an id, which is contained in the entityEntry.Entity. The Entity here is the “final” post.
+
+### Update
+
+```csharp
+public async Task UpdateAsync(Post post)
+{
+    if (!(await ctx.Posts.AnyAsync(p => p.Id == post.Id)))
+    {
+        throw new NotFoundException("Post with id {post.Id} not found");
+    }
+
+    ctx.Posts.Update(post);
+    await ctx.SaveChangesAsync();
+}
+```
+
+First we check if the post exists.
+
+Then we use the Update method.
+
+### Delete
+
+```csharp
+public async Task DeleteAsync(int id)
+{
+    Post? existing = await ctx.Posts.SingleOrDefaultAsync(p => p.Id == id);
+    if (existing == null)
+    {
+        throw new NotFoundException($"Post with id {id} not found");
+    }
+
+    ctx.Posts.Remove(existing);
+    await ctx.SaveChangesAsync();
+}
+```
+
+In order to delete an entity, it must first be fetched, and then removed.
+
+### GetSingle
+
+You should be able to implement this based on the above.
+
+### GetMany
+
+```csharp
+public IQueryable<Post> GetMany()
+{
+    return ctx.Posts.AsQueryable();
+}
+```
+
+That’s it.
+
+## Step 7.9 - Update Web API
+
+It’s time to update the Web API. You need to use the new repositories, and you might want to update the endpoints, because of how EFC can load associated data.
+
+### Swap repository implementations
+
+In the WebAPI/Program.cs, swap the repository implementations.
+
+### Register DbContext
+
+Each new repository is requesting an AppContext through the constructor. So this has to be registered as a service too. There is a specific method for registering DbContexts:
+
+![alt text](Images/part%207/image-6.png)
+
+### Test
+
+You should actually be able to run your WebAPI now, and interact with it. You can use either the Blazor app, or just the swagger page opened by the Web API.
+
+Just make a few requests, and verify they end up in the database, by inspecting the tables through the DataGrip-like database view. You can double click on a table (or refresh an open table), to inspect the data.
+
+If you get an exception, with a message like:
+
+![alt text](Images/part%207/image-7.png)
+
+This is because in your AppContext you need to specify either a relative path or the absolute path to the app.db file. This is very inconvenient when in a group, because this path is different for each of you.
+
+My absolute path is:
+
+```
+C:\TRMO\RiderProjects\DnpCourseAssignment2024\Server\EfcRepositories\app.db
+```
+
+Alternatively, the relative path is from the WebAPI project, so something like this:
+
+```
+..\EfcRepositories\app.db
+```
+
+There are other ways around this, usually the path is put into a configuration file, but you will have to google this yourself. Alternatively, just update the path last, and don’t push the changed AppContext.
+
+Or put the path in a separate class as a static public property, and push this class, by after updating the path, don’t push it again.
+
+Here’s my updated absolute path in AppContext:
+
+![alt text](Images/part%207/image-8.png)
+
+You can right-click the app.db file and copy the absolute path:
+
+![alt text](Images/part%207/image-9.png)
+
+Then test again.
+
+If you are anywhere sending or receiving domain entities, you may now get an exception from JSON serialization, because of cycles. For example, my Post now references a User, which references a Post, which references a User, which…
+
+This is a cycle. It cannot be serialized. And I don’t want it to.
+
+So, in my AddPost endpoint, I previously returned the Post entity. It failed with the above exception. I’m now returning a PostDto instead. This class does not have the cycle.
+
+### Update endpoints
+
+Most of your endpoints are just working with a single entity, in which case this should still work. But you should still look over if any synchronous methods can be made async now.
+
+### GetMany
+
+These endpoints are probably synchronous currently, something like this:
+
+```csharp
+[HttpGet]
+public ActionResult<IEnumerable<User>> GetUsers([FromQuery] string? userNameContains = null)
+{
+    IList<User> users = userRepo.GetMany()
+        .Where(
+            u => userNameContains == null ||
+                 u.UserName.ToLower().Contains(userNameContains.ToLower())
+        ).ToList();
+
+    return Ok(users);
+}
+```
+
+Notice the ToList() call at the end. We can now update this to use ToListAsync(), which is a method we now have access to, because the Web API knows about EfcRepositories, which knows about EFC:
+
+![alt text](Images/part%207/image-10.png)
+
+You can see here the ToListAsync() method exists in the Microsoft.EntityFrameworkCore namespace, which we didn’t have access to before we added this package to the EfcRepositories project.
+
+To improve performance, update your ToList() calls to be async. This requires a change to the method signature too:
+
+```csharp
+[HttpGet]
+public async Task<ActionResult<IEnumerable<User>>> GetUsers([FromQuery] string? userNameContains = null)
+{
+    IList<User> users = await userRepo.GetMany()
+        .Where(
+            u => userNameContains == null ||
+                 u.UserName.ToLower().Contains(userNameContains.ToLower())
+        ).ToListAsync();
+
+    return Ok(users);
+}
+```
+
+Basically, where-ever you use the GetMany method, you may need to update a following synchronous call to async. For example, in my UsersController, when adding a User, I check if any user has the same user name. Here I use AnyAsync().
+
+### Get entity with other entities
+
+If you have an endpoint, which somehow interacts with multiple entities, you may look into updating it.
+
+For example, I have an endpoint to retrieve a PostDto, and optionally the client can request to include comments, or author.
+
+My current version, which you can see in the uploaded solution suggestion, will extract first the post, and then comments, and then author. As necessary. This results in multiple requests to the database, which works, but it can be done in one go instead, which increases performane. This is going to be a bit complicated.
+
+Here’s the new endpoint:
+
+```csharp
+[HttpGet("{id:int}")]
+public async Task<IResult> GetPost(
+    [FromRoute] int id,
+    [FromQuery] bool includeAuthor,
+    [FromQuery] bool includeComments)
+{
+    IQueryable<Post> queryForPost = postRepo
+        				.GetMany()
+        				.Where(p => p.Id == id)
+        				.AsQueryable();
+
+    if (includeAuthor)
+    {
+        queryForPost = queryForPost.Include(p => p.User);
+    }
+
+    if (includeComments)
+    {
+        queryForPost = queryForPost.Include(p => p.Comments);
+    }
+
+    PostDto? dto = await queryForPost.Select(post => new PostDto()
+        {
+            Id = post.Id,
+            Title = post.Title,
+            Body = post.Body,
+            UserId = post.UserId,
+            Author = includeAuthor
+                ? new UserDto
+                {
+                    Id = post.User.Id,
+                    UserName = post.User.UserName
+                }
+                : null,
+            Comments = includeComments
+                ? post.Comments.Select(c => new CommentDto
+                {
+                    Id = c.Id,
+                    Body = c.Body,
+                    AuthorUserId = c.UserId
+                }).ToList()
+                : new ()
+        })
+        .FirstOrDefaultAsync();
+
+    return dto == null ? Results.NotFound() : Results.Ok(dto);
+}
+```
+
+Step 1: GetMany posts, filter by Id. Now I have a collection of a single post. This is an IQueryable, i.e. it is an SQL statement, but has not yet been executed.
+
+Step 2: if includeAuthor is true, update the IQueryable queryForPost (i.e. the SQL statement) to include the comments of the post. This will automatically handle the joining of tables etc for us.
+
+Step 3: The same with comments.
+
+Step 4: Convert the Post to a PostDto with Select(). The first four properties should be straightforward: Id, Title, Body, UserId.
+
+Step 5: Setting the Author property, I use the ternary expression here, i.e. “condition ? then : else”. If includeAuthor is true, create a new UserDto from the associated loaded Post.User. Otherwise just return null here.
+
+Step 6: Similarly for the comments, if includeComments is true, convert the post.Comments to a list of CommentDto. Otherwise just an empty list, created with the “new ()”.
+
+Step 7: Use FirstOrDefaultAsync() to just get the first PostDto (there should be only one, or zero). This call actually executes the SQL statement against the database. Up until now, we have just constructed the statement.
+
+Step 8: Either return NotFound or Ok, based on whether the dto is null or not. It will be null if no post with a matching ID was found in the initial where clause.
+
+## Step 7.10 - Formalities
+
+- You may work on this assignment in groups.
+- You must have your assignment on github.
+
+Deadline can be found on itslearning.
