@@ -1,4 +1,4 @@
-# 11 Exercises: EFC Queries
+# 11 Exercises: LINQ
 
 ## 11.1 Book Shop Exercises - part 1
 
