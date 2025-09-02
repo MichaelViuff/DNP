@@ -135,9 +135,10 @@ A good start is to now commit your \*.sln file. E.g.: DnpAssignmentXYZ.sln. This
 ## Step 1.4 - Domain Model
 
 Based on the above requirements, you must create a domain model diagram, where we can see:
-• The entities of the system
-• The properties (attributes) on the entities
-• The relationships between entities, e.g. Post is written by a User. Remember multiplicities at both ends. Like you were taught for the Entity Relationship Diagram in DBS, or the Domain Model in SWE.
+ - The entities of the system
+ - The properties (attributes) on the entities
+ - The relationships between entities, e.g. Post is written by a User. Remember multiplicities at both ends.
+   Like you were taught for the Entity Relationship Diagram in DBS, or the Domain Model in SWE.
 
 ## Step 1.5 - Entities
 
