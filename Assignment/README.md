@@ -458,7 +458,7 @@ GetMany
 Finally, we need to be able to get many Posts, and apply some filtering, or ordering:
 
 ```csharp
-public IQueryable<Post> GetManyAsync()
+public IQueryable<Post> GetMany()
 {
     return posts.AsQueryable();
 }
