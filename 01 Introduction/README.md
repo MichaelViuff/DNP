@@ -67,7 +67,7 @@ namespace ConsoleApplication
 
         public void Introduce()
         {
-            Console.WriteLine($"Hi, I am {person1.Name}");
+            Console.WriteLine($"Hi, I am {Name}");
         }
     }
 }
