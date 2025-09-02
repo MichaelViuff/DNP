@@ -264,7 +264,7 @@ And then select the project, you want to referece, in our case the Entities:
 ![alt text](Images/image-16.png)
 
 Finally, select [Add].
-Note: In the image above, it says <Shared>. In yours it says <Server>.
+Note: In the image above, it says "Shared". In yours it should say "Server".
 
 ### Create Repository Interfaces
 
