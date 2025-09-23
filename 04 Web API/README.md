@@ -279,12 +279,11 @@ Set up a new minimal API project and create a simple GET endpoint.
 
 **Steps:**
 
-1. Create a new ASP.NET Console project
-2. Install the `aspnetcore.openapi` package (right click dependencies -> Manage NuGet packages -> search for "aspnetcore.openapi" -> select a version compatible with your project (probably version 8.0.0) -> install in your project)
-3. Modify the `Program.cs` file to create a Builder using the `WebApplication` class, and run the `Build()` method.
-4. Map a GET request to your "/" endpoint and have it output "Hello, Minimal API!".
-5. Run your program.
-6. Open your browser and navigate to http://localhost:5000/ and verify that your output is displayed
+1. Create a new project, with type "Web" and use the template "Empty"
+2. The `Program.cs` file should already create a Builder using the `WebApplication` class, and run the `Build()` method. If not, create this.
+3. Map a new GET request to the endpoint "/helloworld" endpoint and have it output "Hello, Minimal API!".
+4. Run your program.
+5. Open your browser and navigate to http://localhost:5000/ and verify that your output is displayed
 
 <blockquote>
 <details>
@@ -292,23 +291,13 @@ Set up a new minimal API project and create a simple GET endpoint.
 <p>
 
 ```csharp
-using Microsoft.AspNetCore.Builder;
+var builder = WebApplication.CreateBuilder(args);
+var app = builder.Build();
 
-namespace MinimalWebAPI;
+app.MapGet("/", () => "Hello World!");
+app.MapPost("/helloworld", () => "Hello, Minimal API!");
 
-internal class Program
-{
-    private static void Main()
-    {
-        var builder = WebApplication.CreateBuilder();
-        var app = builder.Build();
-
-        // Test GET endpoint
-        app.MapGet("/", () => "Hello, Minimal API!");
-
-        app.Run();
-    }
-}
+app.Run();
 ```
 
 </p>
