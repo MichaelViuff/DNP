@@ -669,58 +669,188 @@ public ActionResult<IEnumerable<Post>> GetAllPosts()
 <p>
 
 ```csharp
-    namespace ControllerBasedWebAPI;
 
-    public class Program
+using Microsoft.AspNetCore.Mvc;
+using ControllerBasedWebAPI;
+using System.Collections.Generic;
+using System.Linq;
+
+[ApiController]
+[Route("[controller]")]
+public class PostsController : ControllerBase
+{
+    private static List<Post> posts = new()
     {
-        public static void Main(string[] args)
+        new Post { Id = 1, UserId = 1, Title = "Post 1", Body = "Body of Post 1" },
+        new Post { Id = 2, UserId = 1, Title = "Post 2", Body = "Body of Post 2" }
+    };
+
+    [HttpGet("/", Name = "GetRoot")]
+    public IActionResult GetWelcomeMessage()
+    {
+        var response = new
         {
-            var builder = WebApplication.CreateBuilder(args);
-
-            // Define a CORS policy
-            builder.Services.AddCors(options =>
+            message = "Hello, Controller-based API!",
+            links = new[]
             {
-                options.AddPolicy("AllowAll", policy =>
-                {
-                    policy.AllowAnyOrigin()     // Allow requests from any origin
-                        .AllowAnyMethod()     // Allow any HTTP method (GET, POST, etc.)
-                        .AllowAnyHeader();    // Allow any headers
-                });
-            });
-            
-            
-            
-            //Dependency Injection
-            builder.Services.AddSingleton<CachingService>();  // Singleton because we want to persist cache across requests
-            
-            // Add services to the container.
-
-            builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-            builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
-
-            var app = builder.Build();
-
-            // Configure the HTTP request pipeline.
-            if (app.Environment.IsDevelopment())
-            {
-                app.UseSwagger();
-                app.UseSwaggerUI();
+                new { href = Url.Link("GetAllPosts", null), rel = "all-posts", method = "GET" },
+                new { href = Url.Link("CreatePost", null), rel = "create-post", method = "POST" }
             }
-
-            app.UseHttpsRedirection();
-
-            app.UseAuthorization();
-
-            // Use the CORS policy
-            app.UseCors("AllowAll");
-
-            app.MapControllers();
-
-            app.Run();
-        }
+        };
+        return Ok(response);
     }
+
+    [HttpGet(Name = "GetAllPosts")]
+    public IActionResult GetAllPosts()
+    {
+        var response = new
+        {
+            posts = posts.Select(p => new
+            {
+                p.Id,
+                p.UserId,
+                p.Title,
+                p.Body,
+                links = new[]
+                {
+                    new { href = Url.Link("GetPostById", new { id = p.Id }), rel = "self", method = "GET" },
+                    new { href = Url.Link("UpdatePost", new { id = p.Id }), rel = "update", method = "PUT" },
+                    new { href = Url.Link("DeletePost", new { id = p.Id }), rel = "delete", method = "DELETE" }
+                }
+            }),
+            links = new[]
+            {
+                new { href = Url.Link("GetAllPosts", null), rel = "self", method = "GET" },
+                new { href = Url.Link("CreatePost", null), rel = "create", method = "POST" }
+            }
+        };
+        return Ok(response);
+    }
+
+    [HttpGet("{id:int}", Name = "GetPostById")]
+    public IActionResult GetPostById(int id)
+    {
+        var post = posts.FirstOrDefault(p => p.Id == id);
+        if (post == null)
+        {
+            return NotFound(new
+            {
+                error = "Post not found",
+                links = new[]
+                {
+                    new { href = Url.Link("GetAllPosts", null), rel = "all-posts", method = "GET" }
+                }
+            });
+        }
+
+        var response = new
+        {
+            post.Id,
+            post.UserId,
+            post.Title,
+            post.Body,
+            links = new[]
+            {
+                new { href = Url.Link("GetPostById", new { id = post.Id }), rel = "self", method = "GET" },
+                new { href = Url.Link("UpdatePost", new { id = post.Id }), rel = "update", method = "PUT" },
+                new { href = Url.Link("DeletePost", new { id = post.Id }), rel = "delete", method = "DELETE" },
+                new { href = Url.Link("GetAllPosts", null), rel = "all-posts", method = "GET" }
+            }
+        };
+        return Ok(response);
+    }
+
+    [HttpPost(Name = "CreatePost")]
+    public IActionResult CreatePost([FromBody] Post newPost)
+    {
+        newPost.Id = posts.Count == 0 ? 1 : posts.Max(p => p.Id) + 1;
+        posts.Add(newPost);
+
+        var response = new
+        {
+            newPost.Id,
+            newPost.UserId,
+            newPost.Title,
+            newPost.Body,
+            links = new[]
+            {
+                new { href = Url.Link("GetPostById", new { id = newPost.Id }), rel = "self", method = "GET" },
+                new { href = Url.Link("UpdatePost", new { id = newPost.Id }), rel = "update", method = "PUT" },
+                new { href = Url.Link("DeletePost", new { id = newPost.Id }), rel = "delete", method = "DELETE" },
+                new { href = Url.Link("GetAllPosts", null), rel = "all-posts", method = "GET" }
+            }
+        };
+
+        return CreatedAtRoute("GetPostById", new { id = newPost.Id }, response);
+    }
+
+    [HttpPut("{id:int}", Name = "UpdatePost")]
+    public IActionResult UpdatePost(int id, [FromBody] Post updatedPost)
+    {
+        var index = posts.FindIndex(p => p.Id == id);
+        if (index == -1)
+        {
+            return NotFound(new
+            {
+                error = "Post not found",
+                links = new[]
+                {
+                    new { href = Url.Link("GetAllPosts", null), rel = "all-posts", method = "GET" }
+                }
+            });
+        }
+
+        updatedPost.Id = id;
+        posts[index] = updatedPost;
+
+        var response = new
+        {
+            updatedPost.Id,
+            updatedPost.UserId,
+            updatedPost.Title,
+            updatedPost.Body,
+            links = new[]
+            {
+                new { href = Url.Link("GetPostById", new { id = updatedPost.Id }), rel = "self", method = "GET" },
+                new { href = Url.Link("DeletePost", new { id = updatedPost.Id }), rel = "delete", method = "DELETE" },
+                new { href = Url.Link("GetAllPosts", null), rel = "all-posts", method = "GET" }
+            }
+        };
+
+        return Ok(response);
+    }
+
+    [HttpDelete("{id:int}", Name = "DeletePost")]
+    public IActionResult DeletePost(int id)
+    {
+        var post = posts.FirstOrDefault(p => p.Id == id);
+        if (post == null)
+        {
+            return NotFound(new
+            {
+                error = "Post not found",
+                links = new[]
+                {
+                    new { href = Url.Link("GetAllPosts", null), rel = "all-posts", method = "GET" }
+                }
+            });
+        }
+
+        posts.Remove(post);
+
+        var response = new
+        {
+            message = $"Post {id} deleted",
+            links = new[]
+            {
+                new { href = Url.Link("GetAllPosts", null), rel = "all-posts", method = "GET" },
+                new { href = Url.Link("CreatePost", null), rel = "create", method = "POST" }
+            }
+        };
+
+        return Ok(response);
+    }
+
 ```
 
 You often don't want to implement this is a larger system, as it is hard to maintain, and adds little value (assuming you document your API instead)
