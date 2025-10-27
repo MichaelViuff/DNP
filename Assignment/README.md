@@ -101,12 +101,12 @@ The way we create relationships between the Entities is described in detail furt
 ### Optional features
 
 Further feature suggestions, if you are brave:
-• A user can like/dislike a post.
-• A user can like/dislike a comment.
-• A user can create a SubForum, meaning a post now belongs to a specific SubForum instead.
-• A user can comment on a comment.
-• A user becomes moderator of a sub forum, they created, meaning they can delete comments and posts.
-• Feel free to add further ideas yourself.
+- A user can like/dislike a post.
+- A user can like/dislike a comment.
+- A user can create a SubForum, meaning a post now belongs to a specific SubForum instead.
+- A user can comment on a comment.
+- A user becomes moderator of a sub forum, they created, meaning they can delete comments and posts.
+- Feel free to add further ideas yourself.
 
 ## Step 1.2 - Create Solution
 
@@ -135,9 +135,10 @@ A good start is to now commit your \*.sln file. E.g.: DnpAssignmentXYZ.sln. This
 ## Step 1.4 - Domain Model
 
 Based on the above requirements, you must create a domain model diagram, where we can see:
-• The entities of the system
-• The properties (attributes) on the entities
-• The relationships between entities, e.g. Post is written by a User. Remember multiplicities at both ends. Like you were taught for the Entity Relationship Diagram in DBS, or the Domain Model in SWE.
+ - The entities of the system
+ - The properties (attributes) on the entities
+ - The relationships between entities, e.g. Post is written by a User. Remember multiplicities at both ends.
+   Like you were taught for the Entity Relationship Diagram in DBS, or the Domain Model in SWE.
 
 ## Step 1.5 - Entities
 
@@ -263,7 +264,7 @@ And then select the project, you want to referece, in our case the Entities:
 ![alt text](Images/image-16.png)
 
 Finally, select [Add].
-Note: In the image above, it says <Shared>. In yours it says <Server>.
+Note: In the image above, it says "Shared". In yours it should say "Server".
 
 ### Create Repository Interfaces
 
@@ -457,7 +458,7 @@ GetMany
 Finally, we need to be able to get many Posts, and apply some filtering, or ordering:
 
 ```csharp
-public IQueryable<Post> GetManyAsync()
+public IQueryable<Post> GetMany()
 {
     return posts.AsQueryable();
 }
