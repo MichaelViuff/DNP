@@ -195,12 +195,13 @@ Create a login form that sends credentials to the Web API and displays the recei
 //Login.razor
 @page "/login"
 @inject AuthService AuthService
+@rendermode InteractiveServer
 
 <h3>Login</h3>
 
 <input @bind="username" placeholder="Username" />
 <input @bind="password" placeholder="Password" type="password" />
-<button @onclick="Login">Login</button>
+<button @onclick="LoginMethod">Login</button>
 
 @if (!string.IsNullOrEmpty(jwt))
 {
@@ -213,7 +214,7 @@ Create a login form that sends credentials to the Web API and displays the recei
     private string password;
     private string jwt;
 
-    private async Task Login()
+    private async Task LoginMethod()
     {
         jwt = await AuthService.LoginAndReturnToken(username, password);
     }
