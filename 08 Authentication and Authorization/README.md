@@ -227,7 +227,7 @@ public class AuthService
 {
     private readonly HttpClient _http;
 
-    public AuthService(HttpClient http)
+    public AuthService()
     {
         _http = new HttpClient
         {
