@@ -405,7 +405,7 @@ public class TokenAuthenticationStateProvider : AuthenticationStateProvider
 ```
 
 ```razor
-//App.razor
+//Routes.razor
 <CascadingAuthenticationState>
     <Router AppAssembly="@typeof(App).Assembly">
         <Found Context="routeData">
