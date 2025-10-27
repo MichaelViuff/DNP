@@ -289,6 +289,7 @@ Create a page that is only accessible to authenticated users.
 @using System.Security.Claims
 @using Microsoft.AspNetCore.Components.Authorization
 @inject AuthenticationStateProvider AuthProvider
+@rendermode InteractiveServer
 
 <AuthorizeView>
     <Authorized>
@@ -359,6 +360,8 @@ Create a page that is only accessible to authenticated users.
 using Microsoft.AspNetCore.Components.Authorization;
 
 builder.Services.AddAuthorizationCore();
+builder.Services.AddCascadingAuthenticationState();
+
 builder.Services.AddScoped<AuthenticationStateProvider, TokenAuthenticationStateProvider>();
 ```
 
