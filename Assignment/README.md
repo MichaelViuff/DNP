@@ -11,7 +11,7 @@
   - [Step 1.8 - Repository Contracts Project](#step-18---repository-contracts-project)
   - [Step 1.9 - In-memory Repository Implementations](#step-19---in-memory-repository-implementations)
   - [Step 1.10 - Formalities](#step-110---formalities)
-- [Part 2 - Command Line Interface (CLI)](#part-2---command-line-interface)
+- [Part 2 - Command Line Interface (CLI)](#part-2---command-line-interface-(CLI))
   - [Step 2.1 - Requirements](#step-21---requirements)
   - [Step 2.2 - Status](#step-22---status)
   - [Step 2.3 - Setup](#step-23---setup)
